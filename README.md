@@ -147,7 +147,7 @@ O painel abre offline, mas estes itens só carregam conectado:
 
 | Item | De onde vem |
 | --- | --- |
-| Telas do video wall | Ao vivo, em iframe, de [felipeab8.github.io/videowall-coe](https://felipeab8.github.io/videowall-coe/). Não são capturas: dá para usar os filtros dentro de cada tela. |
+| Telas do video wall | Ao vivo, em iframe, de [felipeab8.github.io/videowall-coe](https://felipeab8.github.io/videowall-coe/). Não são capturas: clique em uma tela para abri-la e usar os filtros. |
 | Modelos 3D | Bibliotecas carregadas de CDN (jsDelivr e cdnjs) |
 | Fonte Plus Jakarta Sans | Google Fonts |
 

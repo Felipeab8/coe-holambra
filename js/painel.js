@@ -200,7 +200,7 @@
   const naVista = q => { const r = q.getBoundingClientRect(); return r.top < innerHeight + 120 && r.bottom > -120; };
   function ligarIframe(f, depois) {
     const aviso = f.parentElement && $('.tv-aviso', f.parentElement);
-    f.addEventListener('load', () => { if (aviso) aviso.hidden = true; if (depois) depois(); }, { once: true });
+    f.addEventListener('load', () => { f.dataset.ligada = Date.now(); if (aviso) aviso.hidden = true; if (depois) depois(); }, { once: true });
     f.src = f.dataset.tela;
   }
   function proximaTv() {
@@ -224,6 +224,7 @@
 
   let visao = 'tatica';
   const escolhas = {}; // TV -> tela fixa escolhida; sem escolha, fica no rodízio
+  const RODIZIO_MS = 10000; // igual a QUADRO_INTERVALO, no script.js do videowall
 
   function resumoTv(tv) {
     const p = [];
@@ -233,18 +234,24 @@
     return p.join(', ');
   }
 
+  /* o videowall reveza as telas sozinho, a partir do carregamento: abre-se a que está à vista */
+  function telaEmRodizio(tvEl, tv) {
+    const ligada = +($('iframe', tvEl) || { dataset: {} }).dataset.ligada;
+    return ligada ? tv.telas[Math.floor((Date.now() - ligada) / RODIZIO_MS) % tv.telas.length] : tv.telas[0];
+  }
+
   function ligarMural() {
     const tvs = C[visao];
     mural.innerHTML =
       '<div class="mural-barra"><div class="seg" role="group" aria-label="Visão do mural">' +
       '<button type="button" data-visao="tatica" aria-pressed="' + (visao === 'tatica') + '">Camada tática</button>' +
       '<button type="button" data-visao="estrategica" aria-pressed="' + (visao === 'estrategica') + '">Visão estratégica</button></div>' +
-      '<p>' + (visao === 'tatica' ? 'TVs com mais de uma tela fazem rodízio a cada 10 segundos.' : 'Histórico mensal e anual, uma tela por área.') + '</p>' +
+      '<p>Clique em uma tela para abrir. ' + (visao === 'tatica' ? 'TVs com mais de uma tela fazem rodízio a cada 10 segundos.' : 'Histórico mensal e anual, uma tela por área.') + '</p>' +
       '<a href="' + esc(C.url) + '" target="_blank" rel="noopener">Abrir o videowall completo</a></div>' +
       '<div class="mural-grade">' + tvs.map((tv, i) =>
-        '<figure class="tv" data-i="' + i + '"><div class="tv-tela"><span class="tv-aviso">Ligando a tela</span></div>' +
-        '<figcaption><div class="tv-placa"><span class="tv-n">' + esc(tv.n) + '</span><div><b>' + esc(tv.nome) + '</b><small>' + resumoTv(tv) + '</small></div>' +
-        '<button type="button" class="tv-ampliar" aria-label="Ampliar ' + esc(tv.nome) + '" title="Ampliar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div>' +
+        '<figure class="tv" data-i="' + i + '"><div class="tv-tela"><span class="tv-aviso">Ligando a tela</span>' +
+        '<button type="button" class="tv-abrir" aria-label="Abrir ' + esc(tv.nome) + '"><span>Abrir tela</span></button></div>' +
+        '<figcaption><div class="tv-placa"><span class="tv-n">' + esc(tv.n) + '</span><div><b>' + esc(tv.nome) + '</b><small>' + resumoTv(tv) + '</small></div></div>' +
         (tv.telas.length > 1 ? '<div class="tv-abas" role="group" aria-label="Telas de ' + esc(tv.nome) + '">' +
           '<button type="button" data-t="" aria-pressed="true">Rodízio</button>' +
           tv.telas.map(t => '<button type="button" data-t="' + esc(t.cod) + '" aria-pressed="false">' + esc(t.titulo) + '</button>').join('') + '</div>' : '') +
@@ -279,10 +286,10 @@
       ligarIframe(telaNoQuadro(q, lista.map(t => t.id), tv.nome));
       return;
     }
-    if (e.target.closest('.tv-ampliar')) {
+    if (e.target.closest('.tv-abrir')) {
       const lista = C[visao].flatMap(x => x.telas.map(t => Object.assign({ tv: x.nome }, t)));
-      const fixa = escolhas[visao + i];
-      abrirTelao(lista, lista.findIndex(t => t.cod === (fixa || tv.telas[0].cod)));
+      const cod = escolhas[visao + i] || telaEmRodizio(tvEl, tv).cod;
+      abrirTelao(lista, lista.findIndex(t => t.cod === cod));
     }
   });
 
