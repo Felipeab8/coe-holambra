@@ -16,14 +16,9 @@
     "nome": "Objetivos com stakeholders",
     "paginas": [
       {
-        "id": "ponto-de-partida",
-        "titulo": "Ponto de partida",
-        "arquivo": "01-01-ponto-de-partida.html"
-      },
-      {
-        "id": "objetivos-do-coe",
-        "titulo": "Objetivos do COE",
-        "arquivo": "01-03-objetivos-do-coe.html"
+        "id": "ponto-de-partida-e-objetivos",
+        "titulo": "Ponto de partida e objetivos",
+        "arquivo": "01-01-ponto-de-partida-e-objetivos.html"
       }
     ],
     "palavra": "Objetivos"
@@ -48,11 +43,6 @@
         "id": "telas-do-video-wall-avare",
         "titulo": "Telas do video wall · Avaré",
         "arquivo": "03-01-telas-do-video-wall-avare.html"
-      },
-      {
-        "id": "camadas-de-leitura",
-        "titulo": "Camadas de leitura",
-        "arquivo": "03-02-camadas-de-leitura.html"
       },
       {
         "id": "ficha-de-kpi",
@@ -149,18 +139,8 @@
     "paginas": [
       {
         "id": "modelo-de-governanca",
-        "titulo": "Modelo e tomada de decisão",
-        "arquivo": "06-01-modelo-de-governanca.html"
-      },
-      {
-        "id": "estrutura-e-papeis",
-        "titulo": "Estrutura e equipe",
-        "arquivo": "06-03-estrutura-e-papeis.html"
-      },
-      {
-        "id": "pilares-e-ecossistema",
-        "titulo": "Pilares e ecossistema",
-        "arquivo": "06-04-pilares-e-ecossistema.html"
+        "titulo": "Modelo de governança",
+        "arquivo": "06-01-governanca.html"
       }
     ],
     "palavra": "Governança"
@@ -170,14 +150,9 @@
     "nome": "Roadmap de implementação",
     "paginas": [
       {
-        "id": "expansao-e-frentes",
-        "titulo": "Expansão e frentes",
-        "arquivo": "07-01-expansao-e-frentes.html"
-      },
-      {
-        "id": "jornada-de-automacao",
-        "titulo": "Jornada de automação",
-        "arquivo": "07-03-jornada-de-automacao.html"
+        "id": "expansao-e-jornada",
+        "titulo": "Expansão e jornada de automação",
+        "arquivo": "07-01-expansao-e-jornada.html"
       }
     ],
     "palavra": "Roadmap"

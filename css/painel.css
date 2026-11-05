@@ -721,7 +721,11 @@ td:first-child{font-weight:600}
   .land-hero{min-height:620px}
   .lh-paisagem{height:58%}
 }
-@media (max-width:560px){.rodape span{display:none}}
+.rodape-id{display:grid;gap:1px}
+.rodape-id small{font-size:12.5px}
+.rodape-autoria{margin:0;text-align:center}
+.rodape-autoria strong{color:var(--fg);font-weight:700}
+@media (max-width:760px){.rodape{flex-wrap:wrap}.rodape-autoria{order:3;flex-basis:100%;text-align:left}}
 @media print{.barra-topo,.migalha,.passos-fixos,.rodape,.lh-paisagem{display:none}}
 
 /* tela inicial: resumo do site no lugar dos botões */

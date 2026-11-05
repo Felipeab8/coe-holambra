@@ -79,7 +79,7 @@
 
   function rota() {
     const [e, p, extra] = decodeURIComponent(location.hash.slice(1)).split('/');
-    mostrar(paginas.find(x => x.etapa.id === e && (!p || x.pagina.id === p)) || paginas[0], extra);
+    mostrar(paginas.find(x => x.etapa.id === e && (!p || x.pagina.id === p)) || paginas.find(x => x.etapa.id === e) || paginas[0], extra);
   }
   window.addEventListener('hashchange', rota);
 
