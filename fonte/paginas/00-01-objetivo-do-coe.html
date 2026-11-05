@@ -1,5 +1,5 @@
 <section class="land-hero full">
-  <svg class="lh-paisagem" viewBox="0 96 1920 724" preserveAspectRatio="xMaxYMin slice" aria-hidden="true">
+  <svg class="lh-paisagem" viewBox="0 40 1920 780" preserveAspectRatio="xMaxYMin slice" aria-hidden="true">
     <defs>
     <linearGradient id="ps-ceu" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="500"><stop offset="0" stop-color="var(--ps-c1)"/><stop offset="0.34" stop-color="var(--ps-c2)"/><stop offset="0.62" stop-color="var(--ps-c3)"/><stop offset="0.84" stop-color="var(--ps-c4)"/><stop offset="1" stop-color="var(--ps-c5)"/></linearGradient>
     <radialGradient id="ps-halo"><stop offset="0" stop-color="var(--ps-halo)" stop-opacity=".95"/><stop offset=".3" stop-color="var(--ps-halo)" stop-opacity=".42"/><stop offset="1" stop-color="var(--ps-halo)" stop-opacity="0"/></radialGradient>
@@ -57,82 +57,92 @@
       <h1>Visibilidade das operações.<br><span>Eficiência operacional e financeira.</span></h1>
       <p>Estabelecer a estratégia para o desenvolvimento de uma Central de Excelência Operacional, com foco em ampliar a visibilidade das operações e alavancar a eficiência operacional e financeira da Cooperativa Holambra.</p>
     </div>
+    <aside class="lh-painel" aria-label="O projeto em números">
+      <ul class="lh-num">
+        <li><a href="#objetivos"><b>12</b><span>entrevistas</span></a></li>
+        <li><a href="#indicadores"><b>{{total}}</b><span>indicadores</span></a></li>
+        <li><a href="#roadmap"><b>7</b><span>unidades</span></a></li>
+        <li><a href="#indicadores/telas-do-video-wall-avare"><b>8</b><span>TVs em Avaré</span></a></li>
+      </ul>
+    </aside>
     <nav class="lh-guia" aria-labelledby="lh-guia-t">
       <h2 id="lh-guia-t">O que você vai ver neste site</h2>
-      <ul>
-        <li><a href="#objetivos"><b>Objetivos</b><span>O que a Holambra espera do COE, a partir de 12 entrevistas e da visita a Avaré.</span></a></li>
-        <li><a href="#desafios"><b>Desafios</b><span>As dores relatadas pelas áreas, gerais e em cada etapa da operação.</span></a></li>
-        <li><a href="#indicadores"><b>Indicadores</b><span>Os {{total}} indicadores mapeados, as telas do video wall de Avaré e a ficha de cada KPI.</span></a></li>
-        <li><a href="#dados"><b>Infraestrutura</b><span>Diagnóstico da unidade, infraestrutura física (equipamentos, modelo 3D e sala do COE) e de software (arquitetura e sistemas).</span></a></li>
-        <li><a href="#viabilidade"><b>Viabilidade</b><span>Situação atual, investimento e retorno e, a partir deles, solução, plano e decisões.</span></a></li>
-        <li><a href="#governanca"><b>Governança</b><span>Quem decide o quê: níveis, rituais, papéis e áreas envolvidas.</span></a></li>
-        <li><a href="#roadmap"><b>Roadmap</b><span>A expansão às sete unidades, as ondas de implementação e a jornada de automação.</span></a></li>
-      </ul>
+      <ol>
+        <li><a href="#objetivos"><b>Objetivos</b><span>O que a Holambra espera</span></a></li>
+        <li><a href="#desafios"><b>Desafios</b><span>As dores por área e etapa</span></a></li>
+        <li><a href="#indicadores"><b>Indicadores</b><span>Telas e ficha de cada KPI</span></a></li>
+        <li><a href="#dados"><b>Infraestrutura</b><span>Unidade, equipamentos e sistemas</span></a></li>
+        <li><a href="#viabilidade"><b>Viabilidade</b><span>Investimento, plano e decisões</span></a></li>
+        <li><a href="#governanca"><b>Governança</b><span>Quem decide o quê</span></a></li>
+        <li><a href="#roadmap"><b>Roadmap</b><span>Expansão e automação</span></a></li>
+      </ol>
     </nav>
   </div></section>
-  <section class="land-sec full"><div class="wrap ls-g">
-    <div><div class="ls-k">Objetivo desta fase</div><h2 class="ls-h">Desenho pré-implementação do COE</h2>
-      <div class="lh-v"><svg class="tower" viewBox="0 0 380 480" role="img" aria-label="Torre do COE: Operational Excellence Center com o ciclo colaborar, prever, analisar e responder sobre a estrutura de dados">
-  <defs><marker id="tw" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="9" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="#49C8F2"/></marker></defs>
-  <g fill="none" stroke="#49C8F2" stroke-width="5" stroke-linecap="round">
+  <section class="land-sec fase full"><div class="wrap">
+    <div class="lh-v"><svg class="tower" viewBox="0 0 380 480" role="img" aria-label="Torre do COE: Operational Excellence Center com o ciclo colaborar, prever, analisar e responder sobre a estrutura de dados">
+  <defs><marker id="tw" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="9" refY="8" orient="auto"><path d="M0,0 L16,8 L0,16 Z" fill="var(--accent)"/></marker></defs>
+  <g fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round">
     <path d="M118 46 Q190 14 262 46" marker-end="url(#tw)"/>
     <path d="M318 82 Q352 118 338 166" marker-end="url(#tw)"/>
     <path d="M300 214 Q262 244 206 250" marker-end="url(#tw)"/>
     <path d="M80 228 Q30 196 42 128" marker-end="url(#tw)"/>
   </g>
-  <g font-family="Archivo,Arial,sans-serif" font-weight="700" font-size="13" fill="#9FE3FA">
+  <g font-weight="700" font-size="13" fill="var(--accent)">
     <text x="62" y="58" transform="rotate(-30 62 58)">Colaborar</text>
     <text x="282" y="44" transform="rotate(28 282 44)">Prever</text>
     <text x="336" y="196" transform="rotate(62 336 196)">Analisar</text>
     <text x="22" y="182" transform="rotate(68 22 182)">Resposta</text>
   </g>
-  <rect x="118" y="64" width="144" height="10" fill="#1B3F86"/>
-  <polygon points="104,74 276,74 296,122 84,122" fill="#1F55C4"/>
-  <text x="190" y="96" text-anchor="middle" font-family="Archivo,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff">Operational Excellence Center</text>
-  <text x="190" y="112" text-anchor="middle" font-family="Archivo,Arial,sans-serif" font-size="9.5" fill="#D6E4FB">Governança | Visualização | Colaboração</text>
-  <rect x="92" y="124" width="196" height="22" fill="#DCE8FA"/>
-  <g fill="#1B3F86"><rect x="112" y="124" width="4" height="22"/><rect x="140" y="124" width="4" height="22"/><rect x="168" y="124" width="4" height="22"/><rect x="196" y="124" width="4" height="22"/><rect x="224" y="124" width="4" height="22"/><rect x="252" y="124" width="4" height="22"/></g>
-  <polygon points="78,148 302,148 292,162 88,162" fill="#1F55C4"/>
-  <polygon points="92,164 288,164 272,196 108,196" fill="#0C2149"/>
-  <g fill="#DCE8FA"><polygon points="112,170 130,170 126,190 116,190"/><polygon points="140,170 158,170 156,190 144,190"/><polygon points="168,170 186,170 186,190 172,190"/><polygon points="196,170 214,170 212,190 198,190"/><polygon points="224,170 242,170 238,190 226,190"/><polygon points="252,170 268,170 262,190 254,190"/></g>
-  <polygon points="108,198 272,198 260,222 120,222" fill="#163C80"/>
-  <rect x="120" y="222" width="140" height="160" fill="#2266E0"/>
-  <g font-family="Archivo,Arial,sans-serif" fill="#fff" text-anchor="middle">
+  <rect x="118" y="64" width="144" height="10" fill="#1E3A5F"/>
+  <polygon points="104,74 276,74 296,122 84,122" fill="#2F6CA8"/>
+  <text x="190" y="96" text-anchor="middle" font-weight="700" font-size="11" fill="#fff">Operational Excellence Center</text>
+  <text x="190" y="112" text-anchor="middle" font-size="9" fill="#DCE3EB">Governança | Visualização | Colaboração</text>
+  <rect x="92" y="124" width="196" height="22" fill="#DCE3EB"/>
+  <g fill="#1E3A5F"><rect x="112" y="124" width="4" height="22"/><rect x="140" y="124" width="4" height="22"/><rect x="168" y="124" width="4" height="22"/><rect x="196" y="124" width="4" height="22"/><rect x="224" y="124" width="4" height="22"/><rect x="252" y="124" width="4" height="22"/></g>
+  <polygon points="78,148 302,148 292,162 88,162" fill="#2F6CA8"/>
+  <polygon points="92,164 288,164 272,196 108,196" fill="#16263A"/>
+  <g fill="#DCE3EB"><polygon points="112,170 130,170 126,190 116,190"/><polygon points="140,170 158,170 156,190 144,190"/><polygon points="168,170 186,170 186,190 172,190"/><polygon points="196,170 214,170 212,190 198,190"/><polygon points="224,170 242,170 238,190 226,190"/><polygon points="252,170 268,170 262,190 254,190"/></g>
+  <polygon points="108,198 272,198 260,222 120,222" fill="#1E3A5F"/>
+  <rect x="120" y="222" width="140" height="160" fill="#23588F"/>
+  <g fill="#fff" text-anchor="middle">
     <text x="190" y="242" font-weight="700" font-size="12.5">Planejar</text>
     <text x="190" y="261" font-weight="700" font-size="11">Operações Digitais</text>
-    <line x1="132" y1="268" x2="248" y2="268" stroke="#9EC0F5"/>
+    <line x1="132" y1="268" x2="248" y2="268" stroke="#A9C4DE"/>
     <text x="190" y="283" font-size="10">Visibilidade Fim-a-Fim</text>
-    <line x1="132" y1="290" x2="248" y2="290" stroke="#9EC0F5"/>
-    <line x1="170" y1="290" x2="170" y2="372" stroke="#9EC0F5"/><line x1="210" y1="290" x2="210" y2="372" stroke="#9EC0F5"/>
+    <line x1="132" y1="290" x2="248" y2="290" stroke="#A9C4DE"/>
+    <line x1="170" y1="290" x2="170" y2="372" stroke="#A9C4DE"/><line x1="210" y1="290" x2="210" y2="372" stroke="#A9C4DE"/>
     <text transform="translate(154 332) rotate(-90)" font-size="10">Operações</text>
     <text transform="translate(193 332) rotate(-90)" font-size="10">Financeiro</text>
     <text transform="translate(232 332) rotate(-90)" font-size="10">Qualidade</text>
   </g>
-  <polygon points="120,382 260,382 292,476 88,476" fill="#1E3A68"/>
-  <g font-family="Archivo,Arial,sans-serif" fill="#fff" text-anchor="middle">
+  <polygon points="120,382 260,382 292,476 88,476" fill="#1E3A5F"/>
+  <g fill="#fff" text-anchor="middle">
     <text x="190" y="402" font-weight="700" font-size="11.5">Estrutura de Dados</text>
-    <line x1="112" y1="410" x2="268" y2="410" stroke="#49C8F2" stroke-width="1"/>
-    <line x1="190" y1="414" x2="190" y2="470" stroke="#49C8F2" stroke-width="1"/>
-    <line x1="106" y1="442" x2="274" y2="442" stroke="#49C8F2" stroke-width="1" opacity=".6"/>
+    <line x1="112" y1="410" x2="268" y2="410" stroke="var(--accent)" stroke-width="1"/>
+    <line x1="190" y1="414" x2="190" y2="470" stroke="var(--accent)" stroke-width="1"/>
+    <line x1="106" y1="442" x2="274" y2="442" stroke="var(--accent)" stroke-width="1" opacity=".6"/>
     <text x="150" y="426" font-size="9.5">Dados</text><text x="150" y="437" font-size="9.5">Integrados</text>
     <text x="230" y="431" font-size="9.5">Agentes</text>
     <text x="150" y="461" font-size="9.5">Sistemas</text>
     <text x="232" y="455" font-size="9.5">Simulações e</text><text x="232" y="466" font-size="9.5">Modelagens</text>
   </g>
-</svg></div></div>
+</svg></div>
+    <div class="fase-t"><div class="ls-k">Objetivo desta fase</div><h2 class="ls-h">Desenho pré-implementação do COE</h2>
     <div class="ls-b">
       <p>Esta fase realiza o desenho pré-implementação do COE: estratégia, modelo operacional e plano de implementação definidos antes da implantação.</p>
       <ul class="ben"><li><b>Implantação mais harmônica</b><span>etapas planejadas antes do início da implantação</span></li><li><b>Áreas engajadas desde o início</b><span>desenho construído a partir das necessidades da operação</span></li><li><b>Alinhada aos objetivos da companhia</b><span>prioridades vinculadas aos resultados da cooperativa</span></li></ul>
     </div>
+    </div>
   </div></section>
-  <section class="land-sec soft full"><div class="wrap">
-    <div class="ls-k">Objetivos do COE</div><h2 class="ls-h">Objetivos estratégicos do COE</h2>
+  <section class="land-sec objs full"><div class="wrap">
+    <div><h2 class="ls-h">Objetivos estratégicos do COE</h2>
+    <blockquote>“Operacionalizar as unidades a distância: a decisão tomada no CoE e o time local fazendo a assistência.”</blockquote></div>
     <div class="o6">
-      <div><span>01</span><b>Visibilidade ponta a ponta</b><p>Um único dado confiável, integrado entre processos e unidades, no lugar de bases paralelas e comunicação informal.</p></div>
-      <div><span>02</span><b>Padronização da decisão</b><p>Parâmetros de secagem, aeração e segregação definidos por regra e por referência de desempenho, não pela experiência individual.</p></div>
-      <div><span>03</span><b>Previsibilidade da operação</b><p>Antecipar desvios, riscos e eventos operacionais, para uma atuação mais preventiva, estável e confiável.</p></div>
-      <div><span>04</span><b>Eficiência do custo</b><p>Menos consumo de energia, mais produtividade, manutenção mais eficiente e melhor uso dos ativos e recursos.</p></div>
-      <div><span>05</span><b>Operação remota e escalável</b><p>Decisão conduzida na matriz e execução na unidade, com o mesmo padrão replicável às sete unidades.</p></div>
-      <div><span>06</span><b>Rotina de gestão</b><p>Indicadores confiáveis sustentando a rotina diária de acompanhamento e a priorização da melhoria contínua.</p></div>
+      <div><b>Visibilidade ponta a ponta</b><p>Um único dado confiável, integrado entre processos e unidades, no lugar de bases paralelas e comunicação informal.</p></div>
+      <div><b>Padronização da decisão</b><p>Parâmetros de secagem, aeração e segregação definidos por regra e por referência de desempenho, não pela experiência individual.</p></div>
+      <div><b>Previsibilidade da operação</b><p>Antecipar desvios, riscos e eventos operacionais, para uma atuação mais preventiva, estável e confiável.</p></div>
+      <div><b>Eficiência do custo</b><p>Menos consumo de energia, mais produtividade, manutenção mais eficiente e melhor uso dos ativos e recursos.</p></div>
+      <div><b>Operação remota e escalável</b><p>Decisão conduzida na matriz e execução na unidade, com o mesmo padrão replicável às sete unidades.</p></div>
+      <div><b>Rotina de gestão</b><p>Indicadores confiáveis sustentando a rotina diária de acompanhamento e a priorização da melhoria contínua.</p></div>
     </div>
   </div></section>

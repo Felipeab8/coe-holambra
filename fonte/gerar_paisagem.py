@@ -71,7 +71,7 @@ def trelica(x0, y0, x1, y1, alt, passos):
 
 o = []
 A = o.append
-A(f'<svg class="lh-paisagem" viewBox="0 96 {W} {H-96}" preserveAspectRatio="xMaxYMin slice" aria-hidden="true">')
+A(f'<svg class="lh-paisagem" viewBox="0 40 {W} {H-40}" preserveAspectRatio="xMaxYMin slice" aria-hidden="true">')
 A('<defs>')
 paradas = ''.join(f'<stop offset="{p}" stop-color="var(--ps-c{i})"/>' for i, p in ((1, 0), (2, .34), (3, .62), (4, .84), (5, 1)))
 A(f'<linearGradient id="ps-ceu" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="{HZ+30}">{paradas}</linearGradient>')
