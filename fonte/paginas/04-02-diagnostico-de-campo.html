@@ -1,4 +1,6 @@
 <div class="wrap wide">
+<div class="abas">
+<section class="aba" data-aba="equipamentos" data-rotulo="Equipamento por equipamento">
   <div><h2>O dado já existe na maioria dos painéis; falta o caminho até o CCO</h2></div>
   <p class="intro">Esta é a visita técnica equipamento por equipamento, na ordem em que o grão percorre a unidade. Para cada um: o que foi encontrado, que dado ele já gera e o que falta para esse dado chegar ao COE.</p>
 
@@ -143,5 +145,65 @@
     </div>
 </div></details>
 
-  <p class="note">Fonte: Estudo de Viabilidade Técnica do COE, revisão A (emissão preliminar), capítulo 4, e registro da visita técnica (2026). Leituras de campo valem para o momento da visita. A coluna Comunicação e a barra de situação são uma leitura deste painel sobre o texto do estudo, não uma classificação do documento original. Criticidade e prontidão de cada sistema em <a href="#viabilidade/dados-e-sistemas/prontidao">Dados e sistemas</a>.</p>
+  <p class="note">Fonte: Estudo de Viabilidade Técnica do COE, revisão A (emissão preliminar), capítulo 4, e registro da visita técnica (2026). Leituras de campo valem para o momento da visita. A coluna Comunicação e a barra de situação são uma leitura deste painel sobre o texto do estudo, não uma classificação do documento original. Criticidade e prontidão de cada sistema em <a href="#viabilidade/situacao-atual">Situação atual</a>.</p>
+</section>
+<section class="aba" data-aba="tecnicas" data-rotulo="Soluções de campo" hidden>
+<div><h2>As lacunas de campo têm caminho definido, e parte delas começa sem investimento em campo</h2></div>
+  <p class="intro">São as alternativas que o estudo avaliou para medir o que hoje não existe. As soluções são referências técnicas para orientar o Projeto Executivo e a cotação, não representam decisão de compra nem indicação exclusiva de fornecedor; recomenda-se cotar ao menos duas alternativas equivalentes.</p>
+
+<details class="sec dobra"><summary><h3>Depressão das fornalhas: da leitura manual à coleta automática</h3><span class="dobra-sub">Hoje um colaborador verifica a depressão na fornalha a cada 15 minutos. Além de consumir tempo de operação, a leitura manual não gera tendência nem alarme e depende da disciplina de registro. As alternativas avaliadas permitem avançar por etapas, começando sem investimento em campo.</span></summary>
+<div class="dobra-c">
+<div class="tbl"><table class=""><thead><tr><th>Alternativa</th><th>Como funciona</th><th>Ganho</th><th>Limitação</th><th>Custo</th></tr></thead><tbody>
+      <tr><td><b>A – Formulário digital</b></td><td>Leitura a cada 15 min registrada em formulário com data, hora, ponto, valor e ação tomada</td><td>Histórico imediato e validação da faixa no registro</td><td>Continua manual</td><td>Baixo</td></tr>
+      <tr><td><b>B – Relés em remota de I/O</b></td><td>Relés de alarme do SanTec ligados a entradas digitais da rede OT</td><td>Alarme automático de fora de faixa no COE</td><td>Não fornece o valor contínuo</td><td>Baixo</td></tr>
+      <tr><td><b>C – Saída do próprio SanTec</b></td><td>Uso de saída analógica ou comunicação, se o modelo dispuser</td><td>Valor contínuo sem novo instrumento</td><td>Depende do modelo instalado</td><td>Baixo a médio</td></tr>
+      <tr><td><b>D – Transmissores 4–20 mA</b></td><td>Um transmissor de pressão por ponto (P1–P5), ligado a remota ou CLP</td><td>Valor contínuo, tendência e alarme em tempo real</td><td>Instalação em campo e área classificada</td><td>Médio</td></tr>
+      <tr><td><b>E – Manômetro com comunicação</b></td><td>Substituição por modelo multicanal com Modbus</td><td>Solução integrada em um equipamento</td><td>Troca do instrumento em operação</td><td>Médio</td></tr>
+    </tbody></table></div>
+    <p class="vb-alerta dg-mt"><b>Recomendação:</b> implantar a alternativa A imediatamente (Fase 1), somar B para alarme automático e decidir entre C e D após a resposta da SanTec. A operação paralela manual e automática deve durar ao menos duas semanas, comparando as leituras antes de desativar o registro manual.</p>
+</div></details>
+
+<details class="sec dobra"><summary><h3>Scanner 3D de nível para silos e armazém</h3><span class="dobra-sub">Hoje, o estoque dos silos e do armazém não tem medição automática: 7 informações do painel de silos e armazenagem estão sem fonte e outras 4 dependem de apontamento no Microsoft Forms. Em silos de grande diâmetro e no armazém graneleiro, a superfície do grão não é plana (forma cone na entrada, cratera na saída e rampas junto às paredes), e um sensor de nível de ponto único mede apenas um ponto dessa superfície, o que gera erro no volume. O scanner 3D acústico mede vários pontos da superfície, monta o relevo do grão em 3D e calcula o volume real, inclusive com poeira.</span></summary>
+<div class="dobra-c">
+<div class="tbl"><table class=""><thead><tr><th>Local</th><th>Solução recomendada</th><th>Quantidade de referência</th></tr></thead><tbody>
+      <tr><td><b>Silos de armazenagem (grande diâmetro)</b></td><td>Sistema com múltiplos scanners 3D combinados em um único volume</td><td>2 a 3 por silo, conforme diâmetro <span class="dg-aberto">dimensionar</span></td></tr>
+      <tr><td><b>Armazém graneleiro</b></td><td>Múltiplos scanners 3D por área/célula</td><td>Conforme comprimento e divisão do armazém <span class="dg-aberto">dimensionar</span></td></tr>
+      <tr><td><b>Silos pulmão</b></td><td>Radar ou scanner 3D compacto para silos estreitos</td><td>1 por silo</td></tr>
+      <tr><td><b>Moegas M1–M6</b></td><td>Sensor indutivo existente (status) + radar (ocupação contínua)</td><td>1 radar por moega</td></tr>
+    </tbody></table></div>
+    <p class="vb-alerta dg-mt">Recomenda-se um teste piloto em um silo de armazenagem antes da compra para todos os silos, comparando o volume medido pelo scanner com o saldo de movimentação do Império e com a última medição manual. Tecnologias equivalentes de outros fabricantes devem ser cotadas na mesma especificação.</p>
+    <details class="vb-det"><summary>Ver a ficha da solução e a referência de mercado</summary>
+    <div class="tbl"><table class=""><thead><tr><th>Item</th><th>Descrição</th></tr></thead><tbody>
+      <tr><td><b>O que é</b></td><td>Sensor sem contato instalado no teto do silo que emite som de baixa frequência, recebe os ecos de múltiplos pontos da superfície e gera o relevo do produto e o volume armazenado</td></tr>
+      <tr><td><b>O que entrega</b></td><td>Volume e ocupação reais; nível mínimo, máximo e médio; imagem 3D da superfície; identificação de cone para cima ou para baixo e de acúmulo de produto na parede</td></tr>
+      <tr><td><b>Onde aplicar em Avaré</b></td><td>Silos de armazenagem e armazém graneleiro (superfície irregular e grande diâmetro). Silos pulmão e moegas seguem com radar/sensor indutivo existente (volume menor e superfície mais regular)</td></tr>
+      <tr><td><b>Informações do painel atendidas</b></td><td>Visão geral: espaço disponível, produto em estoque e capacidade (AVR-VG-E01 a E03); Silos: ocupação e estoque por silo (AVR-SIL-A03, A04) e estoque atual (AVR-SIL-B06, hoje em Forms); Armazém: capacidade, ocupação e volume armazenado (AVR-ARM-A02, A04, A05, hoje em Forms)</td></tr>
+      <tr><td><b>Integração ao COE</b></td><td>Saídas 4–20 mA/HART e RS-485/Modbus (e TCP/IP conforme modelo) para o SCADA/historiador; software próprio de visualização 3D pode ser exibido no videowall</td></tr>
+      <tr><td><b>Requisitos de instalação</b></td><td>Bocal/flange no teto de cada silo, alimentação 24 Vcc e cabo de comunicação até o painel mais próximo; modelo certificado para atmosfera explosiva por poeira; instalação em altura (NR-35)</td></tr>
+      <tr><td><b>Ganhos além do indicador</b></td><td>Estoque confiável para comercialização e contratos; fim da medição manual com subida ao topo do silo (segurança); alerta de enchimento excessivo e de carregamento desigual das paredes, que pode causar dano estrutural</td></tr>
+      <tr><td><b>Pontos de atenção</b></td><td>Custo por silo maior que o radar; silos de grande diâmetro podem exigir 2 ou mais scanners; validar o posicionamento com o fornecedor a partir das dimensões e da estrutura interna (cabos de termometria) de cada silo</td></tr>
+    </tbody></table></div>
+    <div class="dg-mt"></div>
+    <div class="tbl"><table class=""><thead><tr><th>Característica</th><th>Referência de mercado – BinMaster 3DLevelScanner</th></tr></thead><tbody>
+      <tr><td><b>Tecnologia</b></td><td>Acústica de baixa frequência, sem contato, que atravessa a poeira</td></tr>
+      <tr><td><b>Alcance de medição</b></td><td>Até 61 m</td></tr>
+      <tr><td><b>Saídas</b></td><td>4 fios 4–20 mA / HART / RS-485 / Modbus</td></tr>
+      <tr><td><b>Alimentação</b></td><td>20 a 32 Vcc</td></tr>
+      <tr><td><b>Certificações</b></td><td>Áreas classificadas (ATEX / IECEx e FM, incluindo poeira combustível)</td></tr>
+      <tr><td><b>Software</b></td><td>Visualização 3D de múltiplos silos em rede local</td></tr>
+      <tr><td><b>Representação no Brasil</b></td><td>Distribuidor autorizado no Brasil (Grunn)</td></tr>
+    </tbody></table></div>
+    </details>
+</div></details>
+
+
+
+<details class="sec dobra"><summary><h3>Referência de custo: instrumentação complementar</h3><span class="dobra-sub" data-v="cat-instrumentos-rot"></span></summary>
+<div class="dobra-c">
+<div data-v="cat-instrumentos"></div>
+</div></details>
+
+  <p class="note">Fonte: Estudo de Viabilidade Técnica do COE, revisão A (emissão preliminar) e arquivo de apoio (2026). Classificação do documento: restrita.</p>
+</section>
+</div>
 </div>

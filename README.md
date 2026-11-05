@@ -30,7 +30,7 @@ start index.html
 
 ## O que há no painel
 
-São 27 páginas em 8 seções. O menu do topo segue esta ordem. Páginas irmãs ficam em abas e os detalhes longos em seções recolhíveis, para o título e o recado de cada bloco ficarem à vista.
+São 24 páginas em 8 seções. O menu do topo segue esta ordem. Páginas irmãs ficam em abas e os detalhes longos em seções recolhíveis, para o título e o recado de cada bloco ficarem à vista.
 
 | Seção | Páginas | O que mostra |
 | --- | --- | --- |
@@ -38,8 +38,8 @@ São 27 páginas em 8 seções. O menu do topo segue esta ordem. Páginas irmãs
 | Objetivos | 2 | O que a Holambra espera do COE, a partir de 12 entrevistas e da visita técnica a Avaré |
 | Desafios | 1 | Dores relatadas pelas áreas, gerais e por etapa da operação |
 | Indicadores | 3 | Mural com as telas do video wall ao vivo, camadas de leitura e ficha de cada KPI |
-| Infraestrutura | 4 | Diagnóstico, arquitetura As-Is e To-Be em 2D e 3D, piloto Avaré em 3D e fichas por sistema |
-| Viabilidade | 11 | Parecer, investimento, retorno, solução, plano, riscos e decisões |
+| Infraestrutura | 7 | Diagnóstico da unidade; física: diagnóstico de campo e soluções, piloto Avaré em 3D, fichas dos equipamentos e sala do COE; software: arquitetura As-Is e To-Be em 2D e 3D, sistemas e históricos |
+| Viabilidade | 5 | Situação atual, investimento e retorno, solução e contratação, plano e gates, decisões e próximos passos |
 | Governança | 3 | Níveis de decisão, rituais, papéis, equipe de Avaré e áreas envolvidas |
 | Roadmap | 2 | Expansão às sete unidades, ondas de implementação e jornada de automação |
 
@@ -76,7 +76,7 @@ O `atualizar.py` usa apenas a biblioteca padrão do Python, sem `pip install`. A
 - escolhe o CSV de versão mais alta;
 - recalcula todas as contagens exibidas nas páginas;
 - para com erro se faltar uma coluna no CSV, um rótulo na planilha, um ID ficar repetido ou uma página não existir;
-- avisa quando um indicador fica sem onda ou quando os textos de riscos precisam de revisão;
+- avisa quando um indicador fica sem onda;
 - versiona os links de CSS e JS, para o navegador não usar arquivos antigos.
 
 ## Estrutura das pastas
@@ -125,7 +125,7 @@ Não edite à mão `index.html`, `js/indicadores.js` nem `js/viabilidade-dados.j
 | Para mudar | Mexa em |
 | --- | --- |
 | Mapeamento de indicadores | Coloque o CSV novo em `fonte/mapeamento/`. O de versão mais alta é usado (`..._1.6v.csv`), e todas as contagens se recalculam. |
-| Estudo de viabilidade | Coloque a planilha nova em `Viabilidade/`. Cenários, fluxo de caixa, priorização, roadmap, gates, riscos, plano mestre (aba 01) e sala do COE (aba 02) se atualizam sozinhos. Textos vindos do Word ficam nas páginas `05-*`. |
+| Estudo de viabilidade | Coloque a planilha nova em `Viabilidade/`. Cenários, fluxo de caixa, priorização, roadmap, gates, plano mestre (aba 01) e sala do COE (aba 02) se atualizam sozinhos. Textos vindos do Word ficam nas páginas `05-*`. |
 | Texto de uma página | O arquivo dela em `fonte/paginas/`. |
 | Resumo da tela inicial | O bloco "O que você vai ver neste site" em `fonte/paginas/00-01-objetivo-do-coe.html`. É escrito à mão: revise se uma seção mudar de conteúdo. |
 | Nova página ou ordem das páginas | `fonte/etapas.json` e o arquivo em `fonte/paginas/`. O campo `palavra` é o nome curto no menu. O campo opcional `grupo` vira coluna no menu suspenso; páginas do mesmo grupo devem ficar em sequência. |

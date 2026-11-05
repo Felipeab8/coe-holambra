@@ -113,10 +113,6 @@ def main():
         viab, onda_por_id = ler_viabilidade.ler(planilhas[-1])
     except ler_viabilidade.Erro as e:
         falha(f"{planilhas[-1].name}: {e}")
-    criticos = sum(r["crit"] == "Crítico" for r in viab["riscos"])
-    if criticos != 5:
-        print(f'  Atenção: a planilha tem {criticos} riscos críticos, mas o título e a introdução de '
-              'fonte/paginas/05-09-riscos.html falam em cinco. Revise o texto.')
     so_no_csv = sorted(set(l["id"] for l in linhas) - set(onda_por_id))
     if so_no_csv:
         print(f"  Atenção: {len(so_no_csv)} indicadores do CSV sem onda na planilha: {', '.join(so_no_csv[:5])}")

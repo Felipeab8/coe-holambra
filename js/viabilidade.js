@@ -265,33 +265,7 @@
     desenha();
   })();
 
-  /* ---------- riscos ---------- */
-  (function riscos() {
-    const probs = ['Alta', 'Média', 'Baixa'], imps = ['Baixo', 'Médio', 'Alto'];
-    let filtro = null;
-    const cl = { 'Crítico': 'crit', 'Alto': 'aten', 'Médio': 'neutro', 'Baixo': 'neutro' }, gl = { 'Crítico': '×', 'Alto': '!', 'Médio': '–', 'Baixo': '–' };
-    const lista = alvo('riscos'), mapa = alvo('riscos-mapa');
-    function desenha() {
-      mapa.innerHTML = '<div class="mapa" role="group" aria-label="Riscos por probabilidade e impacto"><span class="m-y">Probabilidade</span>' +
-        probs.map(p => '<span class="m-r">' + p + '</span>' + imps.map(i => {
-          const n = V.riscos.filter(r => r.prob === p && r.imp === i).length, nv = { Alta: 3, 'Média': 2, Baixa: 1 }[p] * { Alto: 3, 'Médio': 2, Baixo: 1 }[i];
-          const on = filtro === p + '|' + i;
-          return '<button type="button" class="m-c n' + nv + '" data-f="' + p + '|' + i + '"' + (n ? '' : ' disabled') + ' aria-pressed="' + on + '" aria-label="' + n + ' riscos com probabilidade ' + p + ' e impacto ' + i + '">' + (n || '') + '</button>';
-        }).join('')).join('') + '<span></span>' + imps.map(i => '<span class="m-b">' + i + '</span>').join('') + '<span class="m-x">Impacto</span></div>' +
-        (filtro ? '<button type="button" class="m-limpa">Mostrar todos os riscos</button>' : '<p class="vb-apoio">Clique em uma célula para filtrar.</p>');
-      const L = V.riscos.filter(r => !filtro || r.prob + '|' + r.imp === filtro).sort((a, b) => b.pont - a.pont || a.id.localeCompare(b.id));
-      lista.innerHTML = tabela(['ID', 'Risco', 'Criticidade', 'Mitigação', 'Responsável'],
-        L.map(r => [r.id, '<b>' + esc(r.risco) + '</b><small class="pi">probabilidade ' + r.prob.toLowerCase() + ', impacto ' + r.imp.toLowerCase() + '</small>', selo(cl[r.crit], gl[r.crit], r.crit), esc(r.mitig), esc(r.dono)]));
-    }
-    mapa.addEventListener('click', e => {
-      const b = e.target.closest('[data-f]');
-      if (b) { filtro = filtro === b.dataset.f ? null : b.dataset.f; desenha(); }
-      if (e.target.closest('.m-limpa')) { filtro = null; desenha(); }
-    });
-    desenha();
-  })();
-
-  alvo('oportunidades').innerHTML = tabela(['ID', 'Oportunidade', 'Como aproveitar', 'Responsável'], V.oportunidades.map(o => [o.id, '<b>' + esc(o.item) + '</b>', esc(o.acao), esc(o.dono)]));
+  /* ---------- pendências ---------- */
   alvo('pendencias-rot').textContent = 'Ver as ' + V.pendencias.length + ' pendências que travam engenharia, prazo e orçamento';
   alvo('pendencias').innerHTML = tabela(['ID', 'Tema', 'Pendência', 'Responsável', 'Prazo', 'Se não resolver'],
     V.pendencias.map(p => [p.id, esc(p.tema), esc(p.item), esc(p.resp), tri(p.prazo), esc(p.impacto)]));

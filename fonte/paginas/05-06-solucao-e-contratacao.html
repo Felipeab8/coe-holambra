@@ -16,7 +16,7 @@
 <div class="dobra-c">
 <div data-v="pacotes"></div>
 </div></details>
-  <p class="note">Fonte: Estudo de Viabilidade Técnica do COE, revisão A (emissão preliminar) e arquivo de apoio (2026). As soluções de mercado são referências para o projeto executivo, não decisão de compra nem indicação exclusiva de fornecedor. A proposta é confirmar as quantidades em levantamento próprio da integradora.</p>
+  <p class="note">Fonte: Estudo de Viabilidade Técnica do COE, revisão A (emissão preliminar) e arquivo de apoio (2026). As soluções de mercado são referências para o projeto executivo, não decisão de compra nem indicação exclusiva de fornecedor. A proposta é confirmar as quantidades em levantamento próprio da integradora. O detalhe físico está em Infraestrutura: <a href="#dados/diagnostico-de-campo/tecnicas">Soluções de campo</a> e <a href="#dados/sala-do-coe">Sala do COE</a>.</p>
 </section>
 <section class="aba" data-aba="escopo" data-rotulo="Escopo da integradora" hidden>
 <div><h2>Uma integradora responde do sensor ao banco de dados, em quatro frentes</h2></div>
@@ -136,95 +136,199 @@
 
   <p class="note">Fonte: Estudo de Viabilidade Técnica do COE, revisão A (emissão preliminar) e arquivo de apoio (2026). Classificação do documento: restrita. A contratação cobre o primeiro horizonte da <a href="#roadmap/jornada-de-automacao">jornada de automação</a>. Quantidades e valores são referências, a validar no levantamento da integradora.</p>
 </section>
-<section class="aba" data-aba="tecnicas" data-rotulo="Soluções técnicas" hidden>
-<div><h2>As lacunas de campo têm caminho definido, e parte delas começa sem investimento em campo</h2></div>
-  <p class="intro">São as alternativas que o estudo avaliou para medir o que hoje não existe e para aproveitar o que já está gravado nos sistemas. As soluções são referências técnicas para orientar o Projeto Executivo e a cotação, não representam decisão de compra nem indicação exclusiva de fornecedor; recomenda-se cotar ao menos duas alternativas equivalentes.</p>
+<section class="aba" data-aba="fornecedores" data-rotulo="Fornecedores" hidden>
+  <div><h2>Integrar depende de 17 empresas, e o prazo do projeto depende da resposta delas</h2></div>
+  <p class="intro">Cada painel foi programado por um fornecedor, que detém o programa do CLP, o mapa de memória, as senhas e, em muitos casos, a garantia. Por isso o contato começa antes de contratar a integradora: as respostas definem o hardware adicional, as subcontratações e, com eles, o custo e o prazo da Frente 2.</p>
 
-<details class="sec dobra"><summary><h3>Depressão das fornalhas: da leitura manual à coleta automática</h3><span class="dobra-sub">Hoje um colaborador verifica a depressão na fornalha a cada 15 minutos. Além de consumir tempo de operação, a leitura manual não gera tendência nem alarme e depende da disciplina de registro. As alternativas avaliadas permitem avançar por etapas, começando sem investimento em campo.</span></summary>
-<div class="dobra-c">
-<div class="tbl"><table class=""><thead><tr><th>Alternativa</th><th>Como funciona</th><th>Ganho</th><th>Limitação</th><th>Custo</th></tr></thead><tbody>
-      <tr><td><b>A – Formulário digital</b></td><td>Leitura a cada 15 min registrada em formulário com data, hora, ponto, valor e ação tomada</td><td>Histórico imediato e validação da faixa no registro</td><td>Continua manual</td><td>Baixo</td></tr>
-      <tr><td><b>B – Relés em remota de I/O</b></td><td>Relés de alarme do SanTec ligados a entradas digitais da rede OT</td><td>Alarme automático de fora de faixa no COE</td><td>Não fornece o valor contínuo</td><td>Baixo</td></tr>
-      <tr><td><b>C – Saída do próprio SanTec</b></td><td>Uso de saída analógica ou comunicação, se o modelo dispuser</td><td>Valor contínuo sem novo instrumento</td><td>Depende do modelo instalado</td><td>Baixo a médio</td></tr>
-      <tr><td><b>D – Transmissores 4–20 mA</b></td><td>Um transmissor de pressão por ponto (P1–P5), ligado a remota ou CLP</td><td>Valor contínuo, tendência e alarme em tempo real</td><td>Instalação em campo e área classificada</td><td>Médio</td></tr>
-      <tr><td><b>E – Manômetro com comunicação</b></td><td>Substituição por modelo multicanal com Modbus</td><td>Solução integrada em um equipamento</td><td>Troca do instrumento em operação</td><td>Médio</td></tr>
-    </tbody></table></div>
-    <p class="vb-alerta dg-mt"><b>Recomendação:</b> implantar a alternativa A imediatamente (Fase 1), somar B para alarme automático e decidir entre C e D após a resposta da SanTec. A operação paralela manual e automática deve durar ao menos duas semanas, comparando as leituras antes de desativar o registro manual.</p>
-</div></details>
+  <p class="vb-alerta"><b>Primeiro passo:</b> o comunicado formal da diretoria, com o objetivo do COE, o ponto focal e o prazo de resposta. Ele vence em 13/11/2026 (<a href="#viabilidade/decisoes-e-proximos-passos">ver decisões</a>). O estudo sugere <span class="dg-aberto">15 dias úteis por solicitação</span>, a validar com a Holambra.</p>
 
-<details class="sec dobra"><summary><h3>Scanner 3D de nível para silos e armazém</h3><span class="dobra-sub">Hoje, o estoque dos silos e do armazém não tem medição automática: 7 informações do painel de silos e armazenagem estão sem fonte e outras 4 dependem de apontamento no Microsoft Forms. Em silos de grande diâmetro e no armazém graneleiro, a superfície do grão não é plana (forma cone na entrada, cratera na saída e rampas junto às paredes), e um sensor de nível de ponto único mede apenas um ponto dessa superfície, o que gera erro no volume. O scanner 3D acústico mede vários pontos da superfície, monta o relevo do grão em 3D e calcula o volume real, inclusive com poeira.</span></summary>
-<div class="dobra-c">
-<div class="tbl"><table class=""><thead><tr><th>Local</th><th>Solução recomendada</th><th>Quantidade de referência</th></tr></thead><tbody>
-      <tr><td><b>Silos de armazenagem (grande diâmetro)</b></td><td>Sistema com múltiplos scanners 3D combinados em um único volume</td><td>2 a 3 por silo, conforme diâmetro <span class="dg-aberto">dimensionar</span></td></tr>
-      <tr><td><b>Armazém graneleiro</b></td><td>Múltiplos scanners 3D por área/célula</td><td>Conforme comprimento e divisão do armazém <span class="dg-aberto">dimensionar</span></td></tr>
-      <tr><td><b>Silos pulmão</b></td><td>Radar ou scanner 3D compacto para silos estreitos</td><td>1 por silo</td></tr>
-      <tr><td><b>Moegas M1–M6</b></td><td>Sensor indutivo existente (status) + radar (ocupação contínua)</td><td>1 radar por moega</td></tr>
-    </tbody></table></div>
-    <p class="vb-alerta dg-mt">Recomenda-se um teste piloto em um silo de armazenagem antes da compra para todos os silos, comparando o volume medido pelo scanner com o saldo de movimentação do Império e com a última medição manual. Tecnologias equivalentes de outros fabricantes devem ser cotadas na mesma especificação.</p>
-    <details class="vb-det"><summary>Ver a ficha da solução e a referência de mercado</summary>
-    <div class="tbl"><table class=""><thead><tr><th>Item</th><th>Descrição</th></tr></thead><tbody>
-      <tr><td><b>O que é</b></td><td>Sensor sem contato instalado no teto do silo que emite som de baixa frequência, recebe os ecos de múltiplos pontos da superfície e gera o relevo do produto e o volume armazenado</td></tr>
-      <tr><td><b>O que entrega</b></td><td>Volume e ocupação reais; nível mínimo, máximo e médio; imagem 3D da superfície; identificação de cone para cima ou para baixo e de acúmulo de produto na parede</td></tr>
-      <tr><td><b>Onde aplicar em Avaré</b></td><td>Silos de armazenagem e armazém graneleiro (superfície irregular e grande diâmetro). Silos pulmão e moegas seguem com radar/sensor indutivo existente (volume menor e superfície mais regular)</td></tr>
-      <tr><td><b>Informações do painel atendidas</b></td><td>Visão geral: espaço disponível, produto em estoque e capacidade (AVR-VG-E01 a E03); Silos: ocupação e estoque por silo (AVR-SIL-A03, A04) e estoque atual (AVR-SIL-B06, hoje em Forms); Armazém: capacidade, ocupação e volume armazenado (AVR-ARM-A02, A04, A05, hoje em Forms)</td></tr>
-      <tr><td><b>Integração ao COE</b></td><td>Saídas 4–20 mA/HART e RS-485/Modbus (e TCP/IP conforme modelo) para o SCADA/historiador; software próprio de visualização 3D pode ser exibido no videowall</td></tr>
-      <tr><td><b>Requisitos de instalação</b></td><td>Bocal/flange no teto de cada silo, alimentação 24 Vcc e cabo de comunicação até o painel mais próximo; modelo certificado para atmosfera explosiva por poeira; instalação em altura (NR-35)</td></tr>
-      <tr><td><b>Ganhos além do indicador</b></td><td>Estoque confiável para comercialização e contratos; fim da medição manual com subida ao topo do silo (segurança); alerta de enchimento excessivo e de carregamento desigual das paredes, que pode causar dano estrutural</td></tr>
-      <tr><td><b>Pontos de atenção</b></td><td>Custo por silo maior que o radar; silos de grande diâmetro podem exigir 2 ou mais scanners; validar o posicionamento com o fornecedor a partir das dimensões e da estrutura interna (cabos de termometria) de cada silo</td></tr>
-    </tbody></table></div>
-    <div class="dg-mt"></div>
-    <div class="tbl"><table class=""><thead><tr><th>Característica</th><th>Referência de mercado – BinMaster 3DLevelScanner</th></tr></thead><tbody>
-      <tr><td><b>Tecnologia</b></td><td>Acústica de baixa frequência, sem contato, que atravessa a poeira</td></tr>
-      <tr><td><b>Alcance de medição</b></td><td>Até 61 m</td></tr>
-      <tr><td><b>Saídas</b></td><td>4 fios 4–20 mA / HART / RS-485 / Modbus</td></tr>
-      <tr><td><b>Alimentação</b></td><td>20 a 32 Vcc</td></tr>
-      <tr><td><b>Certificações</b></td><td>Áreas classificadas (ATEX / IECEx e FM, incluindo poeira combustível)</td></tr>
-      <tr><td><b>Software</b></td><td>Visualização 3D de múltiplos silos em rede local</td></tr>
-      <tr><td><b>Representação no Brasil</b></td><td>Distribuidor autorizado no Brasil (Grunn)</td></tr>
+  <section class="sec"><h3>Sequência de contato, contada a partir do comunicado</h3>
+    <div class="vb-tres">
+      <div class="card"><div class="k">Bloco 1: Semanas 1 a 2</div><h4>Império, Evolutize, Microsoft Forms, Jotform, Altus e provedor meteorológico</h4><p>Forma de acesso aos dados definida e Onda 1 liberada para projeto</p></div>
+      <div class="card"><div class="k">Bloco 2: Semanas 2 a 4</div><h4>FACH, SanTec, Condutiva, NBR Tec, Fockink e Omega Engenharia</h4><p>Mapas de memória, protocolos e propostas de serviço dos painéis prioritários</p></div>
+      <div class="card"><div class="k">Bloco 3: Semanas 4 a 6</div><h4>RM Engenharia, SAUR, Autokraft, Atlas Copco e Kepler Weber</h4><p>Caminho de integração definido para os demais painéis</p></div>
+    </div>
+    <details class="vb-det"><summary>Ver o que pedir a cada uma das 17 empresas</summary>
+    <div class="tbl"><table class=""><thead><tr><th>Fornecedor</th><th>O que solicitar</th><th>Onda</th><th>Prioridade</th><th>Bloco de contato</th><th>Contato conduzido por</th></tr></thead><tbody>
+      <tr class="vb-sub"><td colspan="6">SOFTWARE E DADOS</td></tr>
+      <tr><td><b>Império</b></td><td>Acesso de leitura (API ou base) a fila, pesagens, classificação, moegas, expedição e contratos; dicionário de dados</td><td>1</td><td>1</td><td>1</td><td>TI Holambra</td></tr>
+      <tr><td><b>Evolutize (Delsoft)</b></td><td>Acesso a contratos, estoque e expedição; frequência de atualização</td><td>1</td><td>1</td><td>1</td><td>TI Holambra</td></tr>
+      <tr><td><b>Microsoft Forms</b></td><td>Exportação/integração das respostas; padronização e validação de campos</td><td>1</td><td>1</td><td>1</td><td>TI / Operações</td></tr>
+      <tr><td><b>Jotform</b></td><td>API/exportação; campos de prioridade, status e encerramento das OS</td><td>1</td><td>1</td><td>1</td><td>TI / Manutenção</td></tr>
+      <tr><td><b>Provedor meteorológico</b></td><td>Contratação da API (Avaré e localidades dos cooperados)</td><td>1</td><td>1</td><td>1</td><td>TI Holambra</td></tr>
+      <tr><td><b>Altus (BluePlant)</b></td><td>Licenças, capacidade de tags e historiador do SCADA</td><td>1</td><td>1</td><td>1</td><td>TI / Manutenção</td></tr>
+      <tr class="vb-sub"><td colspan="6">AUTOMAÇÃO DE CAMPO</td></tr>
+      <tr><td><b>FACH</b></td><td>Mapa de memória do M221, endereço IP e proposta de serviço</td><td>2</td><td>1</td><td>2</td><td>Manutenção</td></tr>
+      <tr><td><b>SanTec</b></td><td>Saída de dados ou analógica do manômetro; confirmação da tabela de depressões</td><td>2</td><td>1</td><td>2</td><td>Manutenção</td></tr>
+      <tr><td><b>Condutiva</b></td><td>Conclusão da calibração e mapa de memória</td><td>2</td><td>1</td><td>2</td><td>Manutenção / Operação</td></tr>
+      <tr><td><b>NBR Tec</b></td><td>Variáveis do S7-1200 (fluxo, termometria, balanças de fluxo), reativação do Termo A e sinais do HC-03</td><td>2</td><td>1</td><td>2</td><td>Manutenção</td></tr>
+      <tr><td><b>Fockink</b></td><td>Protocolo da central RS485 e mapa de memória</td><td>2</td><td>1</td><td>2</td><td>Manutenção</td></tr>
+      <tr><td><b>Omega Engenharia</b></td><td>Documentação do projeto integrado e ampliação de sinais</td><td>2</td><td>Ampliar</td><td>2</td><td>Manutenção</td></tr>
+      <tr><td><b>RM Engenharia</b></td><td>Versão do LOGO!, programa e liberação dos sinais de alarme</td><td>2</td><td>2</td><td>3</td><td>Manutenção</td></tr>
+      <tr><td><b>SAUR</b></td><td>Sinais de falha disponíveis nos tombadores e modelo do inversor</td><td>2</td><td>2</td><td>3</td><td>Manutenção</td></tr>
+      <tr><td><b>Autokraft</b></td><td>Mapa de variáveis do CLP Wago</td><td>2</td><td>2</td><td>3</td><td>Manutenção / TI</td></tr>
+      <tr><td><b>Atlas Copco</b></td><td>Protocolo do Elektronikon e módulo de comunicação</td><td>2</td><td>2</td><td>3</td><td>Manutenção</td></tr>
+      <tr><td><b>Kepler Weber</b></td><td>Comunicação do LOGO! e dos inversores da máquina de limpeza</td><td>2</td><td>2</td><td>3</td><td>Manutenção</td></tr>
     </tbody></table></div>
     </details>
-</div></details>
+  </section>
 
-<details class="sec dobra"><summary><h3>Fockink: supervisório de termometria e aeração</h3><span class="dobra-sub">A Fockink dispõe de sistema supervisório associado à central de termometria digital (RS485/wireless) e aos módulos remotos de motor (MR-M) que comandam a aeração. Hoje esse sistema é consultado apenas localmente. Para o COE, interessa identificar o que é monitorado, o que fica gravado e como ler esses dados sem interferir no controle.</span></summary>
+<details class="sec dobra"><summary><h3>O que precisa ser obtido de cada fornecedor</h3></summary>
 <div class="dobra-c">
 <ul class="list">
-      <li><b>Informações monitoradas:</b> temperatura por sensor e por cabo, temperatura máxima por célula do armazém, estado e modo (automático/manual) de ventiladores e exaustores, alarmes de aeração e, se houver sensores externos, temperatura e umidade do ar</li>
-      <li><b>Dados disponíveis:</b> leituras instantâneas na central e, conforme a versão do software, histórico local exportável – retenção e formato a confirmar com a Fockink</li>
-      <li><b>Como aproveitar:</b> (1) exportar o histórico existente para formar a linha de base; (2) ler as variáveis em tempo real por gateway RS485 → Modbus TCP ou pelo protocolo do próprio supervisório; (3) gravar no historiador e aplicar a regra de aeração por equilíbrio higroscópico (iniciativa 63 do Plano Mestre)</li>
-      <li><b>A confirmar:</b> versão do software e onde ele roda, protocolo e mapa de variáveis, licença de comunicação e retenção do histórico</li>
+      <li><b>Mapa de memória e protocolo:</b> endereços das variáveis e forma de comunicação do controlador</li>
+      <li><b>Programa, senhas e licenças:</b> cópia do programa do CLP/IHM e definição de quem pode alterá-lo</li>
+      <li><b>Garantia e segurança:</b> confirmação de que a leitura dos dados não interfere nos intertravamentos nem na garantia</li>
+      <li><b>Serviço de programação:</b> proposta para programar a comunicação, quando o próprio fornecedor precisar fazê-lo (subcontratação)</li>
+      <li><b>Documentação:</b> diagramas elétricos, lista de entradas e saídas e manual das telas</li>
+      <li><b>Acesso a dados de software:</b> API, base de dados ou exportação (Império, Evolutize, Microsoft Forms, Jotform)</li>
     </ul>
 </div></details>
-<details class="sec dobra"><summary><h3>NBR Tec: onde procurar relatórios e histórico</h3><span class="dobra-sub">A IHM da NBR Tec exibe em tempo real a rota do grão, válvulas, níveis e balanças de fluxo, mas não se sabe se esses dados geram relatórios nem onde ficam armazenados. A investigação deve percorrer, nesta ordem, os locais onde esses registros costumam estar:</span></summary>
-<div class="dobra-c">
-<ol class="list">
-      <li>Cartão de memória ou registros de dados (data logs e alarm logs) da própria IHM SIMATIC</li>
-      <li>Computador de supervisão local ou notebook de manutenção do fornecedor</li>
-      <li>Banco de dados instalado pela NBR Tec em servidor da Holambra (por exemplo, SQL Server ou arquivo local)</li>
-      <li>Servidor ou nuvem do próprio fornecedor, acessado mediante solicitação</li>
-    </ol>
-      <p class="vb-apoio dg-mt">A forma de acesso depende do que for encontrado: se houver banco de dados próprio, a recomendação é um usuário somente leitura com visões específicas e carga do histórico; se houver apenas arquivos, uma ingestão agendada para a camada de dados; se não houver registro, a integração direta com o CLP por Profinet/S7 ou OPC UA passa a gravar o histórico no historiador do COE, que começa a contar a partir do go-live. Nos três casos, o acesso deve ser formalizado com o fornecedor.</p>
-</div></details>
 
-<details class="sec dobra"><summary><h3>Onde está cada dado e se há histórico</h3><span class="dobra-sub">Só onde há histórico dá para formar a linha de base sem esperar a nova coleta.</span></summary>
+<details class="sec dobra"><summary><h3>Rito de engajamento, do comunicado ao aceite</h3></summary>
 <div class="dobra-c">
-<div class="tbl"><table><thead><tr><th>Sistema</th><th>Dados disponíveis</th><th>Onde estão</th><th>Forma de acesso</th><th>Histórico</th></tr></thead><tbody>
-      <tr><td><b>Império</b></td><td>Eventos e tempos por etapa, pesos, qualidade por carga, moegas, contratos e expedição</td><td>Base do Império</td><td>API ou réplica somente leitura</td><td>A confirmar</td></tr>
-      <tr><td><b>Evolutize → SAP</b></td><td>Contratos, estoque, cadastros mestres e financeiro</td><td>ERP</td><td>Adaptador desacoplado</td><td>Sim</td></tr>
-      <tr><td><b>Fockink</b></td><td>Temperatura por sensor, aeração, alarmes</td><td>Central / supervisório local</td><td>Gateway ou protocolo do supervisório</td><td>A confirmar</td></tr>
-      <tr><td><b>NBR Tec</b></td><td>Estados do fluxo, níveis, balanças de fluxo, termometria (Termo A)</td><td>CLP, IHM e possíveis relatórios</td><td>Profinet/S7, OPC UA ou banco</td><td>A confirmar</td></tr>
-      <tr><td><b>SanTec</b></td><td>Depressão P1–P5 e relés de faixa</td><td>Display local e anotação manual</td><td>Formulário, remota ou 4–20 mA</td><td>Não</td></tr>
-      <tr><td><b>FACH / Condutiva</b></td><td>Temperaturas, setpoints e umidade da secagem</td><td>CLPs Schneider</td><td>Modbus TCP</td><td>Não</td></tr>
-      <tr><td><b>Forms / Jotform</b></td><td>Secagem, resíduos, teste de coluna e OS</td><td>Nuvem</td><td>Exportação ou API</td><td>Sim</td></tr>
-      <tr><td><b>SCADA BluePlant / Omega</b></td><td>Corrente, mancais, horímetros e aeradores</td><td>SCADA do CCO</td><td>OPC UA / driver do SCADA</td><td>Não</td></tr>
+<div class="tbl"><table class="vb-id"><thead><tr><th>Passo</th><th>Atividade</th><th>Responsável</th><th>Resultado</th></tr></thead><tbody>
+      <tr><td><b>1</b></td><td>Comunicado formal da Holambra a todos os fornecedores: objetivo do COE, ponto focal e prazo de resposta</td><td>Holambra (diretoria)</td><td>Fornecedores cientes e com prazo</td></tr>
+      <tr><td><b>2</b></td><td>Envio do questionário técnico padrão</td><td>Ponto focal Holambra</td><td>Informações técnicas por painel</td></tr>
+      <tr><td><b>3</b></td><td>Reunião técnica com cada fornecedor</td><td>Holambra + integradora</td><td>Dúvidas resolvidas e caminho de integração definido</td></tr>
+      <tr><td><b>4</b></td><td>Entrega de documentação, mapa de memória e acessos</td><td>Fornecedor</td><td>Base para o Termo de Referência</td></tr>
+      <tr><td><b>5</b></td><td>Proposta de serviço, quando houver programação ou hardware</td><td>Fornecedor</td><td>Custo e prazo da Frente 2</td></tr>
+      <tr><td><b>6</b></td><td>Teste de comunicação com o SCADA</td><td>Integradora + fornecedor</td><td>Variáveis lidas e validadas</td></tr>
+      <tr><td><b>7</b></td><td>Aceite e atualização do dicionário de variáveis</td><td>Holambra</td><td>Sistema integrado ao COE</td></tr>
     </tbody></table></div>
 </div></details>
 
-<details class="sec dobra"><summary><h3>Referência de custo: instrumentação complementar</h3><span class="dobra-sub" data-v="cat-instrumentos-rot"></span></summary>
+<details class="sec dobra"><summary><h3>Quem contrata o serviço de cada fornecedor</h3><span class="dobra-sub">Parte das integrações exige só liberar informações; outra parte exige programação pelo próprio fornecedor. Em todos os casos, preserva-se o responsável único pela cadeia de dados.</span></summary>
 <div class="dobra-c">
-<div data-v="cat-instrumentos"></div>
+<div class="tbl"><table class=""><thead><tr><th>Situação</th><th>Tratamento recomendado</th><th>Quem contrata</th><th>Observação</th></tr></thead><tbody>
+      <tr><td><b>Liberação de mapa de memória, protocolo e documentação</b></td><td>Solicitação formal da Holambra ao fornecedor</td><td>Holambra</td><td>Pode estar coberta por contrato ou garantia vigente; registrar o aceite por escrito</td></tr>
+      <tr><td><b>Programação da comunicação pelo próprio fornecedor</b></td><td>Subcontratação pela integradora</td><td>Integradora</td><td>Mantém a integradora como responsável único por prazo e resultado</td></tr>
+      <tr><td><b>Fornecedor que só aceita contratação direta</b></td><td>Contrato direto com a Holambra e coordenação técnica da integradora</td><td>Holambra</td><td>Prazo e escopo amarrados ao cronograma da integradora</td></tr>
+      <tr><td><b>Fornecedor sem suporte ou sem resposta</b></td><td>Alternativa técnica independente</td><td>Integradora</td><td>Sem alteração do programa do CLP do fornecedor</td></tr>
+      <tr><td><b>Novos equipamentos e contratos futuros</b></td><td>Cláusula de comunicação aberta, mapa de memória e documentação</td><td>Holambra (Suprimentos)</td><td>Evita a formação de novas ilhas</td></tr>
+    </tbody></table></div>
 </div></details>
 
-  <p class="note">Fonte: Estudo de Viabilidade Técnica do COE, revisão A (emissão preliminar) e arquivo de apoio (2026). Classificação do documento: restrita.</p>
+<details class="sec dobra"><summary><h3>Se o fornecedor recusar ou atrasar</h3></summary>
+<div class="dobra-c">
+<ol class="list">
+      <li>Reiteração formal pelo ponto focal da Holambra, com novo prazo e cópia à gestão do contrato</li>
+      <li>Escalonamento à diretoria da Holambra e reunião com a liderança do fornecedor</li>
+      <li>Avaliação de alternativa técnica independente, sem alterar o programa do CLP: leitura de sinais de status e alarme por contatos auxiliares em remota de I/O, medição de corrente ou posição e, quando necessário, transmissores dedicados</li>
+      <li>Registro do impacto na onda correspondente e na matriz de riscos, com decisão formal da Holambra sobre a alternativa adotada</li>
+    </ol>
+</div></details>
+<details class="sec dobra"><summary><h3>Quando um fornecedor conta como integrado</h3><span class="dobra-sub">Só quando todos os critérios forem atendidos:</span></summary>
+<div class="dobra-c">
+<ul class="list">
+      <li>Variáveis acordadas lidas pelo SCADA ou pela camada de dados, na frequência definida no mapeamento</li>
+      <li>Variáveis nomeadas conforme a taxonomia e gravadas no historiador</li>
+      <li>Valores conferidos com a leitura local da IHM ou do sistema de origem</li>
+      <li>Alarmes do painel testados e refletidos no SCADA</li>
+      <li>Confirmação escrita do fornecedor de que a integração não interfere nos intertravamentos nem na garantia</li>
+      <li>Documentação entregue (mapa de variáveis, arquitetura e backups) e aceite formal da Holambra</li>
+    </ul>
+</div></details>
+
+<details class="sec dobra"><summary><h3>Governança dos contatos</h3></summary>
+<div class="dobra-c">
+<ul class="list">
+      <li><b>Governança do contato:</b> ponto focal único na Holambra e quadro de acompanhamento (fornecedor, solicitação, data, status), revisado semanalmente</li>
+      <li><b>Papéis:</b> a Holambra mantém a relação contratual com cada fornecedor; a integradora coordena a parte técnica</li>
+      <li><b>Confidencialidade:</b> termo de confidencialidade com os fornecedores que entregarem programa ou mapa de memória</li>
+      <li><b>Para o futuro:</b> incluir nos novos contratos de equipamentos a entrega de comunicação aberta, mapa de memória e documentação, evitando novas ilhas</li>
+    </ul>
+</div></details>
+
+  <p class="note">Fonte: Estudo de Viabilidade Técnica do COE, revisão A (emissão preliminar) e arquivo de apoio (2026). Classificação do documento: restrita. Questionário técnico padrão em <a href="#viabilidade/solucao-e-contratacao/aceite">Aceite e apoio técnico</a>.</p>
+</section>
+<section class="aba" data-aba="aceite" data-rotulo="Aceite e apoio técnico" hidden>
+  <div><h2>Sete requisitos definem quando o COE está aceito, e um deles ainda não tem número</h2></div>
+  <p class="intro">Todos são mandatórios. A retenção do historiador segue em aberto no estudo. Abaixo estão também os instrumentos para validar as fontes com cada fornecedor.</p>
+
+  <section class="sec"><h3>Requisitos e critérios de aceitação</h3>
+    <div class="tbl"><table><thead><tr><th>Requisito</th><th>Critério de aceitação</th></tr></thead><tbody>
+      <tr><td><b>Informações da onda no painel</b></td><td>100% das informações da onda contratada exibidas e conferidas com a fonte</td></tr>
+      <tr><td><b>Regras de alerta</b></td><td>Limites validados e alertas testados conforme o mapeamento</td></tr>
+      <tr><td><b>Comunicação dos painéis</b></td><td>CLPs da Onda 2 comunicando, testados painel a painel</td></tr>
+      <tr><td><b>Histórico</b></td><td>Historiador ativo com retenção de <span class="dg-aberto">prazo a definir</span></td></tr>
+      <tr><td><b>Formulários</b></td><td>Campos padronizados com validação e integrados</td></tr>
+      <tr><td><b>Documentação</b></td><td>Lista de pontos, arquitetura, integrações, backups e licenças</td></tr>
+      <tr><td><b>Capacitação</b></td><td>Equipe do COE, Operação e Manutenção treinadas</td></tr>
+    </tbody></table></div>
+    <p class="vb-apoio dg-mt">A aprovação da Holambra em cada requisito ainda está em branco no estudo.</p>
+  </section>
+
+<details class="sec dobra"><summary><h3>Roteiro de validação das fontes</h3></summary>
+<div class="dobra-c">
+<div class="tbl"><table class="vb-id"><thead><tr><th>Fonte</th><th>O que validar</th><th>Situação</th></tr></thead><tbody>
+      <tr><td><b>Império</b></td><td>Tabelas, campos, frequência, histórico e forma de acesso; cadastro de contratos</td><td>Pendente</td></tr>
+      <tr><td><b>Evolutize</b></td><td>Dados de contratos, estoque e expedição</td><td>Pendente</td></tr>
+      <tr><td><b>Microsoft Forms e Jotform</b></td><td>Campos, validações, histórico e exportação</td><td>Pendente</td></tr>
+      <tr><td><b>FACH</b></td><td>Mapa de memória do M221 e endereço IP; ponto de rede até o painel</td><td>Marcado como validado no apêndice D, embora a prontidão ainda cite a liberação do mapa</td></tr>
+      <tr><td><b>SanTec</b></td><td>Existência de saída analógica ou comunicação no modelo de 6 canais</td><td>Pendente</td></tr>
+      <tr><td><b>Demais painéis</b></td><td>Protocolo, porta livre, mapa de memória, contato do fornecedor</td><td>Pendente</td></tr>
+      <tr><td><b>SCADA BluePlant</b></td><td>Licenças, capacidade de tags, historiador, usuários, limites de alarme e leituras zeradas</td><td>Pendente</td></tr>
+      <tr><td><b>Campo</b></td><td>Pontos para sensores de nível e vazão, rotas de cabos</td><td>Pendente</td></tr>
+    </tbody></table></div>
+</div></details>
+
+<details class="sec dobra"><summary><h3>Questionário técnico aos fornecedores</h3><span class="dobra-sub">Enviado a cada fornecedor no passo 2 do rito de engajamento. As respostas alimentam o termo de referência da integradora e o dicionário de variáveis do COE.</span></summary>
+<div class="dobra-c">
+<div class="tbl"><table><thead><tr><th>Automação de campo</th><th>Pergunta ao fornecedor</th></tr></thead><tbody>
+        <tr><td><b>Identificação</b></td><td>Equipamento atendido, modelo e versão de firmware do CLP e da IHM, ano de instalação e responsável técnico</td></tr>
+        <tr><td><b>Comunicação</b></td><td>Portas físicas disponíveis (Ethernet, RS-485, RS-232), protocolos suportados (Modbus TCP, Profinet, OPC UA) e endereço IP atual</td></tr>
+        <tr><td><b>Variáveis</b></td><td>Lista de variáveis disponíveis (medições, estados, alarmes e setpoints), com endereço, tipo, unidade e escala</td></tr>
+        <tr><td><b>Hardware adicional</b></td><td>Necessidade de módulo de comunicação, gateway ou remota para disponibilizar os dados, com modelo recomendado</td></tr>
+        <tr><td><b>Programa e acesso</b></td><td>Disponibilidade do programa do CLP e da IHM, senhas, licenças de software e definição de quem pode alterar a lógica</td></tr>
+        <tr><td><b>Segurança e garantia</b></td><td>Confirmação de que a leitura dos dados não interfere nos intertravamentos e não afeta a garantia; restrições de área classificada</td></tr>
+        <tr><td><b>Serviço</b></td><td>Proposta, prazo e condições para programar a comunicação com o SCADA, caso o serviço seja do próprio fornecedor</td></tr>
+        <tr><td><b>Documentação</b></td><td>Diagramas elétricos, lista de entradas e saídas, manual das telas e histórico de alterações</td></tr>
+      </tbody></table></div>
+      <div class="tbl dg-mt"><table><thead><tr><th>Software e dados</th><th>Pergunta ao fornecedor</th></tr></thead><tbody>
+        <tr><td><b>Acesso</b></td><td>Forma de acesso disponível (API, base de dados, exportação), autenticação e ambiente de testes</td></tr>
+        <tr><td><b>Dados</b></td><td>Dicionário de dados, tabelas e campos relevantes, frequência de atualização e histórico disponível</td></tr>
+        <tr><td><b>Condições</b></td><td>Custos, limites de uso, responsabilidades sobre a integração e suporte em caso de falha</td></tr>
+      </tbody></table></div>
+</div></details>
+
+<details class="sec dobra"><summary><h3>Lista de pontos de automação</h3><span class="dobra-sub">Exemplos do estudo para a integradora completar. Mostra como cada ponto de campo se liga a uma informação do painel.</span></summary>
+<div class="dobra-c">
+<div class="tbl"><table><thead><tr><th>Tag</th><th>Descrição</th><th>Origem</th><th>Sinal</th><th>Informação do painel</th></tr></thead><tbody>
+        <tr><td>AVR-SEC-FOR01-TEMP</td><td>Temperatura da fornalha</td><td>FACH (M221)</td><td>Modbus TCP</td><td>AVR-SPR-B02</td></tr>
+        <tr><td>AVR-SEC-SEC01-SP</td><td>Temperatura desejada do ar (operador)</td><td>Condutiva</td><td>Rede</td><td>AVR-SPR-C03</td></tr>
+        <tr><td>AVR-SEC-FOR01-M1..M4</td><td>Status dos motores M1 a M4</td><td>FACH (M221)</td><td>Modbus TCP</td><td>Status do equipamento</td></tr>
+        <tr><td>AVR-SEC-SEC01-DEP-P1..P5</td><td>Depressão por ponto (mmca)</td><td>SanTec</td><td>Relé ou 4 a 20 mA</td><td>AVR-PRS-A01</td></tr>
+        <tr><td>AVR-SEC-SEC01-TAR</td><td>Ar do secador 1</td><td>Condutiva ou RM</td><td>Rede</td><td>AVR-SPR-C01</td></tr>
+        <tr><td>AVR-SEC-SEC01-UMS</td><td>Umidade de saída</td><td>Condutiva</td><td>Rede</td><td>AVR-SPR-E02</td></tr>
+        <tr><td>AVR-ARM-SIL01-TMAX</td><td>Temperatura máxima do silo 1</td><td>NBR Tec</td><td>Rede</td><td>AVR-SIL-A05</td></tr>
+        <tr><td>AVR-MOE-M01-NIV</td><td>Nível da moega 1</td><td>Novo sensor</td><td>Analógico</td><td>AVR-MOE-A03</td></tr>
+      </tbody></table></div>
+      <p class="note">Tags e origens como no apêndice C do estudo. No mapeamento 1.5v, AVR-SIL-A05 é a temperatura média do produto e a fonte de AVR-SPR-E02 é o Microsoft Forms. Confirmar antes de fechar a lista.</p>
+</div></details>
+
+<details class="sec dobra"><summary><h3>Glossário</h3></summary>
+<div class="dobra-c">
+<div class="tbl"><table class="vb-id"><thead><tr><th>Termo</th><th>Significado</th></tr></thead><tbody>
+        <tr><td><b>COE</b></td><td>Centro de Operações: equipe e videowall que acompanham toda a unidade em tempo real</td></tr>
+        <tr><td><b>CCO</b></td><td>Sala de operação atual da unidade</td></tr>
+        <tr><td><b>Império</b></td><td>Sistema que controla o fluxo do caminhão: cadastro, pesagens, classificação, descarga e saída</td></tr>
+        <tr><td><b>Evolutize</b></td><td>ERP da Holambra</td></tr>
+        <tr><td><b>CLP</b></td><td>Controlador do painel elétrico de cada fornecedor</td></tr>
+        <tr><td><b>IHM</b></td><td>Tela de operação local do painel, como a Harmony na FACH</td></tr>
+        <tr><td><b>Mapa de memória</b></td><td>Lista de endereços que permite ler os dados de um CLP</td></tr>
+        <tr><td><b>SCADA</b></td><td>Sistema de supervisão com telas e alarmes (BluePlant no CCO)</td></tr>
+        <tr><td><b>Historiador</b></td><td>Banco que grava cada medição ao longo do tempo</td></tr>
+        <tr><td><b>Depressão (mmca ou mmH₂O)</b></td><td>Pressão negativa medida nos pontos da fornalha e do secador</td></tr>
+        <tr><td><b>PH (peso hectolítrico)</b></td><td>Massa de 100 litros de grãos; indica densidade e qualidade do trigo</td></tr>
+        <tr><td><b>Falling Number</b></td><td>Ensaio que avalia a atividade enzimática e a qualidade tecnológica do trigo</td></tr>
+        <tr><td><b>Ritmo por contrato</b></td><td>Comparação entre o volume entregue e o previsto pelo prazo de cada contrato</td></tr>
+        <tr><td><b>Onda</b></td><td>Etapa de implantação que coloca um grupo de informações no painel</td></tr>
+      </tbody></table></div>
+</div></details>
+
+
+  <p class="note">Fonte: Estudo de Viabilidade Técnica do COE, revisão A (emissão preliminar), capítulo 14, apêndices C, D e E e glossário. A ficha padrão de indicador (apêndice B) está em <a href="#indicadores/ficha-de-kpi">Ficha de KPI</a>.</p>
 </section>
 </div>
 </div>

@@ -68,23 +68,45 @@
     "paginas": [
       {
         "id": "diagnostico",
-        "titulo": "Diagnóstico",
-        "arquivo": "04-01-diagnostico.html"
+        "titulo": "Diagnóstico da unidade",
+        "arquivo": "04-01-diagnostico.html",
+        "grupo": "Visão geral"
       },
       {
-        "id": "arquitetura-as-is-e-to-be",
-        "titulo": "Arquitetura As-Is e To-Be",
-        "arquivo": "04-04-arquitetura-as-is-e-to-be.html"
+        "id": "diagnostico-de-campo",
+        "titulo": "Diagnóstico de campo",
+        "arquivo": "04-02-diagnostico-de-campo.html",
+        "grupo": "Física"
       },
       {
         "id": "piloto-avare-modelo-3d",
         "titulo": "Piloto Avaré · Modelo 3D",
-        "arquivo": "04-05-piloto-avare-modelo-3d.html"
+        "arquivo": "04-05-piloto-avare-modelo-3d.html",
+        "grupo": "Física"
       },
       {
-        "id": "fichas-por-sistema",
-        "titulo": "Fichas por sistema",
-        "arquivo": "04-06-fichas-por-sistema.html"
+        "id": "fichas-dos-equipamentos",
+        "titulo": "Fichas dos equipamentos",
+        "arquivo": "04-06-fichas-dos-equipamentos.html",
+        "grupo": "Física"
+      },
+      {
+        "id": "sala-do-coe",
+        "titulo": "Sala do COE",
+        "arquivo": "04-07-sala-do-coe.html",
+        "grupo": "Física"
+      },
+      {
+        "id": "arquitetura-as-is-e-to-be",
+        "titulo": "Arquitetura As-Is e To-Be",
+        "arquivo": "04-04-arquitetura-as-is-e-to-be.html",
+        "grupo": "Software"
+      },
+      {
+        "id": "sistemas-e-historicos",
+        "titulo": "Sistemas e históricos",
+        "arquivo": "04-08-sistemas-e-historicos.html",
+        "grupo": "Software"
       }
     ],
     "palavra": "Infraestrutura"
@@ -94,70 +116,29 @@
     "nome": "Estudo de viabilidade",
     "paginas": [
       {
-        "id": "parecer-de-viabilidade",
-        "titulo": "Parecer de viabilidade",
-        "arquivo": "05-01-parecer-de-viabilidade.html",
-        "grupo": "Situação atual"
-      },
-      {
-        "id": "dados-e-sistemas",
-        "titulo": "Dados e sistemas",
-        "arquivo": "05-02-dados-e-sistemas.html",
-        "grupo": "Situação atual"
-      },
-      {
-        "id": "diagnostico-de-campo",
-        "titulo": "Diagnóstico de campo",
-        "arquivo": "05-12-diagnostico-de-campo.html",
-        "grupo": "Situação atual"
+        "id": "situacao-atual",
+        "titulo": "Situação atual",
+        "arquivo": "05-01-situacao-atual.html"
       },
       {
         "id": "investimento-e-retorno",
         "titulo": "Investimento e retorno",
-        "arquivo": "05-04-investimento-e-retorno.html",
-        "grupo": "Investimento"
+        "arquivo": "05-04-investimento-e-retorno.html"
       },
       {
         "id": "solucao-e-contratacao",
         "titulo": "Solução e contratação",
-        "arquivo": "05-06-solucao-e-contratacao.html",
-        "grupo": "Solução"
-      },
-      {
-        "id": "engajamento-dos-fornecedores",
-        "titulo": "Engajamento dos fornecedores",
-        "arquivo": "05-15-engajamento-dos-fornecedores.html",
-        "grupo": "Solução"
-      },
-      {
-        "id": "sala-do-coe",
-        "titulo": "Sala do COE",
-        "arquivo": "05-17-sala-do-coe.html",
-        "grupo": "Solução"
+        "arquivo": "05-06-solucao-e-contratacao.html"
       },
       {
         "id": "plano-e-gates",
         "titulo": "Plano e gates",
-        "arquivo": "05-08-plano-e-gates.html",
-        "grupo": "Plano"
-      },
-      {
-        "id": "aceite-e-apoio-tecnico",
-        "titulo": "Aceite e apoio técnico",
-        "arquivo": "05-13-aceite-e-apoio-tecnico.html",
-        "grupo": "Plano"
-      },
-      {
-        "id": "riscos",
-        "titulo": "Riscos e migração para SAP",
-        "arquivo": "05-09-riscos.html",
-        "grupo": "Riscos e decisões"
+        "arquivo": "05-08-plano-e-gates.html"
       },
       {
         "id": "decisoes-e-proximos-passos",
         "titulo": "Decisões e próximos passos",
-        "arquivo": "05-11-decisoes-e-proximos-passos.html",
-        "grupo": "Riscos e decisões"
+        "arquivo": "05-11-decisoes-e-proximos-passos.html"
       }
     ],
     "palavra": "Viabilidade"
