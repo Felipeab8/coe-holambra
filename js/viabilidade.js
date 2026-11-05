@@ -311,6 +311,7 @@
       linhas.forEach(l => { l.hidden = !!filtro && l.dataset.c !== filtro; });
       document.querySelectorAll('.dg-parada').forEach(p => {
         p.hidden = !p.querySelector('tr[data-c]:not([hidden])');
+        p.open = !!filtro && !p.hidden; // com filtro ligado, mostra direto os equipamentos
       });
       barra.querySelectorAll('.dg-seg').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.k === filtro)));
       const vis = linhas.filter(l => !l.hidden).length;

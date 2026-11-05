@@ -30,18 +30,18 @@ start index.html
 
 ## O que há no painel
 
-São 44 páginas em 8 seções. O menu do topo segue esta ordem.
+São 27 páginas em 8 seções. O menu do topo segue esta ordem. Páginas irmãs ficam em abas e os detalhes longos em seções recolhíveis, para o título e o recado de cada bloco ficarem à vista.
 
 | Seção | Páginas | O que mostra |
 | --- | --- | --- |
 | Início | 1 | Objetivo do COE e um resumo de todo o site |
-| Objetivos | 3 | O que a Holambra espera do COE, a partir de 12 entrevistas e da visita técnica a Avaré |
-| Desafios | 2 | Dores relatadas pelas áreas, gerais e por etapa da operação |
+| Objetivos | 2 | O que a Holambra espera do COE, a partir de 12 entrevistas e da visita técnica a Avaré |
+| Desafios | 1 | Dores relatadas pelas áreas, gerais e por etapa da operação |
 | Indicadores | 3 | Mural com as telas do video wall ao vivo, camadas de leitura e ficha de cada KPI |
-| Infraestrutura | 7 | Diagnóstico, sistemas, fluxograma, arquitetura As-Is e To-Be, incluindo modelo 3D |
-| Viabilidade | 19 | Parecer, investimento, retorno, solução, plano, riscos e decisões |
-| Governança | 5 | Níveis de decisão, rituais, papéis e áreas envolvidas |
-| Roadmap | 4 | Piloto Avaré em 3D, expansão às sete unidades e ondas de implementação |
+| Infraestrutura | 4 | Diagnóstico, arquitetura As-Is e To-Be em 2D e 3D, piloto Avaré em 3D e fichas por sistema |
+| Viabilidade | 11 | Parecer, investimento, retorno, solução, plano, riscos e decisões |
+| Governança | 3 | Níveis de decisão, rituais, papéis, equipe de Avaré e áreas envolvidas |
+| Roadmap | 2 | Expansão às sete unidades, ondas de implementação e jornada de automação |
 
 | Mural de indicadores | Piloto Avaré em 3D |
 | --- | --- |

@@ -74,6 +74,7 @@
       fecharGaveta();
     }
     if (a === FICHA && extra) abrirIndicador(extra);
+    else if (extra && abrirAba(a.el, extra)) window.scrollTo(0, 0);
   }
 
   function rota() {
@@ -86,6 +87,50 @@
     const p = paginas[paginas.indexOf(atual) + d];
     if (p) location.hash = p.hash;
   }
+
+  /* ---------- abas: páginas irmãs reunidas sem alongar a rolagem ---------- */
+  function selecionarAba(caixa, id) {
+    $$(':scope > .abas-lista [role="tab"]', caixa).forEach(b => {
+      const sim = b.dataset.aba === id;
+      b.setAttribute('aria-selected', sim);
+      b.tabIndex = sim ? 0 : -1;
+    });
+    $$(':scope > .aba', caixa).forEach(p => { p.hidden = p.dataset.aba !== id; });
+    window.dispatchEvent(new Event('resize')); // gráficos medem a área visível
+  }
+  function abrirAba(pagina, id) {
+    const p = $$('.aba', pagina).find(x => x.dataset.aba === id);
+    if (p) selecionarAba(p.parentElement, id);
+    return !!p;
+  }
+  $$('.abas').forEach(caixa => {
+    const paineis = $$(':scope > .aba', caixa);
+    const lista = document.createElement('div');
+    lista.className = 'abas-lista';
+    lista.setAttribute('role', 'tablist');
+    lista.innerHTML = paineis.map((p, i) => '<button type="button" role="tab" data-aba="' + p.dataset.aba + '" id="aba-' + p.dataset.aba +
+      '" aria-controls="painel-' + p.dataset.aba + '" aria-selected="' + (i === 0) + '" tabindex="' + (i === 0 ? 0 : -1) + '">' + esc(p.dataset.rotulo) + '</button>').join('');
+    paineis.forEach(p => {
+      p.id = 'painel-' + p.dataset.aba;
+      p.setAttribute('role', 'tabpanel');
+      p.setAttribute('aria-labelledby', 'aba-' + p.dataset.aba);
+    });
+    caixa.prepend(lista);
+    lista.addEventListener('click', e => {
+      const b = e.target.closest('[role="tab"]');
+      if (!b) return;
+      selecionarAba(caixa, b.dataset.aba);
+      try { history.replaceState(null, '', atual.hash + '/' + b.dataset.aba); } catch (x) { /* só o endereço deixa de acompanhar */ }
+    });
+    lista.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const l = $$('[role="tab"]', lista), i = l.indexOf(document.activeElement);
+      const b = l[(i + (e.key === 'ArrowRight' ? 1 : -1) + l.length) % l.length];
+      e.preventDefault(); e.stopPropagation();
+      selecionarAba(caixa, b.dataset.aba);
+      b.focus();
+    });
+  });
 
   /* ---------- menu, tema, tela cheia ---------- */
   const gavetaQuery = matchMedia('(max-width: 1240px)');
@@ -442,14 +487,18 @@
   const busca = $('#busca'), campoBusca = $('#buscaCampo'), listaBusca = $('#buscaLista');
   let indicePaginas = null, marcado = 0;
   function abrirBusca() {
-    if (!indicePaginas) indicePaginas = paginas.map(p => ({ p, txt: norm(p.pagina.titulo + ' ' + p.etapa.nome + ' ' + p.el.textContent) }));
+    if (!indicePaginas) indicePaginas = paginas.map(p => ({
+      p, txt: norm(p.pagina.titulo + ' ' + p.etapa.nome + ' ' + p.el.textContent),
+      abas: $$('.aba', p.el).map(a => ({ id: a.dataset.aba, rot: a.dataset.rotulo, txt: norm(a.textContent) })),
+    }));
     campoBusca.value = ''; resultados(); busca.showModal(); campoBusca.focus();
   }
   function resultados() {
     const q = norm(campoBusca.value.trim());
-    const pags = (q ? indicePaginas.filter(x => x.txt.includes(q)) : indicePaginas).slice(0, 7).map(x => ({
-      href: x.p.hash, t: x.p.pagina.titulo, s: x.p.etapa.nome,
-    }));
+    const pags = (q ? indicePaginas.filter(x => x.txt.includes(q)) : indicePaginas).slice(0, 7).map(x => {
+      const aba = q && x.abas.find(a => a.txt.includes(q)); // o resultado abre na aba onde o termo está
+      return { href: x.p.hash + (aba ? '/' + aba.id : ''), t: x.p.pagina.titulo + (aba ? ' · ' + aba.rot : ''), s: x.p.etapa.nome };
+    });
     const inds = q ? R.filter(r => norm(r.ind + ' ' + r.id + ' ' + r.card).includes(q)).slice(0, 12).map(r => ({
       href: FICHA.hash + '/' + r.id, t: r.ind, s: r.card + ', ' + r.id,
     })) : [];
@@ -495,7 +544,7 @@
       if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') $('[data-a="' + (e.key === 'ArrowRight' ? 'proxima' : 'anterior') + '"]', lente).click();
       return;
     }
-    if (busca.open || e.target.closest('input,textarea,select') || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (busca.open || e.target.closest('input,textarea,select,[role="tab"]') || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === 'ArrowRight' || e.key === 'PageDown') { passoPagina(1); e.preventDefault(); }
     if (e.key === 'ArrowLeft' || e.key === 'PageUp') { passoPagina(-1); e.preventDefault(); }
     if (e.key === '/') { e.preventDefault(); abrirBusca(); }

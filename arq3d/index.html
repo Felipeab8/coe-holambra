@@ -410,6 +410,9 @@ function loop(now){
   requestAnimationFrame(loop);
 }
 setView('rec');
+// o painel abre o modelo na visão escolhida no 2D (#asis ou #rec)
+const vistaDoEndereco=()=>{ const v=location.hash.slice(1); if(v==='asis'||v==='rec') setView(v); };
+addEventListener('hashchange',vistaDoEndereco); vistaDoEndereco();
 requestAnimationFrame(loop);
 
 // proteção: se a câmera ficar inválida, volta à vista inicial; se o WebGL for perdido, recarrega

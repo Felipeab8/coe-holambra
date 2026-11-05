@@ -21,11 +21,6 @@
         "arquivo": "01-01-ponto-de-partida.html"
       },
       {
-        "id": "o-que-se-espera-do-coe",
-        "titulo": "O que se espera do CoE",
-        "arquivo": "01-02-o-que-se-espera-do-coe.html"
-      },
-      {
         "id": "objetivos-do-coe",
         "titulo": "Objetivos do COE",
         "arquivo": "01-03-objetivos-do-coe.html"
@@ -38,14 +33,9 @@
     "nome": "Desafios operacionais",
     "paginas": [
       {
-        "id": "dores-transversais",
-        "titulo": "Dores transversais",
-        "arquivo": "02-01-dores-transversais.html"
-      },
-      {
-        "id": "dores-na-cadeia-operacional",
-        "titulo": "Dores na cadeia operacional",
-        "arquivo": "02-02-dores-na-cadeia-operacional.html"
+        "id": "dores-operacionais",
+        "titulo": "Dores operacionais",
+        "arquivo": "02-01-dores-operacionais.html"
       }
     ],
     "palavra": "Desafios"
@@ -82,34 +72,19 @@
         "arquivo": "04-01-diagnostico.html"
       },
       {
-        "id": "piramide-e-sistemas",
-        "titulo": "Pirâmide e sistemas",
-        "arquivo": "04-02-piramide-e-sistemas.html"
-      },
-      {
-        "id": "fluxograma",
-        "titulo": "Fluxograma",
-        "arquivo": "04-03-fluxograma.html"
-      },
-      {
         "id": "arquitetura-as-is-e-to-be",
         "titulo": "Arquitetura As-Is e To-Be",
         "arquivo": "04-04-arquitetura-as-is-e-to-be.html"
       },
       {
-        "id": "arquitetura-to-be-em-3d",
-        "titulo": "Arquitetura To-Be em 3D",
-        "arquivo": "04-05-arquitetura-to-be-em-3d.html"
+        "id": "piloto-avare-modelo-3d",
+        "titulo": "Piloto Avaré · Modelo 3D",
+        "arquivo": "04-05-piloto-avare-modelo-3d.html"
       },
       {
         "id": "fichas-por-sistema",
         "titulo": "Fichas por sistema",
         "arquivo": "04-06-fichas-por-sistema.html"
-      },
-      {
-        "id": "visao-alvo-to-be",
-        "titulo": "Visão alvo (To-Be)",
-        "arquivo": "04-07-visao-alvo-to-be.html"
       }
     ],
     "palavra": "Infraestrutura"
@@ -125,15 +100,9 @@
         "grupo": "Situação atual"
       },
       {
-        "id": "origem-dos-dados",
-        "titulo": "Origem dos dados",
-        "arquivo": "05-02-origem-dos-dados.html",
-        "grupo": "Situação atual"
-      },
-      {
-        "id": "prontidao-dos-sistemas",
-        "titulo": "Prontidão dos sistemas",
-        "arquivo": "05-03-prontidao-dos-sistemas.html",
+        "id": "dados-e-sistemas",
+        "titulo": "Dados e sistemas",
+        "arquivo": "05-02-dados-e-sistemas.html",
         "grupo": "Situação atual"
       },
       {
@@ -143,15 +112,9 @@
         "grupo": "Situação atual"
       },
       {
-        "id": "cenarios-de-investimento",
-        "titulo": "Cenários de investimento",
-        "arquivo": "05-04-cenarios-de-investimento.html",
-        "grupo": "Investimento"
-      },
-      {
-        "id": "retorno-economico",
-        "titulo": "Retorno econômico",
-        "arquivo": "05-05-retorno-economico.html",
+        "id": "investimento-e-retorno",
+        "titulo": "Investimento e retorno",
+        "arquivo": "05-04-investimento-e-retorno.html",
         "grupo": "Investimento"
       },
       {
@@ -161,21 +124,9 @@
         "grupo": "Solução"
       },
       {
-        "id": "escopo-da-integradora",
-        "titulo": "Escopo da integradora",
-        "arquivo": "05-14-escopo-da-integradora.html",
-        "grupo": "Solução"
-      },
-      {
         "id": "engajamento-dos-fornecedores",
         "titulo": "Engajamento dos fornecedores",
         "arquivo": "05-15-engajamento-dos-fornecedores.html",
-        "grupo": "Solução"
-      },
-      {
-        "id": "solucoes-tecnicas",
-        "titulo": "Soluções técnicas",
-        "arquivo": "05-16-solucoes-tecnicas.html",
         "grupo": "Solução"
       },
       {
@@ -185,27 +136,9 @@
         "grupo": "Solução"
       },
       {
-        "id": "equipe-e-rituais",
-        "titulo": "Equipe e rituais",
-        "arquivo": "05-19-equipe-e-rituais.html",
-        "grupo": "Solução"
-      },
-      {
-        "id": "priorizacao",
-        "titulo": "Priorização",
-        "arquivo": "05-07-priorizacao.html",
-        "grupo": "Plano"
-      },
-      {
         "id": "plano-e-gates",
         "titulo": "Plano e gates",
         "arquivo": "05-08-plano-e-gates.html",
-        "grupo": "Plano"
-      },
-      {
-        "id": "plano-mestre",
-        "titulo": "Plano mestre",
-        "arquivo": "05-18-plano-mestre.html",
         "grupo": "Plano"
       },
       {
@@ -216,14 +149,8 @@
       },
       {
         "id": "riscos",
-        "titulo": "Riscos",
+        "titulo": "Riscos e migração para SAP",
         "arquivo": "05-09-riscos.html",
-        "grupo": "Riscos e decisões"
-      },
-      {
-        "id": "migracao-para-sap",
-        "titulo": "Migração para SAP",
-        "arquivo": "05-10-migracao-para-sap.html",
         "grupo": "Riscos e decisões"
       },
       {
@@ -241,28 +168,18 @@
     "paginas": [
       {
         "id": "modelo-de-governanca",
-        "titulo": "Modelo de governança",
+        "titulo": "Modelo e tomada de decisão",
         "arquivo": "06-01-modelo-de-governanca.html"
       },
       {
-        "id": "tomada-de-decisao",
-        "titulo": "Tomada de decisão",
-        "arquivo": "06-02-tomada-de-decisao.html"
-      },
-      {
         "id": "estrutura-e-papeis",
-        "titulo": "Estrutura e papéis",
+        "titulo": "Estrutura e equipe",
         "arquivo": "06-03-estrutura-e-papeis.html"
       },
       {
-        "id": "pilares-de-governanca",
-        "titulo": "Pilares de governança",
-        "arquivo": "06-04-pilares-de-governanca.html"
-      },
-      {
-        "id": "areas-e-ecossistema",
-        "titulo": "Áreas e ecossistema",
-        "arquivo": "06-05-areas-e-ecossistema.html"
+        "id": "pilares-e-ecossistema",
+        "titulo": "Pilares e ecossistema",
+        "arquivo": "06-04-pilares-e-ecossistema.html"
       }
     ],
     "palavra": "Governança"
@@ -272,19 +189,9 @@
     "nome": "Roadmap de implementação",
     "paginas": [
       {
-        "id": "piloto-avare-modelo-3d",
-        "titulo": "Piloto Avaré · Modelo 3D",
-        "arquivo": "07-04-piloto-avare-modelo-3d.html"
-      },
-      {
-        "id": "horizonte-de-expansao",
-        "titulo": "Horizonte de expansão",
-        "arquivo": "07-01-horizonte-de-expansao.html"
-      },
-      {
-        "id": "frentes-de-implementacao",
-        "titulo": "Frentes de implementação",
-        "arquivo": "07-02-frentes-de-implementacao.html"
+        "id": "expansao-e-frentes",
+        "titulo": "Expansão e frentes",
+        "arquivo": "07-01-expansao-e-frentes.html"
       },
       {
         "id": "jornada-de-automacao",

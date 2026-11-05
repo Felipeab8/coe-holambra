@@ -15,8 +15,9 @@
     <p class="vb-apoio dg-mt">A aprovação da Holambra em cada requisito ainda está em branco no estudo.</p>
   </section>
 
-  <section class="sec"><h3>Roteiro de validação das fontes</h3>
-    <div class="tbl"><table class="vb-id"><thead><tr><th>Fonte</th><th>O que validar</th><th>Situação</th></tr></thead><tbody>
+<details class="sec dobra"><summary><h3>Roteiro de validação das fontes</h3></summary>
+<div class="dobra-c">
+<div class="tbl"><table class="vb-id"><thead><tr><th>Fonte</th><th>O que validar</th><th>Situação</th></tr></thead><tbody>
       <tr><td><b>Império</b></td><td>Tabelas, campos, frequência, histórico e forma de acesso; cadastro de contratos</td><td>Pendente</td></tr>
       <tr><td><b>Evolutize</b></td><td>Dados de contratos, estoque e expedição</td><td>Pendente</td></tr>
       <tr><td><b>Microsoft Forms e Jotform</b></td><td>Campos, validações, histórico e exportação</td><td>Pendente</td></tr>
@@ -26,12 +27,11 @@
       <tr><td><b>SCADA BluePlant</b></td><td>Licenças, capacidade de tags, historiador, usuários, limites de alarme e leituras zeradas</td><td>Pendente</td></tr>
       <tr><td><b>Campo</b></td><td>Pontos para sensores de nível e vazão, rotas de cabos</td><td>Pendente</td></tr>
     </tbody></table></div>
-  </section>
+</div></details>
 
-  <section class="sec"><h3>Questionário técnico aos fornecedores</h3>
-    <p class="vb-apoio">Enviado a cada fornecedor no passo 2 do rito de engajamento. As respostas alimentam o termo de referência da integradora e o dicionário de variáveis do COE.</p>
-    <details class="vb-det"><summary>Ver as 11 perguntas do questionário padrão</summary>
-      <div class="tbl"><table><thead><tr><th>Automação de campo</th><th>Pergunta ao fornecedor</th></tr></thead><tbody>
+<details class="sec dobra"><summary><h3>Questionário técnico aos fornecedores</h3><span class="dobra-sub">Enviado a cada fornecedor no passo 2 do rito de engajamento. As respostas alimentam o termo de referência da integradora e o dicionário de variáveis do COE.</span></summary>
+<div class="dobra-c">
+<div class="tbl"><table><thead><tr><th>Automação de campo</th><th>Pergunta ao fornecedor</th></tr></thead><tbody>
         <tr><td><b>Identificação</b></td><td>Equipamento atendido, modelo e versão de firmware do CLP e da IHM, ano de instalação e responsável técnico</td></tr>
         <tr><td><b>Comunicação</b></td><td>Portas físicas disponíveis (Ethernet, RS-485, RS-232), protocolos suportados (Modbus TCP, Profinet, OPC UA) e endereço IP atual</td></tr>
         <tr><td><b>Variáveis</b></td><td>Lista de variáveis disponíveis (medições, estados, alarmes e setpoints), com endereço, tipo, unidade e escala</td></tr>
@@ -46,13 +46,11 @@
         <tr><td><b>Dados</b></td><td>Dicionário de dados, tabelas e campos relevantes, frequência de atualização e histórico disponível</td></tr>
         <tr><td><b>Condições</b></td><td>Custos, limites de uso, responsabilidades sobre a integração e suporte em caso de falha</td></tr>
       </tbody></table></div>
-    </details>
-  </section>
+</div></details>
 
-  <section class="sec"><h3>Lista de pontos de automação</h3>
-    <p class="vb-apoio">Exemplos do estudo para a integradora completar. Mostra como cada ponto de campo se liga a uma informação do painel.</p>
-    <details class="vb-det"><summary>Ver os 8 pontos de exemplo</summary>
-      <div class="tbl"><table><thead><tr><th>Tag</th><th>Descrição</th><th>Origem</th><th>Sinal</th><th>Informação do painel</th></tr></thead><tbody>
+<details class="sec dobra"><summary><h3>Lista de pontos de automação</h3><span class="dobra-sub">Exemplos do estudo para a integradora completar. Mostra como cada ponto de campo se liga a uma informação do painel.</span></summary>
+<div class="dobra-c">
+<div class="tbl"><table><thead><tr><th>Tag</th><th>Descrição</th><th>Origem</th><th>Sinal</th><th>Informação do painel</th></tr></thead><tbody>
         <tr><td>AVR-SEC-FOR01-TEMP</td><td>Temperatura da fornalha</td><td>FACH (M221)</td><td>Modbus TCP</td><td>AVR-SPR-B02</td></tr>
         <tr><td>AVR-SEC-SEC01-SP</td><td>Temperatura desejada do ar (operador)</td><td>Condutiva</td><td>Rede</td><td>AVR-SPR-C03</td></tr>
         <tr><td>AVR-SEC-FOR01-M1..M4</td><td>Status dos motores M1 a M4</td><td>FACH (M221)</td><td>Modbus TCP</td><td>Status do equipamento</td></tr>
@@ -63,12 +61,11 @@
         <tr><td>AVR-MOE-M01-NIV</td><td>Nível da moega 1</td><td>Novo sensor</td><td>Analógico</td><td>AVR-MOE-A03</td></tr>
       </tbody></table></div>
       <p class="note">Tags e origens como no apêndice C do estudo. No mapeamento 1.5v, AVR-SIL-A05 é a temperatura média do produto e a fonte de AVR-SPR-E02 é o Microsoft Forms. Confirmar antes de fechar a lista.</p>
-    </details>
-  </section>
+</div></details>
 
-  <section class="sec"><h3>Glossário</h3>
-    <details class="vb-det"><summary>Ver os 14 termos do estudo</summary>
-      <div class="tbl"><table class="vb-id"><thead><tr><th>Termo</th><th>Significado</th></tr></thead><tbody>
+<details class="sec dobra"><summary><h3>Glossário</h3></summary>
+<div class="dobra-c">
+<div class="tbl"><table class="vb-id"><thead><tr><th>Termo</th><th>Significado</th></tr></thead><tbody>
         <tr><td><b>COE</b></td><td>Centro de Operações: equipe e videowall que acompanham toda a unidade em tempo real</td></tr>
         <tr><td><b>CCO</b></td><td>Sala de operação atual da unidade</td></tr>
         <tr><td><b>Império</b></td><td>Sistema que controla o fluxo do caminhão: cadastro, pesagens, classificação, descarga e saída</td></tr>
@@ -84,24 +81,8 @@
         <tr><td><b>Ritmo por contrato</b></td><td>Comparação entre o volume entregue e o previsto pelo prazo de cada contrato</td></tr>
         <tr><td><b>Onda</b></td><td>Etapa de implantação que coloca um grupo de informações no painel</td></tr>
       </tbody></table></div>
-    </details>
-  </section>
+</div></details>
 
-  <section class="sec"><h3>Referências</h3>
-    <details class="vb-det"><summary>Ver as referências do estudo</summary>
-      <ul class="dg-ref">
-        <li>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. NBR 5419-1: proteção contra descargas atmosféricas: parte 1: princípios gerais. Rio de Janeiro: ABNT, 2015.</li>
-        <li>BINMASTER. 3DLevelScanner: medição de nível e volume por varredura acústica. Lincoln: BinMaster, [20--]. Acesso em: 23 out. 2026.</li>
-        <li>BRASIL. Ministério do Trabalho e Emprego. NR 10: segurança em instalações e serviços em eletricidade. Brasília, DF: MTE, [20--].</li>
-        <li>BRASIL. Ministério do Trabalho e Emprego. NR 12: segurança no trabalho em máquinas e equipamentos. Brasília, DF: MTE, [20--].</li>
-        <li>BRASIL. Ministério do Trabalho e Emprego. NR 33: segurança e saúde nos trabalhos em espaços confinados. Brasília, DF: MTE, [20--].</li>
-        <li>BRASIL. Ministério do Trabalho e Emprego. NR 35: trabalho em altura. Brasília, DF: MTE, [20--].</li>
-        <li>HOLAMBRA COOPERATIVA AGROINDUSTRIAL. Infraestrutura e dados: diagnóstico de automação e dados da unidade de Avaré. Avaré, 2026a. Apresentação.</li>
-        <li>HOLAMBRA COOPERATIVA AGROINDUSTRIAL. Mapeamento dos indicadores: COE, videowall, telas Avaré. Versão 1.5. Avaré, 2026b. Planilha eletrônica.</li>
-        <li>INTERNATIONAL SOCIETY OF AUTOMATION. ANSI/ISA-95.00.01-2010: enterprise-control system integration: part 1: models and terminology. Research Triangle Park: ISA, 2010.</li>
-      </ul>
-    </details>
-  </section>
 
-  <p class="note">Fonte: Estudo de Viabilidade Técnica do COE, revisão A (emissão preliminar), capítulo 14, apêndices C, D e E, glossário e referências. A ficha padrão de indicador (apêndice B) está em <a href="#indicadores/ficha-de-kpi">Ficha de KPI</a>.</p>
+  <p class="note">Fonte: Estudo de Viabilidade Técnica do COE, revisão A (emissão preliminar), capítulo 14, apêndices C, D e E e glossário. A ficha padrão de indicador (apêndice B) está em <a href="#indicadores/ficha-de-kpi">Ficha de KPI</a>.</p>
 </div>

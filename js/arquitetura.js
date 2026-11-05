@@ -60,6 +60,20 @@
   }
   document.querySelectorAll('.tog button').forEach(b=>b.addEventListener('click',()=>{cur=b.dataset.v;render();}));
   fld.addEventListener('change',render);
+  /* 2D e 3D ocupam o mesmo lugar; o modelo só carrega no primeiro uso e abre na visão escolhida no 2D */
+  const v2=document.getElementById('vista2d'), v3=document.getElementById('vista3d'), f3=v3.querySelector('iframe');
+  const formato=document.querySelectorAll('.formato button');
+  formato.forEach(b=>b.addEventListener('click',()=>{
+    const tres=b.dataset.d==='3d';
+    formato.forEach(x=>x.setAttribute('aria-pressed',x===b));
+    v2.hidden=tres; v3.hidden=!tres;
+    document.querySelectorAll('.so2d').forEach(e=>{ e.hidden=tres; });
+    document.querySelectorAll('.so3d').forEach(e=>{ e.hidden=!tres; });
+    if(!tres){ render(); return; }
+    note.textContent='Proposta para discussão. Dentro do modelo, compare a situação atual, a proposta inicial e o To-Be recomendado.';
+    const src=f3.dataset.base+'#'+(cur==='asis'?'asis':'rec');
+    if(f3.getAttribute('src')!==src) f3.setAttribute('src',src);
+  }));
   window.addEventListener('resize',()=>requestAnimationFrame(draw));
   document.addEventListener('fullscreenchange',()=>setTimeout(draw,150));
   render();

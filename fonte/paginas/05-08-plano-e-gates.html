@@ -1,8 +1,42 @@
 <div class="wrap wide">
-  <div><h2>Da descoberta à escala em 12 meses, e nenhuma etapa avança sem evidência</h2></div>
-  <p class="intro">A primeira fase coloca indicadores no ar sem obra de campo, o que permite validar telas, alertas e rituais antes da safra. O <a href="#viabilidade/plano-mestre">plano mestre completo</a> reúne 68 iniciativas em 12 trimestres.</p>
+<div class="abas">
+<section class="aba" data-aba="roadmap" data-rotulo="Roadmap e gates">
+<div><h2>Da descoberta à escala em 12 meses, e nenhuma etapa avança sem evidência</h2></div>
+  <p class="intro">A primeira fase coloca indicadores no ar sem obra de campo, o que permite validar telas, alertas e rituais antes da safra. O <a href="#viabilidade/plano-e-gates/mestre">plano mestre completo</a> reúne 68 iniciativas em 12 trimestres.</p>
   <section class="sec"><h3>Roadmap de implementação por mês</h3><div data-v="gantt"></div></section>
   <section class="sec"><h3>Gates de decisão e investimento</h3><div data-v="gates"></div></section>
-  <section class="sec"><h3>Dependências críticas</h3><div data-v="dependencias"></div></section>
+<details class="sec dobra"><summary><h3>Dependências críticas</h3></summary>
+<div class="dobra-c">
+<div data-v="dependencias"></div>
+</div></details>
   <p class="note">M = mês a partir do kick-off. Datas de referência, a ajustar ao calendário de safra e ao cronograma do SAP. Intervenções de campo na entressafra ou em paradas programadas. Fonte: arquivo de apoio (abas 03 e 06).</p>
+</section>
+<section class="aba" data-aba="priorizacao" data-rotulo="Priorização" hidden>
+<div><h2>16 iniciativas priorizadas: primeiro o que já existe, depois o que precisa ser comprado</h2></div>
+  <p class="intro">Cada iniciativa recebeu nota de impacto, esforço e complexidade. A ordem final respeita as dependências e as fases; o score orienta a prioridade dentro de cada fase.</p>
+  <div data-v="prioridade-resumo"></div>
+  <div data-v="prioridade"></div>
+  <p class="note">Score = 2 × impacto − (esforço + complexidade) ÷ 2, mais 2 pontos se usa recurso existente. Notas de 1 a 5. Fonte: arquivo de apoio, matriz de priorização (aba 05).</p>
+</section>
+<section class="aba" data-aba="mestre" data-rotulo="Plano mestre" hidden>
+<div><h2>O plano completo cobre três anos, e cada iniciativa tem dono, custo e critério de aceite</h2></div>
+  <p class="intro">O <a href="#viabilidade/plano-e-gates/roadmap">roadmap de 12 meses</a> mostra a sequência de implementação. Este é o plano integrado por pilar, com o custo vinculado a cada iniciativa.</p>
+
+  <div class="vb-metas" data-v="pm-metas"></div>
+
+  <p class="vb-alerta dg-mt"><b>Datas a conciliar:</b> o plano mestre e o roadmap de 12 meses colocam os gates em momentos diferentes. Enquanto isso não for definido, leia os trimestres abaixo como referência.</p>
+
+  <section class="sec"><h3>Cronograma por pilar</h3>
+    <div class="pm-filtros" data-v="pm-filtros" role="group" aria-label="Filtrar por pilar"></div>
+    <div data-v="pm-gantt"></div>
+  </section>
+
+<details class="sec dobra"><summary><h3>Detalhe das iniciativas</h3><span class="dobra-sub" data-v="pm-det-rot"></span></summary>
+<div class="dobra-c">
+<div data-v="pm-det"></div>
+</div></details>
+
+  <p class="note">A = ano do plano; T = trimestre. O calendário de safra da planilha é indicativo e ainda precisa ser validado com Operações; intervenções de campo em trimestre de safra devem ser reavaliadas. Fonte: arquivo de apoio do Estudo de Viabilidade Técnica do COE (aba 01), revisão A (emissão preliminar). Classificação do documento: restrita.</p>
+</section>
+</div>
 </div>
