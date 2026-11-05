@@ -1,0 +1,127 @@
+<div class="wrap wide">
+  <div><h2>Uma integradora responde do sensor ao banco de dados, em quatro frentes</h2></div>
+  <p class="intro">Esta é a base do termo de referência. A integradora coordena os fornecedores de cada painel e entrega a rede de campo até o switch de borda no CCO. Daí em diante, rede corporativa e servidores ficam com a TI Holambra. Controles e intertravamentos não saem dos CLPs locais.</p>
+
+  <section class="sec"><h3>Premissas da contratação</h3>
+    <ul class="list">
+      <li><b>Responsável único:</b> uma integradora responde pela cadeia que vai do campo ao SCADA e ao banco de dados, com ponto único de responsabilidade perante a Holambra</li>
+      <li><b>Fornecedores dos painéis:</b> subcontratados pela integradora quando necessário (ex.: FACH), sob sua coordenação e prazo</li>
+      <li><b>Segurança operacional:</b> controles e intertravamentos permanecem nos CLPs locais; o SCADA monitora e comanda, sem substituir a proteção</li>
+      <li><b>Padrões antes do projeto:</b> taxonomia, protocolo prioritário, SCADA padrão e padrão de banco/historiador definidos pela Holambra e anexados ao Termo de Referência</li>
+      <li><b>Fronteira com a TI:</b> a integradora entrega a rede OT até o switch de borda no CCO; a partir dele, a rede corporativa e os servidores são da TI Holambra</li>
+      <li><b>Quantidades:</b> as referências do estudo orientam a proposta; a integradora valida as quantidades em levantamento próprio antes da proposta final</li>
+      <li><b>Janela de obra:</b> intervenções em campo na entressafra ou em paradas programadas</li>
+    </ul>
+  </section>
+
+  <section class="sec"><h3><span class="dg-n">1</span>Frente 1: SCADA</h3>
+    <p class="vb-apoio">Remodela as telas com o fluxo de todos os sistemas, padroniza o nome das variáveis, comunica com os painéis e grava o histórico.</p>
+    <details class="vb-det"><summary>Ver o escopo da Frente 1</summary>
+    <div class="tbl"><table class=""><thead><tr><th>Item</th><th>Escopo</th><th>Exemplos em Avaré</th></tr></thead><tbody>
+      <tr class="vb-sub"><td colspan="3">1.1  REMODELAR AS TELAS COM O FLUXO DE TODOS OS SISTEMAS DE AUTOMAÇÃO</td></tr>
+      <tr><td><b>Sensores</b></td><td>Exibir todas as medições do processo em tempo real (pressão, temperatura, corrente, nível, umidade)</td><td>Depressão P1–P5 da fornalha; temperatura da fornalha (FACH); corrente dos elevadores; umidade de entrada/saída (Condutiva); termometria dos silos e do armazém</td></tr>
+      <tr><td><b>Atuadores</b></td><td>Representar o estado de cada atuador no fluxo do grão (válvulas, esteiras, elevadores, roscas, exaustores, aeradores)</td><td>Válvulas V1/V2 dos silos; registros das moegas; elevadores EL-4 a EL-14; aeradores AE01–AE27; roscas de cavaco</td></tr>
+      <tr><td><b>Comandos</b></td><td>Disponibilizar os comandos remotos permitidos pela filosofia de operação</td><td>Abrir/fechar válvula e registro; ligar/desligar exaustor, aerador e esteira</td></tr>
+      <tr><td><b>Controles e intertravamentos</b></td><td>Exibir setpoints, limites e estado dos intertravamentos (lógica permanece no CLP)</td><td>Temperatura desejada da fornalha; temperatura limite para bloqueio do exaustor (RM); registro da moega × corrente da esteira</td></tr>
+      <tr><td><b>Alarmes</b></td><td>Centralizar alarmes com prioridade, limite, horário e reconhecimento por usuário</td><td>Falha na esteira; falha no compressor; depressão fora da faixa; mancal com temperatura alta (hoje limite em 000)</td></tr>
+      <tr class="vb-sub"><td colspan="3">1.2 A 1.4  PADRONIZAÇÃO E DADOS</td></tr>
+      <tr><td><b>1.2 Taxonomia</b></td><td>Definir e aplicar o nome padrão de todas as variáveis (UNIDADE-ÁREA-EQUIPAMENTO-VARIÁVEL), vinculado aos IDs do mapeamento</td><td>Ex.: AVR-SEC-FOR01-TEMP → AVR-SPR-B02; dicionário de variáveis entregue</td></tr>
+      <tr><td><b>1.3 Comunicação com os painéis</b></td><td>Comunicar o SCADA com todos os painéis/CLPs da Frente 2</td><td>11 painéis de fornecedores + multimedidores de energia</td></tr>
+      <tr><td><b>1.4 Banco de dados</b></td><td>Gravar o histórico das variáveis em banco/historiador, na própria máquina do SCADA ou em servidor dedicado, com interface de leitura para a camada de BI</td><td>Retenção: <span class="dg-aberto">prazo a definir</span>; acesso por OPC UA ou SQL <span class="dg-aberto">definir com a TI</span></td></tr>
+      <tr><td><b>Ajustes do projeto atual</b></td><td>Corrigir o que já existe no BluePlant</td><td>Usuário por operador (fim do “Guest”); limites de alarme hoje zerados; leituras de corrente em 000</td></tr>
+    </tbody></table></div>
+    </details>
+  </section>
+
+  <section class="sec"><h3><span class="dg-n">2</span>Frente 2: painéis e CLPs</h3>
+    <p class="vb-apoio">Programa a comunicação de cada painel com o SCADA. Pode exigir subcontratar o fornecedor do painel ou comprar módulos, gateways e remotas de I/O.</p>
+    <details class="vb-det"><summary>Ver a ação por painel</summary>
+    <div class="tbl"><table class=""><thead><tr><th>Painel / fornecedor</th><th>Controlador</th><th>Ação da integradora</th><th>Subcontratar</th><th>Hardware adicional</th></tr></thead><tbody>
+      <tr><td><b>Tombadores (SAUR / NBR Tec)</b></td><td>Inversor SINAMICS, soft starters, HC-03</td><td>Status, falhas e ciclos por entradas digitais; inversor pela rede, se houver porta</td><td>NBR Tec / SAUR <span class="dg-aberto">confirmar</span></td><td>Remota de I/O</td></tr>
+      <tr><td><b>Autokraft +PC11</b></td><td>CLP Wago + switch</td><td>Leitura via Ethernet (Modbus TCP)</td><td>Autokraft (mapa de variáveis)</td><td>Não previsto</td></tr>
+      <tr><td><b>FACH</b></td><td>Schneider M221 (Ethernet)</td><td>Leitura via Modbus TCP</td><td>FACH (mapa de memória)</td><td>Não previsto</td></tr>
+      <tr><td><b>SanTec</b></td><td>Manômetro 6 canais (relé por sensor)</td><td>Relés em entradas digitais; valor contínuo por transmissores</td><td>SanTec <span class="dg-aberto">confirmar saída</span></td><td>Remota / transmissores</td></tr>
+      <tr><td><b>RM Engenharia</b></td><td>Siemens LOGO!</td><td>Ethernet, se a versão permitir; senão, alarmes por entradas digitais</td><td>RM Engenharia</td><td><span class="dg-aberto">confirmar</span></td></tr>
+      <tr><td><b>Condutiva</b></td><td>CLP Schneider (Ethernet)</td><td>Modbus TCP após calibração</td><td>Condutiva</td><td>Não previsto</td></tr>
+      <tr><td><b>NBR Tec (fluxo e termometria)</b></td><td>Siemens S7-1200</td><td>Profinet/S7 – válvulas, registros, níveis, balanças de fluxo</td><td>NBR Tec</td><td>Não previsto</td></tr>
+      <tr><td><b>Omega Engenharia</b></td><td>Siemens S7-1500 (já integrado)</td><td>Validar documentação e ampliar sinais</td><td>—</td><td>Não previsto</td></tr>
+      <tr><td><b>Fockink</b></td><td>Central RS485 / Smarter CLP f2</td><td>Gateway RS485 → Ethernet</td><td>Fockink (protocolo)</td><td>Gateway</td></tr>
+      <tr><td><b>NBR Termo A</b></td><td>Módulo de comunicação NBR Tec</td><td>Reativar comunicação com a central</td><td>NBR Tec</td><td>Não previsto</td></tr>
+      <tr><td><b>Kepler Weber</b></td><td>LOGO! TDE + SINAMICS</td><td>Comunicação do LOGO! ou sinais em remota</td><td>Kepler Weber</td><td><span class="dg-aberto">confirmar</span></td></tr>
+      <tr><td><b>Atlas Copco</b></td><td>Elektronikon</td><td>Leitura pelo protocolo do controlador</td><td>Atlas Copco</td><td><span class="dg-aberto">confirmar módulo</span></td></tr>
+      <tr><td><b>Multimedidores de energia</b></td><td>IMS M-300 / SENTRON PAC</td><td>Leitura pela rede</td><td>—</td><td><span class="dg-aberto">confirmar porta</span></td></tr>
+    </tbody></table></div>
+    </details>
+  </section>
+
+  <section class="sec"><h3><span class="dg-n">3</span>Frente 3: sensores</h3>
+    <p class="vb-apoio">Fornece, instala, cabeia, calibra e integra os instrumentos das variáveis que hoje não existem.</p>
+    <details class="vb-det"><summary>Ver os sensores previstos</summary>
+    <div class="tbl"><table class=""><thead><tr><th>Variável</th><th>Instrumento</th><th>Uso no COE</th><th>Exigência de execução</th></tr></thead><tbody>
+      <tr><td><b>Corrente das esteiras e elevadores</b></td><td>Transdutor de corrente ou multimedidor</td><td>Relacionar corrente com t/h (vazão e ritmo)</td><td>Curva corrente × t/h calibrada com pesagem/balança de fluxo</td></tr>
+      <tr><td><b>Nível dos silos e do armazém</b></td><td>Scanner 3D de nível</td><td>Ocupação, estoque e espaço disponível</td><td>Piloto em 1 silo antes da expansão; NR-35</td></tr>
+      <tr><td><b>Nível das moegas e silos pulmão</b></td><td>Radar</td><td>Ocupação e status de capacidade</td><td>Certificação para poeira combustível</td></tr>
+      <tr><td><b>Depressão contínua da fornalha</b></td><td>Transmissor de pressão 4–20 mA</td><td>Tendência e alerta por faixa</td><td>Somente se o SanTec não tiver saída de dados</td></tr>
+      <tr><td><b>Vazão dos secadores</b></td><td>Balança de fluxo</td><td>Ritmo e projeção automáticos</td><td>Se a correlação de corrente não atingir a precisão necessária</td></tr>
+      <tr><td><b>Status e ciclos dos tombadores</b></td><td>Contatos auxiliares em remota de I/O</td><td>Descargas e disponibilidade</td><td>Padronizar sinais dos dois tombadores</td></tr>
+    </tbody></table></div>
+    </details>
+  </section>
+
+  <section class="sec"><h3><span class="dg-n">4</span>Frente 4: infraestrutura</h3>
+    <p class="vb-apoio">O campo fica com a integradora. Rede entre operação e servidores, segurança OT/TI e servidores ficam com a TI Holambra.</p>
+    <details class="vb-det"><summary>Ver o escopo da Frente 4</summary>
+    <div class="tbl"><table class=""><thead><tr><th>Item</th><th>Escopo</th><th>Responsável</th><th>Situação</th></tr></thead><tbody>
+      <tr class="vb-sub"><td colspan="4">4.1  CAMPO</td></tr>
+      <tr><td><b>Sensores → painéis</b></td><td>Sensores em campo e cabos de comunicação, incluindo eletrodutos, até os painéis com CLP</td><td>Integradora</td><td>Existe parcialmente</td></tr>
+      <tr><td><b>Painéis → SCADA</b></td><td>Rede física (fibra/cabo, eletrodutos, switches) e configuração da rede lógica (endereçamento, VLAN, protocolos), aproveitando a fibra existente até o armazém</td><td>Integradora</td><td>Existe parcialmente</td></tr>
+      <tr class="vb-sub"><td colspan="4">4.2  REDE (TI)</td></tr>
+      <tr><td><b>Operação ↔ servidores</b></td><td>Comunicação entre os computadores de operação (CCO e técnicos) e os servidores de banco de dados – infraestrutura e configuração</td><td>TI Holambra</td><td>A construir</td></tr>
+      <tr><td><b>Segurança OT/TI</b></td><td>Firewall entre rede de automação e corporativa, usuários, acesso remoto seguro e registro de eventos</td><td>TI Holambra</td><td>A construir</td></tr>
+      <tr><td><b>Servidores e ambiente</b></td><td>Servidores, backup, nobreak e climatização do rack de TI (hoje sobre o quadro de força)</td><td>TI Holambra</td><td>A construir</td></tr>
+    </tbody></table></div>
+    </details>
+  </section>
+
+  <section class="sec"><h3>Quem responde por quê na implantação</h3>
+    <div class="tbl"><table class=""><thead><tr><th>Atividade</th><th>Integradora</th><th>Fornecedor do painel</th><th>TI Holambra</th><th>Holambra (Operação / Manutenção)</th></tr></thead><tbody>
+      <tr><td><b>Telas, alarmes e taxonomia do SCADA</b></td><td>R</td><td>C</td><td>I</td><td>A</td></tr>
+      <tr><td><b>Liberação de mapa de memória / protocolo</b></td><td>C</td><td>R</td><td>-</td><td>A</td></tr>
+      <tr><td><b>Programação da comunicação dos painéis</b></td><td>R</td><td>R (subcontratado)</td><td>-</td><td>I</td></tr>
+      <tr><td><b>Fornecimento e instalação de sensores</b></td><td>R</td><td>-</td><td>-</td><td>A</td></tr>
+      <tr><td><b>Rede de campo (OT) até o switch de borda</b></td><td>R</td><td>-</td><td>C</td><td>A</td></tr>
+      <tr><td><b>Rede corporativa, servidores e segurança OT/TI</b></td><td>C</td><td>-</td><td>R</td><td>A</td></tr>
+      <tr><td><b>Banco de dados / historiador</b></td><td>R</td><td>-</td><td>C</td><td>A</td></tr>
+      <tr><td><b>Testes, comissionamento e aceite</b></td><td>R</td><td>C</td><td>C</td><td>A</td></tr>
+      <tr><td><b>Documentação e treinamento</b></td><td>R</td><td>C</td><td>I</td><td>A</td></tr>
+    </tbody></table></div>
+    <p class="note dg-mt">R: responsável. A: aprovador. C: consultado. I: informado.</p>
+  </section>
+
+  <section class="sec"><h3>O que a integradora entrega além da solução funcionando</h3>
+    <ul class="list">
+      <li><b>Engenharia:</b> P&amp;ID / fluxograma de engenharia, matriz de causa e efeito dos intertravamentos e arquitetura de automação e de rede</li>
+      <li><b>Dados:</b> mapa e dicionário de variáveis com a taxonomia aplicada e vínculo com os IDs do painel do COE</li>
+      <li><b>Elétrica:</b> diagramas elétricos as-built dos painéis alterados e das novas instalações</li>
+      <li><b>Software:</b> backups dos programas de CLP e do SCADA, licenças e senhas sob guarda da Holambra</li>
+      <li><b>Capacitação:</b> treinamento de operadores, manutenção e TI; manual das telas</li>
+    </ul>
+  </section>
+
+  <section class="sec"><h3>A contratação é o primeiro horizonte da jornada de automação</h3>
+    <div class="tbl"><table class=""><thead><tr><th>Horizonte</th><th>O que envolve</th><th>Relação com a contratação</th></tr></thead><tbody>
+      <tr><td><b>H1 – Estabelecer a operação (agora)</b></td><td>Campo e controle; integração e dados (fim das ilhas, supervisório, historiador, alarmes, integração OT/TI); documentação de engenharia</td><td>Objeto desta contratação (Frentes 1 a 4)</td></tr>
+      <tr><td><b>H2 – Definir padrões (a cada novo projeto)</b></td><td>Mínimo: taxonomia, protocolo prioritário, SCADA padrão e padrão de banco/historiador. Em paralelo: arquitetura ISA-95, vendor list homologada, padrão de telas e filosofia de alarmes. Governança: usuário por operador, regra de alteração de setpoint de segurança, área classificada</td><td>Mínimo definido antes da contratação e anexado ao Termo de Referência; o restante amadurece em paralelo</td></tr>
+      <tr><td><b>H3 – Sustentar no tempo (continuamente)</b></td><td>Planos de manutenção por criticidade; alarme/falha gerando ordem de serviço; cadastro e taxonomia de ativos; indicadores de disponibilidade, MTTR e corretiva × preventiva</td><td>Integradora entrega cadastro de ativos e alarmes prontos para gerar OS; execução contínua pela Manutenção Holambra</td></tr>
+    </tbody></table></div>
+    <p class="vb-apoio dg-mt">Diagnóstico, modelo-alvo, padrões, roadmap e fluxo de investimentos se consolidam no Plano Diretor de Automação (PDA) da Holambra.</p>
+  </section>
+
+  <section class="sec"><h3>Normas e requisitos de segurança</h3><div data-v="normas"></div></section>
+
+  <section class="sec"><h3>Referência de custo: sistemas, automação e rede OT</h3>
+    <details class="vb-det"><summary data-v="cat-sistemas-rot"></summary><div data-v="cat-sistemas"></div></details>
+  </section>
+
+  <p class="note">Fonte: Estudo de Viabilidade Técnica do COE, revisão A (emissão preliminar) e arquivo de apoio (2026). Classificação do documento: restrita. Quantidades e valores são referências, a validar no levantamento da integradora.</p>
+</div>

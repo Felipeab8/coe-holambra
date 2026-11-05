@@ -1,0 +1,12 @@
+<div class="wrap wide">
+  <div class="lead-row"><div><h2>Arquitetura de automação por nível e etapa</h2></div>
+  <p class="intro">Onde cada sistema está, nível a nível (N0 a N4, ISA-95) e etapa a etapa, e como ele se comunica. Alterne entre a situação atual e o modelo-alvo para ver o que muda.</p></div>
+  <div class="archbar">
+    <div class="tog" role="group" aria-label="Visão da arquitetura"><button type="button" data-v="asis" aria-pressed="true">Hoje (As-Is)</button><button type="button" data-v="tobe" aria-pressed="false">Modelo-alvo (To-Be)</button></div>
+    <p id="archNote"></p>
+    <label class="fldtog"><input type="checkbox" id="showField"> Mostrar campo e processo (N1 e N0)</label>
+  </div>
+  <div class="archw"><div class="archin"><div class="arch" id="arch"></div><svg class="archsvg" id="archsvg" aria-hidden="true"></svg></div></div>
+  <div class="slegend"><span class="tp ctl">CLP</span> Controle <span class="tp sup">SCADA/IHM</span> Supervisão <span class="sp"></span><span class="sys int"><i></i>Integrado</span><span class="sys iso"><i></i>Isolado</span><span class="sys tst"><i></i>Em teste</span><span class="sys conf"><i></i>A confirmar</span><span class="sp"></span><span class="lk ok"></span> Comunicação ativa <span class="lk own"></span> Sistema próprio do fornecedor</div>
+  <p class="note">As esteiras e elevadores têm disjuntores-motores com status de falha; os atuadores pneumáticos têm sensor de fim de curso para detectar o fluxo do produto.</p>
+</div>

@@ -1,0 +1,91 @@
+<div class="wrap wide">
+  <div><h2>As lacunas de campo têm caminho definido, e parte delas começa sem investimento em campo</h2></div>
+  <p class="intro">São as alternativas que o estudo avaliou para medir o que hoje não existe e para aproveitar o que já está gravado nos sistemas. As soluções são referências técnicas para orientar o Projeto Executivo e a cotação, não representam decisão de compra nem indicação exclusiva de fornecedor; recomenda-se cotar ao menos duas alternativas equivalentes.</p>
+
+  <section class="sec"><h3>Depressão das fornalhas: da leitura manual à coleta automática</h3>
+    <p class="vb-apoio">Hoje um colaborador verifica a depressão na fornalha a cada 15 minutos. Além de consumir tempo de operação, a leitura manual não gera tendência nem alarme e depende da disciplina de registro. As alternativas avaliadas permitem avançar por etapas, começando sem investimento em campo.</p>
+    <div class="tbl"><table class=""><thead><tr><th>Alternativa</th><th>Como funciona</th><th>Ganho</th><th>Limitação</th><th>Custo</th></tr></thead><tbody>
+      <tr><td><b>A – Formulário digital</b></td><td>Leitura a cada 15 min registrada em formulário com data, hora, ponto, valor e ação tomada</td><td>Histórico imediato e validação da faixa no registro</td><td>Continua manual</td><td>Baixo</td></tr>
+      <tr><td><b>B – Relés em remota de I/O</b></td><td>Relés de alarme do SanTec ligados a entradas digitais da rede OT</td><td>Alarme automático de fora de faixa no COE</td><td>Não fornece o valor contínuo</td><td>Baixo</td></tr>
+      <tr><td><b>C – Saída do próprio SanTec</b></td><td>Uso de saída analógica ou comunicação, se o modelo dispuser</td><td>Valor contínuo sem novo instrumento</td><td>Depende do modelo instalado</td><td>Baixo a médio</td></tr>
+      <tr><td><b>D – Transmissores 4–20 mA</b></td><td>Um transmissor de pressão por ponto (P1–P5), ligado a remota ou CLP</td><td>Valor contínuo, tendência e alarme em tempo real</td><td>Instalação em campo e área classificada</td><td>Médio</td></tr>
+      <tr><td><b>E – Manômetro com comunicação</b></td><td>Substituição por modelo multicanal com Modbus</td><td>Solução integrada em um equipamento</td><td>Troca do instrumento em operação</td><td>Médio</td></tr>
+    </tbody></table></div>
+    <p class="vb-alerta dg-mt"><b>Recomendação:</b> implantar a alternativa A imediatamente (Fase 1), somar B para alarme automático e decidir entre C e D após a resposta da SanTec. A operação paralela manual e automática deve durar ao menos duas semanas, comparando as leituras antes de desativar o registro manual.</p>
+  </section>
+
+  <section class="sec"><h3>Scanner 3D de nível para silos e armazém</h3>
+    <p class="vb-apoio">Hoje, o estoque dos silos e do armazém não tem medição automática: 7 informações do painel de silos e armazenagem estão sem fonte e outras 4 dependem de apontamento no Microsoft Forms. Em silos de grande diâmetro e no armazém graneleiro, a superfície do grão não é plana (forma cone na entrada, cratera na saída e rampas junto às paredes), e um sensor de nível de ponto único mede apenas um ponto dessa superfície, o que gera erro no volume. O scanner 3D acústico mede vários pontos da superfície, monta o relevo do grão em 3D e calcula o volume real, inclusive com poeira.</p>
+    <div class="tbl"><table class=""><thead><tr><th>Local</th><th>Solução recomendada</th><th>Quantidade de referência</th></tr></thead><tbody>
+      <tr><td><b>Silos de armazenagem (grande diâmetro)</b></td><td>Sistema com múltiplos scanners 3D combinados em um único volume</td><td>2 a 3 por silo, conforme diâmetro <span class="dg-aberto">dimensionar</span></td></tr>
+      <tr><td><b>Armazém graneleiro</b></td><td>Múltiplos scanners 3D por área/célula</td><td>Conforme comprimento e divisão do armazém <span class="dg-aberto">dimensionar</span></td></tr>
+      <tr><td><b>Silos pulmão</b></td><td>Radar ou scanner 3D compacto para silos estreitos</td><td>1 por silo</td></tr>
+      <tr><td><b>Moegas M1–M6</b></td><td>Sensor indutivo existente (status) + radar (ocupação contínua)</td><td>1 radar por moega</td></tr>
+    </tbody></table></div>
+    <p class="vb-alerta dg-mt">Recomenda-se um teste piloto em um silo de armazenagem antes da compra para todos os silos, comparando o volume medido pelo scanner com o saldo de movimentação do Império e com a última medição manual. Tecnologias equivalentes de outros fabricantes devem ser cotadas na mesma especificação.</p>
+    <details class="vb-det"><summary>Ver a ficha da solução e a referência de mercado</summary>
+    <div class="tbl"><table class=""><thead><tr><th>Item</th><th>Descrição</th></tr></thead><tbody>
+      <tr><td><b>O que é</b></td><td>Sensor sem contato instalado no teto do silo que emite som de baixa frequência, recebe os ecos de múltiplos pontos da superfície e gera o relevo do produto e o volume armazenado</td></tr>
+      <tr><td><b>O que entrega</b></td><td>Volume e ocupação reais; nível mínimo, máximo e médio; imagem 3D da superfície; identificação de cone para cima ou para baixo e de acúmulo de produto na parede</td></tr>
+      <tr><td><b>Onde aplicar em Avaré</b></td><td>Silos de armazenagem e armazém graneleiro (superfície irregular e grande diâmetro). Silos pulmão e moegas seguem com radar/sensor indutivo existente (volume menor e superfície mais regular)</td></tr>
+      <tr><td><b>Informações do painel atendidas</b></td><td>Visão geral: espaço disponível, produto em estoque e capacidade (AVR-VG-E01 a E03); Silos: ocupação e estoque por silo (AVR-SIL-A03, A04) e estoque atual (AVR-SIL-B06, hoje em Forms); Armazém: capacidade, ocupação e volume armazenado (AVR-ARM-A02, A04, A05, hoje em Forms)</td></tr>
+      <tr><td><b>Integração ao COE</b></td><td>Saídas 4–20 mA/HART e RS-485/Modbus (e TCP/IP conforme modelo) para o SCADA/historiador; software próprio de visualização 3D pode ser exibido no videowall</td></tr>
+      <tr><td><b>Requisitos de instalação</b></td><td>Bocal/flange no teto de cada silo, alimentação 24 Vcc e cabo de comunicação até o painel mais próximo; modelo certificado para atmosfera explosiva por poeira; instalação em altura (NR-35)</td></tr>
+      <tr><td><b>Ganhos além do indicador</b></td><td>Estoque confiável para comercialização e contratos; fim da medição manual com subida ao topo do silo (segurança); alerta de enchimento excessivo e de carregamento desigual das paredes, que pode causar dano estrutural</td></tr>
+      <tr><td><b>Pontos de atenção</b></td><td>Custo por silo maior que o radar; silos de grande diâmetro podem exigir 2 ou mais scanners; validar o posicionamento com o fornecedor a partir das dimensões e da estrutura interna (cabos de termometria) de cada silo</td></tr>
+    </tbody></table></div>
+    <div class="dg-mt"></div>
+    <div class="tbl"><table class=""><thead><tr><th>Característica</th><th>Referência de mercado – BinMaster 3DLevelScanner</th></tr></thead><tbody>
+      <tr><td><b>Tecnologia</b></td><td>Acústica de baixa frequência, sem contato, que atravessa a poeira</td></tr>
+      <tr><td><b>Alcance de medição</b></td><td>Até 61 m</td></tr>
+      <tr><td><b>Saídas</b></td><td>4 fios 4–20 mA / HART / RS-485 / Modbus</td></tr>
+      <tr><td><b>Alimentação</b></td><td>20 a 32 Vcc</td></tr>
+      <tr><td><b>Certificações</b></td><td>Áreas classificadas (ATEX / IECEx e FM, incluindo poeira combustível)</td></tr>
+      <tr><td><b>Software</b></td><td>Visualização 3D de múltiplos silos em rede local</td></tr>
+      <tr><td><b>Representação no Brasil</b></td><td>Distribuidor autorizado no Brasil (Grunn)</td></tr>
+    </tbody></table></div>
+    </details>
+  </section>
+
+  <div class="vb-duas">
+    <section class="sec"><h3>Fockink: supervisório de termometria e aeração</h3>
+      <p class="vb-apoio">A Fockink dispõe de sistema supervisório associado à central de termometria digital (RS485/wireless) e aos módulos remotos de motor (MR-M) que comandam a aeração. Hoje esse sistema é consultado apenas localmente. Para o COE, interessa identificar o que é monitorado, o que fica gravado e como ler esses dados sem interferir no controle.</p>
+      <ul class="list">
+      <li><b>Informações monitoradas:</b> temperatura por sensor e por cabo, temperatura máxima por célula do armazém, estado e modo (automático/manual) de ventiladores e exaustores, alarmes de aeração e, se houver sensores externos, temperatura e umidade do ar</li>
+      <li><b>Dados disponíveis:</b> leituras instantâneas na central e, conforme a versão do software, histórico local exportável – retenção e formato a confirmar com a Fockink</li>
+      <li><b>Como aproveitar:</b> (1) exportar o histórico existente para formar a linha de base; (2) ler as variáveis em tempo real por gateway RS485 → Modbus TCP ou pelo protocolo do próprio supervisório; (3) gravar no historiador e aplicar a regra de aeração por equilíbrio higroscópico (iniciativa 63 do Plano Mestre)</li>
+      <li><b>A confirmar:</b> versão do software e onde ele roda, protocolo e mapa de variáveis, licença de comunicação e retenção do histórico</li>
+    </ul>
+    </section>
+    <section class="sec"><h3>NBR Tec: onde procurar relatórios e histórico</h3>
+      <p class="vb-apoio">A IHM da NBR Tec exibe em tempo real a rota do grão, válvulas, níveis e balanças de fluxo, mas não se sabe se esses dados geram relatórios nem onde ficam armazenados. A investigação deve percorrer, nesta ordem, os locais onde esses registros costumam estar:</p>
+      <ol class="list">
+      <li>Cartão de memória ou registros de dados (data logs e alarm logs) da própria IHM SIMATIC</li>
+      <li>Computador de supervisão local ou notebook de manutenção do fornecedor</li>
+      <li>Banco de dados instalado pela NBR Tec em servidor da Holambra (por exemplo, SQL Server ou arquivo local)</li>
+      <li>Servidor ou nuvem do próprio fornecedor, acessado mediante solicitação</li>
+    </ol>
+      <p class="vb-apoio dg-mt">A forma de acesso depende do que for encontrado: se houver banco de dados próprio, a recomendação é um usuário somente leitura com visões específicas e carga do histórico; se houver apenas arquivos, uma ingestão agendada para a camada de dados; se não houver registro, a integração direta com o CLP por Profinet/S7 ou OPC UA passa a gravar o histórico no historiador do COE, que começa a contar a partir do go-live. Nos três casos, o acesso deve ser formalizado com o fornecedor.</p>
+    </section>
+  </div>
+
+  <section class="sec"><h3>Onde está cada dado e se há histórico</h3>
+    <p class="vb-apoio">Só onde há histórico dá para formar a linha de base sem esperar a nova coleta.</p>
+    <div class="tbl"><table><thead><tr><th>Sistema</th><th>Dados disponíveis</th><th>Onde estão</th><th>Forma de acesso</th><th>Histórico</th></tr></thead><tbody>
+      <tr><td><b>Império</b></td><td>Eventos e tempos por etapa, pesos, qualidade por carga, moegas, contratos e expedição</td><td>Base do Império</td><td>API ou réplica somente leitura</td><td>A confirmar</td></tr>
+      <tr><td><b>Evolutize → SAP</b></td><td>Contratos, estoque, cadastros mestres e financeiro</td><td>ERP</td><td>Adaptador desacoplado</td><td>Sim</td></tr>
+      <tr><td><b>Fockink</b></td><td>Temperatura por sensor, aeração, alarmes</td><td>Central / supervisório local</td><td>Gateway ou protocolo do supervisório</td><td>A confirmar</td></tr>
+      <tr><td><b>NBR Tec</b></td><td>Estados do fluxo, níveis, balanças de fluxo, termometria (Termo A)</td><td>CLP, IHM e possíveis relatórios</td><td>Profinet/S7, OPC UA ou banco</td><td>A confirmar</td></tr>
+      <tr><td><b>SanTec</b></td><td>Depressão P1–P5 e relés de faixa</td><td>Display local e anotação manual</td><td>Formulário, remota ou 4–20 mA</td><td>Não</td></tr>
+      <tr><td><b>FACH / Condutiva</b></td><td>Temperaturas, setpoints e umidade da secagem</td><td>CLPs Schneider</td><td>Modbus TCP</td><td>Não</td></tr>
+      <tr><td><b>Forms / Jotform</b></td><td>Secagem, resíduos, teste de coluna e OS</td><td>Nuvem</td><td>Exportação ou API</td><td>Sim</td></tr>
+      <tr><td><b>SCADA BluePlant / Omega</b></td><td>Corrente, mancais, horímetros e aeradores</td><td>SCADA do CCO</td><td>OPC UA / driver do SCADA</td><td>Não</td></tr>
+    </tbody></table></div>
+  </section>
+
+  <section class="sec"><h3>Referência de custo: instrumentação complementar</h3>
+    <details class="vb-det"><summary data-v="cat-instrumentos-rot"></summary><div data-v="cat-instrumentos"></div></details>
+  </section>
+
+  <p class="note">Fonte: Estudo de Viabilidade Técnica do COE, revisão A (emissão preliminar) e arquivo de apoio (2026). Classificação do documento: restrita.</p>
+</div>
