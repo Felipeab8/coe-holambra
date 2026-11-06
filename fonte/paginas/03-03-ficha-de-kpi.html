@@ -1,0 +1,24 @@
+<div class="wrap wide">
+    <div class="lead-row"><div><h2>Ficha de KPI</h2></div>
+    <p class="intro">Os {{total}} indicadores do mapeamento, cada um com descrição, cálculo, fonte de dados e regra de alerta. Filtre pela tela, pelo fornecedor ou pela situação e abra o indicador.</p></div>
+    <div class="kf">
+      <div class="kf-l">
+        <label class="kf-lab" for="kpiTela">Tela</label>
+        <select id="kpiTela"></select>
+        <label class="kf-lab" for="kpiBusca">Buscar</label>
+        <input id="kpiBusca" type="search" placeholder="Indicador, card ou ID">
+        <div class="kf-duo">
+          <div><label class="kf-lab" for="kpiForn">Fornecedor</label><select id="kpiForn"></select></div>
+          <div><label class="kf-lab" for="kpiSit">Situação</label><select id="kpiSit"></select></div>
+        </div>
+        <div class="kf-duo">
+          <div><label class="kf-lab" for="kpiOnda">Onda</label><select id="kpiOnda"></select></div>
+          <label class="kf-marca"><input type="checkbox" id="kpiAlerta"> Só com alerta</label>
+        </div>
+        <div class="kf-c" id="kpiCount" role="status" aria-live="polite"></div>
+        <div class="kf-list" id="kpiList" role="listbox" aria-label="Indicadores"></div>
+      </div>
+      <div class="kf-r" id="kpiCard" aria-live="polite"></div>
+    </div>
+    <p class="note">Fonte: Mapeamento de indicadores do video wall, versão {{versao}} ({{atualizacao}}). Campos marcados como “Validar” ainda aguardam confirmação. <a href="{{csv}}" download>Baixar o mapeamento em CSV</a></p>
+</div>

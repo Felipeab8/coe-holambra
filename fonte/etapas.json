@@ -1,0 +1,161 @@
+[
+  {
+    "id": "inicio",
+    "nome": "Início",
+    "paginas": [
+      {
+        "id": "objetivo-do-coe",
+        "titulo": "Objetivo do COE",
+        "arquivo": "00-01-objetivo-do-coe.html",
+        "classe": "hm-root"
+      }
+    ],
+    "palavra": "Início"
+  },
+  {
+    "id": "objetivos",
+    "nome": "Objetivos com stakeholders",
+    "paginas": [
+      {
+        "id": "ponto-de-partida-e-objetivos",
+        "titulo": "Ponto de partida e objetivos",
+        "arquivo": "01-01-ponto-de-partida-e-objetivos.html"
+      }
+    ],
+    "palavra": "Objetivos"
+  },
+  {
+    "id": "desafios",
+    "nome": "Desafios operacionais",
+    "paginas": [
+      {
+        "id": "dores-operacionais",
+        "titulo": "Dores operacionais",
+        "arquivo": "02-01-dores-operacionais.html"
+      }
+    ],
+    "palavra": "Desafios"
+  },
+  {
+    "id": "indicadores",
+    "nome": "Indicadores do COE",
+    "paginas": [
+      {
+        "id": "telas-do-video-wall-avare",
+        "titulo": "Telas do video wall · Avaré",
+        "arquivo": "03-01-telas-do-video-wall-avare.html"
+      },
+      {
+        "id": "ficha-de-kpi",
+        "titulo": "Ficha de KPI",
+        "arquivo": "03-03-ficha-de-kpi.html"
+      }
+    ],
+    "palavra": "Indicadores"
+  },
+  {
+    "id": "dados",
+    "nome": "Infraestrutura e dados",
+    "paginas": [
+      {
+        "id": "diagnostico",
+        "titulo": "Diagnóstico da unidade",
+        "arquivo": "04-01-diagnostico.html",
+        "grupo": "Visão geral"
+      },
+      {
+        "id": "diagnostico-de-campo",
+        "titulo": "Diagnóstico de campo",
+        "arquivo": "04-02-diagnostico-de-campo.html",
+        "grupo": "Física"
+      },
+      {
+        "id": "piloto-avare-modelo-3d",
+        "titulo": "Piloto Avaré · Modelo 3D",
+        "arquivo": "04-05-piloto-avare-modelo-3d.html",
+        "grupo": "Física"
+      },
+      {
+        "id": "fichas-dos-equipamentos",
+        "titulo": "Fichas dos equipamentos",
+        "arquivo": "04-06-fichas-dos-equipamentos.html",
+        "grupo": "Física"
+      },
+      {
+        "id": "sala-do-coe",
+        "titulo": "Sala do COE",
+        "arquivo": "04-07-sala-do-coe.html",
+        "grupo": "Física"
+      },
+      {
+        "id": "arquitetura-as-is-e-to-be",
+        "titulo": "Arquitetura As-Is e To-Be",
+        "arquivo": "04-04-arquitetura-as-is-e-to-be.html",
+        "grupo": "Software"
+      },
+      {
+        "id": "sistemas-e-historicos",
+        "titulo": "Sistemas e históricos",
+        "arquivo": "04-08-sistemas-e-historicos.html",
+        "grupo": "Software"
+      }
+    ],
+    "palavra": "Infraestrutura"
+  },
+  {
+    "id": "viabilidade",
+    "nome": "Estudo de viabilidade",
+    "paginas": [
+      {
+        "id": "situacao-atual",
+        "titulo": "Situação atual",
+        "arquivo": "05-01-situacao-atual.html"
+      },
+      {
+        "id": "investimento-e-retorno",
+        "titulo": "Investimento e retorno",
+        "arquivo": "05-04-investimento-e-retorno.html"
+      },
+      {
+        "id": "solucao-e-contratacao",
+        "titulo": "Solução e contratação",
+        "arquivo": "05-06-solucao-e-contratacao.html"
+      },
+      {
+        "id": "plano-e-gates",
+        "titulo": "Plano e gates",
+        "arquivo": "05-08-plano-e-gates.html"
+      },
+      {
+        "id": "decisoes-e-proximos-passos",
+        "titulo": "Decisões e próximos passos",
+        "arquivo": "05-11-decisoes-e-proximos-passos.html"
+      }
+    ],
+    "palavra": "Viabilidade"
+  },
+  {
+    "id": "governanca",
+    "nome": "Governança",
+    "paginas": [
+      {
+        "id": "modelo-de-governanca",
+        "titulo": "Modelo de governança",
+        "arquivo": "06-01-governanca.html"
+      }
+    ],
+    "palavra": "Governança"
+  },
+  {
+    "id": "roadmap",
+    "nome": "Roadmap de implementação",
+    "paginas": [
+      {
+        "id": "expansao-e-jornada",
+        "titulo": "Expansão e jornada de automação",
+        "arquivo": "07-01-expansao-e-jornada.html"
+      }
+    ],
+    "palavra": "Roadmap"
+  }
+]
