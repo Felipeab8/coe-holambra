@@ -1,8 +1,8 @@
 # Painel COE Holambra
 
-Painel do desenho do **Centro de Excelência Operacional da Cooperativa Agroindustrial Holambra**, com piloto na Unidade Avaré. Reúne objetivos, desafios, indicadores, infraestrutura, estudo de viabilidade, governança e roadmap.
+Painel do desenho do **Centro Operacional de Excelência da Cooperativa Agroindustrial Holambra**, com piloto na Unidade Avaré. Reúne objetivos, desafios, indicadores, infraestrutura, estudo de viabilidade, governança e roadmap.
 
-A home foi integrada ao gerador do sistema a partir do redesign fornecido. As **19 páginas em 8 seções**, os **416 indicadores**, a planilha, as fotos, os gráficos, os modelos 3D e o videowall continuam no mesmo projeto.
+A abertura foi revisada como apresentação executiva: título e subtítulo diretos, sem contadores, com um índice de 11 temas. Os objetivos estão consolidados e os desafios seguem uma leitura vertical, com campos explícitos para complementação. A seção de viabilidade permanece acessível e intacta, fora desta revisão. As **19 páginas em 8 seções**, os **416 indicadores**, a planilha, as fotos, os gráficos, os modelos 3D e o videowall continuam no mesmo projeto.
 
 > O conteúdo inclui estudo corporativo classificado como restrito. Um repositório privado não protege uma hospedagem pública. Esta entrega prepara os arquivos e não publica o painel. Para disponibilização externa, use uma hospedagem com controle de acesso e a autorização responsável pelo conteúdo.
 
@@ -52,7 +52,7 @@ O gerador seleciona a maior versão numérica do CSV (`1.10` vem depois de `1.9`
 
 **Não edite manualmente os três arquivos gerados.** Depois de mudar fontes, dados ou CSS/JS, execute o gerador para atualizar também os hashes de cache. O cálculo normaliza quebras de linha para que o build seja reproduzível em checkouts Windows e Linux. Há um fragmento histórico `04-05-arquitetura-to-be-em-3d.html` fora de `etapas.json`; foi preservado, sem acrescentar uma rota duplicada.
 
-A identidade foi revista com base no site oficial e no novo SVG enviado: azul `#003A70`, vermelho `#EF3340`, logotipo vetorial transparente no cabeçalho/rodapé e ícones de traço fino. Dia e noite agora mostram a mesma cena e o mesmo enquadramento. Consulte [a revisão visual](docs/MANUAL.md) para fontes e detalhes.
+A identidade foi revista com base no portal institucional e no novo SVG enviado: azul `#003A70`, vermelho `#EF3340`, logotipo vetorial transparente no cabeçalho/rodapé e ícones de traço fino. Dia e noite agora mostram a mesma cena e o mesmo enquadramento. Consulte [a revisão visual](docs/MANUAL.md) para fontes e detalhes.
 
 ## Tecnologias e dependências
 
@@ -136,7 +136,30 @@ docs/                      # diagnóstico, relatório, segurança e manutenção
 .github/workflows/         # validação; sem implantação automática
 ```
 
-## Colocar no GitHub
+## Atualizar o repositório existente
+
+Extraia o ZIP em uma pasta vazia. No clone de `Felipeab8/coe-holambra`, crie uma branch:
+
+```powershell
+git switch -c revisao/material-executivo
+```
+
+Copie **todo o conteúdo da pasta `coe-holambra-main` do ZIP** para a raiz do clone, preservando a pasta `.git`. Execute:
+
+```powershell
+python atualizar.py
+python -m unittest discover -s tests -v
+git status --short
+git diff --stat
+git add .
+git diff --cached --stat
+git commit -m "Revisa apresentação executiva e organiza leitura do material COE"
+git push -u origin revisao/material-executivo
+```
+
+No GitHub, abra o pull request dessa branch para a branch principal. A entrega não executa commit, push, publicação ou PR automaticamente.
+
+## Criar um repositório novo
 
 Crie um **repositório privado vazio**, sem README automático. Na pasta deste projeto:
 
@@ -155,3 +178,19 @@ Para hospedagem, consulte [Segurança e produção](docs/MANUAL.md). Para o trab
 
 ## Pacote enxuto
 A documentação completa está em `docs/MANUAL.md`, e as evidências em `docs/validacao.json`. A home usa duas imagens, sem variantes redundantes. Os estilos são incorporados ao HTML pelo gerador. Extraia esta versão em uma pasta vazia para não misturar arquivos de pacotes anteriores.
+
+## Escopo e validação desta revisão
+
+Foram executados 13 testes Python de geração/leitura de dados, 23 testes de navegador e verificação de sintaxe dos 11 scripts. A auditoria editorial verificou 14 páginas nos dois temas, incluindo abas abertas em celular (66 varreduras axe), 42 combinações de rota/resolução e 12 capturas da abertura. Nenhuma violação automática de acessibilidade, erro JavaScript de página ou recurso local com HTTP 404 foi encontrado no resultado final. Isso não substitui teste de usabilidade ou revisão humana completa de acessibilidade.
+
+Para repetir o escopo editorial, com servidor já iniciado:
+
+```powershell
+node --test --test-skip-pattern="return simulator" tests/browser.cjs
+$env:COE_SCOPE="editorial"
+node tests/audit-ui.cjs
+```
+
+O teste específico do simulador foi excluído desta execução. Os testes Python verificam contratos do gerador e do leitor XLSX; não validam conclusões de viabilidade. Os cinco fragmentos, a planilha, os dados gerados e a lógica da viabilidade foram comparados e permanecem intactos.
+
+Pendências: preencher os campos identificados, validar os vínculos entre problemas/KPIs/soluções e realizar teste de usabilidade antes de decidir pela rolagem integral. O iframe do videowall externo ainda solicita `logo-holambra.png` com resposta 404; esse recurso precisa ser corrigido no repositório `videowall-coe`, sem relação com a logo local deste material.

@@ -243,16 +243,6 @@ html[data-theme="dark"] .hm-root .hm-stats b { color: #fff; }
 .hm-root .hm-pic img { animation: hm-zoom 2.4s var(--hm-ease) both; }
 @keyframes hm-zoom { from { opacity: 0; } to { opacity: 1; } }
 
-/* ---------- 4. Seções (base) -------------------------------------------- */
-.hm-root .hm-sec { position: relative; padding-block: clamp(64px, 9vw, 120px); }
-.hm-root .hm-sec::before {
-  content: ""; position: absolute; left: 0; right: 0; top: -1px; height: var(--hm-wave); z-index: 0;
-  background: var(--hm-prev, var(--hm-bg)); pointer-events: none;
-  -webkit-mask: var(--hm-wave-down) center / 100% 100% no-repeat;
-          mask: var(--hm-wave-down) center / 100% 100% no-repeat;
-}
-.hm-root .hm-sec > .hm-in { position: relative; z-index: 1; }
-
 /* ---------- 5. Guia do site -------------------------------------------- */
 .hm-root .hm-guide { background: var(--hm-bg); --hm-prev: var(--hm-bg); padding-top: clamp(28px, 4vw, 56px); }
 .hm-root .hm-guide::before { display: none; }
@@ -281,109 +271,6 @@ html[data-theme="dark"] .hm-root .hm-stats b { color: #fff; }
 html[data-theme="dark"] .hm-root .hm-card a { background: #102D4B; border-color: #244765; }
 html[data-theme="dark"] .hm-root .hm-card:nth-child(even) a { background: #153754; }
 html[data-theme="dark"] .hm-root .hm-card a:hover { background: #1D4264; border-color: #91B8DC; }
-
-/* ---------- 6. Fase: Desenho pré-implementação -------------------------- */
-.hm-root .hm-fase { background: var(--hm-bg2); --hm-prev: var(--hm-bg); }
-/* contornos de plantio: textura sutil de campo, sob o conteúdo */
-.hm-root .hm-fase::after {
-  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background: var(--hm-primary-t); opacity: .035;
-  -webkit-mask: var(--hm-contour-img) 0 0 / 240px 44px repeat;
-          mask: var(--hm-contour-img) 0 0 / 240px 44px repeat;
-}
-html[data-theme="dark"] .hm-root .hm-fase {
-  background:
-    radial-gradient(900px 520px at 88% 0%, rgba(23, 74, 131, .38), transparent 62%),
-    var(--hm-bg2);
-}
-.hm-root .hm-fase-grid { display: grid; gap: clamp(28px, 5vw, 64px); align-items: start; }
-.hm-root .hm-tower { margin: 0 auto; width: min(100%, 440px); }
-.hm-root .hm-tower-stage {
-  position: relative; padding: clamp(18px, 3vw, 30px); border-radius: 16px; overflow: hidden;
-  background:
-    radial-gradient(70% 55% at 50% 0%, rgba(240, 75, 84, .22), transparent 70%),
-    linear-gradient(165deg, #12335A 0%, #0B2140 55%, #081A33 100%);
-  border: 1px solid rgba(255, 255, 255, .12);
-  box-shadow: 0 30px 60px -28px rgba(8, 26, 51, .8), inset 0 1px 0 rgba(255, 255, 255, .1);
-  --accent: #FFD8DD;
-}
-.hm-root .hm-tower-stage::before {   /* linha de horizonte */
-  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 36%;
-  background: linear-gradient(0deg, rgba(0, 58, 112, .45), transparent);
-  pointer-events: none;
-}
-.hm-root .hm-tower svg.tower { position: relative; width: 100%; height: auto; max-height: 520px; margin: 0 auto; filter: drop-shadow(0 12px 22px rgba(0, 0, 0, .35)); }
-.hm-root .hm-fase-txt { display: grid; gap: 18px; align-content: start; }
-.hm-root .hm-fase-txt > p { font: 400 clamp(1rem, .4vw + .92rem, 1.12rem)/1.7 var(--hm-body); color: var(--hm-muted); max-width: 40rem; }
-.hm-root .hm-ben { display: grid; gap: 12px; margin-top: 10px; counter-reset: ben; }
-.hm-root .hm-ben li {
-  counter-increment: ben; position: relative; display: grid; gap: 2px;
-  padding: 16px 18px 16px 64px; border-radius: 12px;
-  background: var(--hm-surface); border: 1px solid var(--hm-line); box-shadow: var(--hm-shadow);
-  transition: transform .35s var(--hm-ease), border-color .3s;
-}
-
-.hm-root .hm-ben li::before {
-  content: counter(ben, decimal-leading-zero); position: absolute; left: 16px; top: 16px;
-  width: 34px; height: 34px; display: grid; place-items: center; border-radius: 11px;
-  font: 700 .78rem/1 var(--hm-display); color: #fff; background: var(--hm-primary);
-}
-.hm-root .hm-ben li:nth-child(2)::before { background: #C82836; }
-.hm-root .hm-ben li:nth-child(3)::before { background: var(--hm-blue); }
-.hm-root .hm-ben b { font: 700 1.02rem/1.3 var(--hm-body); color: var(--hm-ink); }
-.hm-root .hm-ben span { font: 400 .92rem/1.5 var(--hm-body); color: var(--hm-muted); }
-
-/* ---------- 7. Objetivos estratégicos ----------------------------------- */
-.hm-root .hm-objs {
-  --hm-prev: var(--hm-bg2); color: #fff;
-  background:
-    radial-gradient(900px 480px at 100% 0%, rgba(134, 180, 222, .28), transparent 65%),
-    radial-gradient(700px 420px at 0% 100%, rgba(240, 75, 84, .12), transparent 70%),
-    linear-gradient(170deg, #003A70 0%, #003262 100%);
-}
-html[data-theme="dark"] .hm-root .hm-objs {
-  background:
-    radial-gradient(900px 520px at 6% 0%, rgba(23, 74, 131, .62), transparent 65%),
-    radial-gradient(700px 440px at 100% 100%, rgba(0, 58, 112, .42), transparent 70%),
-    linear-gradient(175deg, #0C1B30 0%, #0A1626 55%, #08111D 100%);
-}
-.hm-root .hm-objs-grid { display: grid; gap: clamp(28px, 5vw, 64px); align-items: start; }
-.hm-root .hm-objs .hm-eyebrow { color: var(--hm-highlight); }
-.hm-root .hm-objs .hm-eyebrow svg { color: #fff; }
-.hm-root .hm-objs .hm-h2 { color: #fff; margin-top: 14px; }
-.hm-root .hm-objs blockquote {
-  position: relative; margin-top: 26px; padding: 22px 0 0 0;
-  font: italic 500 clamp(1.15rem, .9vw + .95rem, 1.5rem)/1.5 var(--hm-display); color: rgba(255, 255, 255, .94);
-  border-top: 1px solid rgba(255, 255, 255, .2);
-}
-.hm-root .hm-objs blockquote::before {
-  content: ""; position: absolute; top: -2px; left: 0; width: 56px; height: 4px; border-radius: 4px;
-  background: var(--hm-red);
-}
-.hm-root .hm-objs blockquote { padding-top: 24px; }
-.hm-root .hm-objs-mill { display: flex; align-items: center; gap: 12px; margin-top: 26px; font: 600 .82rem/1.3 var(--hm-body); color: rgba(255, 255, 255, .78); }
-.hm-root .hm-objs-mill .hm-mill { width: 30px; height: 36px; color: #fff; }
-
-.hm-root .hm-o6 { display: grid; gap: 14px; grid-template-columns: 1fr; counter-reset: o6; }
-.hm-root .hm-ocard {
-  counter-increment: o6; position: relative; padding: 26px; border-radius: 14px; overflow: hidden;
-  background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .18);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-  transition: transform .4s var(--hm-ease), background .3s, border-color .3s, box-shadow .4s var(--hm-ease);
-}
-html[data-theme="dark"] .hm-root .hm-ocard { background: rgba(255, 255, 255, .045); border-color: rgba(255, 255, 255, .12); }
-.hm-root .hm-ocard::before {
-  content: counter(o6, decimal-leading-zero); display: block; margin-bottom: 14px;
-  font: 600 1.7rem/1 var(--hm-display); letter-spacing: -.02em; color: var(--hm-highlight);
-}
-.hm-root .hm-ocard::after {
-  content: ""; position: absolute; left: 22px; bottom: 0; width: 36px; height: 3px; border-radius: 3px 3px 0 0;
-  background: var(--hm-red); transition: width .45s var(--hm-ease);
-}
-
-
-.hm-root .hm-ocard b { display: block; font: 700 1.08rem/1.3 var(--hm-body); color: #fff; }
-.hm-root .hm-ocard p { margin-top: 8px; font: 400 .93rem/1.6 var(--hm-body); color: rgba(255, 255, 255, .8); }
 
 /* ---------- 8. Revelação ao rolar (ativada por js/home.js) -------------- */
 .hm-root.hm-js .hm-rv {
@@ -547,3 +434,22 @@ html[data-theme="dark"] .hm-root .hm-ocard { background: rgba(255, 255, 255, .04
 .hm-root .hm-h2{line-height:1.18}
 .hm-root .hm-ocard b{line-height:1.4}
 .hm-root .hm-objs blockquote{font-style:normal;font-weight:400;line-height:1.65}
+
+/* Abertura executiva e índice de leitura. */
+.hm-root .executive-subtitle{margin-top:24px;font-size:clamp(18px,1.5vw,23px);line-height:1.55;font-weight:500;color:var(--hm-ink);max-width:36ch}
+.hm-root .hm-title{font-weight:650;line-height:1.14;text-wrap:balance}
+.hm-root .hm-title .hm-r{font-style:normal}
+.hm-root .hm-lead{font-size:16px;line-height:1.75}
+.hm-root .hm-bot{padding-bottom:36px}
+.hm-root .executive-topics{grid-template-columns:1fr;gap:16px}
+.hm-root .executive-topics .hm-card:nth-child(n){grid-column:auto}
+.hm-root .executive-topics .hm-card a{grid-template-columns:1fr;grid-template-rows:auto 1fr;gap:12px;padding:24px 24px 60px}
+.hm-root .executive-topics .hm-card b{grid-column:1;grid-row:1;margin:0;font-size:18px;line-height:1.4}
+.hm-root .executive-topics .hm-card-d{grid-column:1;grid-row:2;margin:0;font-size:14px;line-height:1.65}
+.hm-root .executive-topics .hm-card-go{font-size:24px;line-height:1;bottom:22px;right:24px}
+@media(min-width:700px){.hm-root .executive-topics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1100px){.hm-root .executive-topics{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:1000px) and (min-aspect-ratio:8/5){
+ .hm-root .hm-title{font-size:clamp(32px,calc(var(--hm-copyw) / 9.5),60px)}
+ .hm-root .hm-bot{padding-bottom:0}
+}
