@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<script src="../js/modelo-host.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><style>body{margin:0}</style></head><body>
+<title>Arquitetura To-Be do COE</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Arimo:wght@400;700&display=swap">
+<style>
+/* Layout: cena 3D em tela cheia; barra superior com título e alternância de visão; painel lateral direito com a crítica; cartão flutuante ao clicar em um componente. Visual escuro único (sala de controle). */
+:root{
+  --bg:#06121C; --panel:#0D1E2CF2; --panel-2:#132A3C; --line:#22394C; --fg:#E8EEF4; --dim:#93A6B8;
+  --accent:#00A9F4; --blue:#2266E0; --ok:#3FC48C; --warn:#F0A63A; --crit:#F0636B; --violet:#8A78D6;
+  --f-display:'Source Serif 4',Georgia,serif; --f-body:'Arimo',Arial,Helvetica,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);overflow:hidden}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#app{position:relative;height:100%}
+#scene{position:absolute;inset:0}
+@media (min-width:861px){#app.side-open #scene,#app.side-open .labels{right:412px}}
+#scene canvas{display:block;touch-action:none}
+.labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lbl{position:absolute;transform:translate(-50%,-100%);font:700 11.5px var(--f-body);color:#fff;background:#0B1A26E6;border:1px solid #2B4A68;border-left:3px solid var(--cc,#00A9F4);padding:3px 7px;border-radius:2px;white-space:nowrap;pointer-events:auto;cursor:pointer}
+.lbl:hover{border-color:var(--cc,#00A9F4)}
+.lbl.zone{background:transparent;border:0;font:700 11px var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--cc);pointer-events:none;transform:translate(0,0)}
+.lbl.new::after{content:"novo";margin-left:6px;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:#04121C;background:var(--ok);padding:0 4px;border-radius:2px}
+header{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;gap:14px;align-items:center;flex-wrap:wrap;
+  padding-block:max(12px,env(safe-area-inset-top,0px)) 12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:linear-gradient(#06121CF2,#06121C00);pointer-events:none}
+header > *{pointer-events:auto}
+.brand b{display:block;font-family:var(--f-display);font-size:22px;font-weight:600;letter-spacing:-.01em}
+.brand span{font-size:12.5px;color:var(--dim)}
+.tog{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--panel);margin-left:auto}
+.tog button{font:inherit;font-size:13px;font-weight:700;border:0;background:transparent;color:var(--dim);padding:7px 14px;border-radius:999px;cursor:pointer}
+.tog button[aria-pressed="true"]{background:var(--accent);color:#04121C}
+.tools{display:flex;gap:6px}
+.tools button{font:inherit;font-size:12.5px;font-weight:700;border:1px solid var(--line);background:var(--panel);color:var(--fg);padding:7px 11px;border-radius:4px;cursor:pointer}
+.tools button:hover{border-color:var(--accent)}
+aside{position:absolute;top:76px;right:max(16px,env(safe-area-inset-right,0px));bottom:16px;width:380px;z-index:2;background:var(--panel);border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;transition:transform .25s,opacity .25s}
+aside.closed{transform:translateX(calc(100% + 24px));opacity:0;pointer-events:none}
+@media (prefers-reduced-motion:reduce){aside{transition:none}}
+.atabs{display:flex;border-bottom:1px solid var(--line)}
+.atabs button{flex:1;font:inherit;font-size:12.5px;font-weight:700;letter-spacing:.04em;background:none;border:0;border-bottom:2px solid transparent;color:var(--dim);padding:12px 6px;cursor:pointer}
+.atabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+.atabs .x{flex:0 0 40px;font-size:18px}
+.apane{overflow:auto;padding:16px 18px 20px;display:grid;gap:14px;align-content:start}
+.apane h3{margin:0;font-family:var(--f-display);font-size:19px;font-weight:600;line-height:1.25}
+.apane p{margin:0;font-size:13.5px;line-height:1.55;color:var(--dim)}
+.k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--accent)}
+.keep{display:grid;gap:6px;background:#10301F80;border:1px solid #1F5A3E;border-radius:6px;padding:12px 14px}
+.keep .k{color:var(--ok)}
+.keep ul{margin:0;padding-left:18px;font-size:13.5px;line-height:1.5;color:#CFE9DC;display:grid;gap:3px}
+.adj{display:grid;gap:0;border-top:1px solid var(--line)}
+.adj details{border-bottom:1px solid var(--line)}
+.adj summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:26px 1fr 14px;gap:8px;align-items:baseline;padding:11px 0;font-size:14px;font-weight:700;line-height:1.35}
+.adj summary::-webkit-details-marker{display:none}
+.adj summary::after{content:"+";color:var(--accent);font-size:16px}
+.adj details[open] summary::after{content:"–"}
+.adj summary i{font-style:normal;font-family:var(--f-display);font-size:17px;color:var(--accent)}
+.adj .body{padding:0 0 12px 34px;display:grid;gap:6px;font-size:13.2px;line-height:1.5;color:var(--dim)}
+.adj .body b{color:var(--fg)}
+.adj .why{border-left:2px solid var(--warn);padding-left:10px}
+.open{display:grid;gap:6px;background:var(--panel-2);border-radius:6px;padding:12px 14px}
+.open ul{margin:0;padding-left:18px;font-size:13.2px;line-height:1.5;color:var(--dim);display:grid;gap:3px}
+.legend{display:grid;gap:6px;font-size:12.5px;color:var(--dim)}
+.legend div{display:flex;gap:8px;align-items:center}
+.legend i{width:22px;height:4px;border-radius:2px;flex:0 0 auto}
+.legend i.dash{background:repeating-linear-gradient(90deg,var(--warn) 0 5px,transparent 5px 9px)!important}
+#card{position:absolute;left:max(16px,env(safe-area-inset-left,0px));bottom:16px;width:360px;max-width:calc(100% - 32px);z-index:2;background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--cc,var(--accent));border-radius:8px;padding:14px 16px;display:grid;gap:8px}
+#card[hidden]{display:none}
+#card .cat{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--cc,var(--accent))}
+#card h2{margin:0;font-family:var(--f-display);font-size:21px;font-weight:600;line-height:1.2}
+#card p{margin:0;font-size:13.5px;line-height:1.5;color:var(--dim)}
+#card .why{border-left:2px solid var(--warn);padding-left:10px;color:#E9D8BC}
+#card .x{position:absolute;top:8px;right:10px;background:none;border:0;color:var(--dim);font-size:20px;cursor:pointer}
+.hint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);font-size:12px;color:var(--dim);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 12px;white-space:nowrap;z-index:1}
+#reopen{position:absolute;top:84px;right:max(16px,env(safe-area-inset-right,0px));z-index:2;font:inherit;font-size:12.5px;font-weight:700;border:1px solid var(--line);background:var(--panel);color:var(--fg);padding:7px 11px;border-radius:4px;cursor:pointer}
+#reopen[hidden]{display:none}
+@media (max-width:860px){
+  aside{top:auto;left:0;right:0;width:auto;height:48%;bottom:0;border-radius:10px 10px 0 0;padding-bottom:env(safe-area-inset-bottom,0px)}
+  aside.closed{transform:translateY(110%)}
+  #card{bottom:auto;top:120px}
+  .hint{display:none}
+  .tog{margin-left:0}
+}
+
+.fronts{display:grid;gap:8px}
+.fronts button{display:grid;grid-template-columns:30px 1fr;gap:10px;text-align:left;font:inherit;color:var(--fg);background:var(--panel-2);border:1px solid var(--line);border-radius:6px;padding:10px 12px;cursor:pointer}
+.fronts button:hover,.fronts button[aria-pressed="true"]{border-color:var(--accent)}
+.fronts i{font-style:normal;font-family:var(--f-display);font-size:22px;color:var(--accent);line-height:1}
+.fronts span{font-size:13px;line-height:1.45;color:var(--dim)}
+.fronts b{display:block;font-size:14px;color:var(--fg);margin-bottom:2px}
+.tip{font-size:12px!important}
+.six{display:grid;gap:6px;background:var(--panel-2);border-radius:6px;padding:12px 14px}
+.six ol{margin:0;padding-left:20px;font-size:13px;line-height:1.5;color:var(--dim);display:grid;gap:2px}
+.six b{color:var(--fg)}
+.cmp{display:grid;gap:8px}
+.cmp > div{border-radius:6px;padding:12px 14px;display:grid;gap:6px}
+.cmp ul{margin:0;padding-left:18px;font-size:13px;line-height:1.5;display:grid;gap:3px}
+.cmp .asis{background:#3A1A1E66;border:1px solid #6B2A31} .cmp .asis .k{color:var(--crit)} .cmp .asis ul,.cmp .asis p{color:#E8C9CC}
+.cmp .tobe{background:#10301F80;border:1px solid #1F5A3E} .cmp .tobe .k{color:var(--ok)} .cmp .tobe ul{color:#CFE9DC}
+.obj{background:#020B12;border:1px solid var(--line);border-radius:6px;padding:12px 14px;display:grid;gap:6px}
+.vnote{position:absolute;left:max(16px,env(safe-area-inset-left,0px));top:76px;z-index:1;font-size:13px;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:4px;padding:7px 12px;max-width:calc(100% - 440px)}
+@media (max-width:860px){.vnote{max-width:calc(100% - 32px)}}
+
+.navpad{position:absolute;left:50%;bottom:max(14px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:4;display:flex;align-items:center;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 8px;box-shadow:0 4px 18px rgba(0,0,0,.25)}
+.navpad button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--fg);font:700 16px/1 Arial,sans-serif;cursor:pointer;display:grid;place-items:center;padding:0}
+.navpad button:hover{border-color:var(--accent);color:var(--accent)}
+.navpad span{width:1px;height:22px;background:var(--line);margin:0 4px}
+.hint{display:none!important}
+#card{bottom:74px}
+</style>
+
+<div id="app" class="side-open">
+  <div id="scene"></div>
+  <div class="labels" id="labels"></div>
+  <header>
+    <div class="brand"><b>Arquitetura To-Be do COE</b><span>Avaré como piloto · padrão replicável às sete unidades · proposta para discussão</span></div>
+    <div class="tog" role="group" aria-label="Visão da arquitetura">
+      <button type="button" data-v="asis" aria-pressed="false">Hoje (As-Is)</button>
+      <button type="button" data-v="orig" aria-pressed="false">Proposta inicial</button>
+      <button type="button" data-v="rec" aria-pressed="true">To-Be recomendado</button>
+    </div>
+    <div class="tools"><button type="button" id="bTop">Vista de topo</button><button type="button" id="bPersp">Perspectiva</button></div>
+  </header>
+
+  <aside id="side">
+    <div class="atabs" role="tablist">
+      <button type="button" role="tab" data-t="tobe" aria-selected="true">Visão To-Be</button>
+      <button type="button" role="tab" data-t="crit" aria-selected="false">Crítica da proposta</button>
+      <button type="button" role="tab" data-t="leg" aria-selected="false">Legenda</button>
+      <button type="button" class="x" id="closeSide" aria-label="Recolher painel">›</button>
+    </div>
+    <div class="apane" id="p-tobe">
+      <div><div class="k">Visão alvo (To-Be)</div><h3>Quatro frentes para integrar os dados ao COE</h3></div>
+      <p>Os sistemas hoje isolados passam a se conectar ao SCADA, alimentando um histórico centralizado e consistente. Essa camada única de dados é a base que viabiliza o COE como ambiente de gestão integrada da unidade.</p>
+      <div class="fronts">
+        <button type="button" data-front="1"><i>1</i><span><b>Integração dos CLPs isolados</b>Conectar SAUR, FACH, SanTec, RM, NBR Tech, Atlas Copco e Autokraft ao SCADA central.</span></button>
+        <button type="button" data-front="2"><i>2</i><span><b>Historiador de processo</b>Implantar historiador no CCO/SCADA, habilitando tendências e indicadores históricos hoje inexistentes.</span></button>
+        <button type="button" data-front="3"><i>3</i><span><b>Digitalização dos apontamentos</b>Padronizar os registros hoje manuais (MS Forms, Jotform), reduzindo erros e inconsistências.</span></button>
+        <button type="button" data-front="4"><i>4</i><span><b>Visão única de alarmes</b>Consolidar alarmes e indicadores operacionais em uma camada única para o COE.</span></button>
+      </div>
+      <p class="tip">Clique em uma frente para localizá-la no modelo.</p>
+      <div class="six"><div class="k">Arquitetura em seis camadas, do sensor ao COE</div>
+        <ol><li><b>Campo</b> · sensores e atuadores</li><li><b>Controle</b> · CLPs, com intertravamentos locais</li><li><b>Supervisão</b> · SCADA do CCO e gestão de alarmes</li><li><b>Borda e historiador local</b> · gateways e banco da unidade</li><li><b>Plataforma de dados</b> · namespace ISA-95 e historiador central na matriz</li><li><b>COE</b> · video wall, alertas e análises</li></ol></div>
+      <div class="cmp"><div class="asis"><div class="k">Hoje · As-Is</div><ul><li>Mais de 15 painéis, CLPs, IHMs e SCADAs de fabricantes diferentes operam em ilhas.</li><li>Sem visão única: o operador depende de várias telas para saber o estado da planta.</li><li>Sem histórico central: não há série temporal para qualidade, secagem e rastreabilidade.</li><li>Dado preso ao fornecedor: cada painel tem protocolo, software e senha próprios.</li></ul><p><b>Dor central:</b> nenhum dado chega padronizado ao COE.</p></div>
+      <div class="tobe"><div class="k">Modelo-alvo · To-Be</div><ul><li>Arquitetura em seis camadas, do sensor ao COE, com gateways de borda e banco de dados.</li><li>Um padrão único de dados (namespace ISA-95) traduz cada fabricante.</li><li>O historiador centraliza o histórico para tendências, KPIs e rastreabilidade.</li><li>Controle e intertravamentos continuam nos CLPs locais, sem interferência do COE.</li></ul></div></div>
+      <div class="obj"><div class="k">Objetivo</div><p>Transformar dados hoje dispersos e isolados em uma base única, confiável e padronizada, capaz de suportar o COE na tomada de decisões operacionais e estratégicas em toda a cadeia produtiva da Holambra.</p></div>
+    </div>
+    <div class="apane" id="p-crit" hidden>
+      <div><div class="k">Proposta inicial</div><h3>CLPs → CCO com SCADA e banco local → banco na matriz → COE</h3></div>
+      <div class="keep"><div class="k">O que está certo e se mantém</div>
+        <ul><li>Integrar todos os CLPs ao CCO da unidade, com o SCADA como supervisão local.</li><li>Ter um banco de dados na unidade e outro na matriz, em dois níveis.</li><li>O COE consumir dados da matriz, e não de cada painel.</li></ul></div>
+      <div><div class="k">Oito ajustes de boa prática</div></div>
+      <div class="adj">
+        <details open><summary><i>1</i>Banco local vira historiador com armazenamento e reenvio</summary><div class="body"><p><b>Recomendação:</b> historiador de processo na unidade, com “store-and-forward”: se o link com a matriz cair, a unidade continua gravando e reenvia tudo quando a conexão volta.</p><p class="why">Um banco local comum perde a série temporal em quedas de link, justamente no pico de safra.</p></div></details>
+        <details><summary><i>2</i>Gateway de borda separa coleta de dados e operação</summary><div class="body"><p><b>Recomendação:</b> um gateway de borda (OPC UA ou MQTT) lê os CLPs e publica os dados. O SCADA continua dedicado à operação e aos alarmes do CCO.</p><p class="why">Usar o SCADA como única porta de dados cria dependência de licença e de fornecedor, e sobrecarrega a supervisão.</p></div></details>
+        <details><summary><i>3</i>Segmentação da rede OT com firewall e DMZ industrial</summary><div class="body"><p><b>Recomendação:</b> zonas e conduítes conforme a IEC 62443: rede de controle isolada, firewall e uma DMZ industrial entre a planta e a rede corporativa. Os CLPs nunca ficam expostos à WAN.</p><p class="why">Conectar CLPs diretamente à rede da matriz amplia a superfície de ataque sobre equipamentos de segurança, como tombadores e secadores.</p></div></details>
+        <details><summary><i>4</i>Padrão único de dados (namespace ISA-95)</summary><div class="body"><p><b>Recomendação:</b> cada variável segue a mesma hierarquia, por exemplo Holambra / Avaré / Secagem / Secador-01 / Temperatura do ar. Um broker central (Unified Namespace) recebe os dados de todas as unidades nesse padrão.</p><p class="why">Sem padrão, cada nova unidade exige refazer integrações e telas. Com padrão, a expansão às sete unidades é replicação.</p></div></details>
+        <details><summary><i>5</i>Banco da matriz vira plataforma de dados</summary><div class="body"><p><b>Recomendação:</b> historiador central e uma camada de dados que integra também o ERP Evolutize, o Império e os formulários. Os KPIs são calculados uma única vez e servidos ao video wall, aos painéis e às análises.</p><p class="why">Um banco que só recebe dados de automação deixa de fora recepção, classificação e manutenção, que hoje estão em outros sistemas.</p></div></details>
+        <details><summary><i>6</i>Conectividade redundante e autonomia local</summary><div class="body"><p><b>Recomendação:</b> dois links entre unidade e matriz, de operadoras diferentes, e nobreak no CCO. A unidade opera e grava dados mesmo isolada.</p><p class="why">O COE não pode ser ponto único de falha da operação.</p></div></details>
+        <details><summary><i>7</i>Comando remoto só pelo SCADA local, com acesso seguro</summary><div class="body"><p><b>Recomendação (visão futura):</b> comandos do COE passam pelo SCADA da unidade, com acesso via VPN e autenticação multifator, usuário por operador, registro de eventos e permissivo local. Intertravamentos permanecem nos CLPs.</p><p class="why">Comando direto do COE ao CLP contornaria a segurança local e a rastreabilidade.</p></div></details>
+        <details><summary><i>8</i>Sincronização de horário e governança de tags</summary><div class="body"><p><b>Recomendação:</b> NTP em todos os equipamentos, dicionário de tags e dono por variável.</p><p class="why">Sem horário único, não há como correlacionar eventos entre secador, silo e expedição.</p></div></details>
+      </div>
+      <div class="open"><div class="k">Decisões em aberto</div><ul><li>Plataforma central na matriz (on-premise) ou em nuvem</li><li>Protocolo prioritário: OPC UA, MQTT ou ambos</li><li>Escolha do historiador e do broker</li><li>Fronteira de responsabilidade entre TI e automação na DMZ</li></ul></div>
+      <p>Coerente com a visão To-Be do diagnóstico: arquitetura em camadas do sensor ao COE, com gateways de borda, padrão ISA-95, historiador centralizado e controle mantido nos CLPs locais.</p>
+    </div>
+    <div class="apane" id="p-leg" hidden>
+      <div class="legend">
+        <div><i style="background:#2266E0"></i>Campo e controle · CLPs (N1–N2)</div>
+        <div><i style="background:#00A9F4"></i>Supervisão e dados da unidade · CCO (N3)</div>
+        <div><i style="background:#F0A63A"></i>Segurança · firewall e DMZ industrial</div>
+        <div><i style="background:#8A78D6"></i>Plataforma de dados · matriz (N4)</div>
+        <div><i style="background:#3FC48C"></i>COE · video wall e análise</div>
+        <div><i class="dash"></i>Comando remoto controlado (visão futura)</div>
+      </div>
+      <p>As esferas que percorrem as conexões mostram o sentido do fluxo de dados. Clique em um componente ou rótulo para ver a função e o motivo da recomendação.</p>
+      <p>Modelo conceitual, sem escala. Quantidade e posição dos equipamentos são ilustrativas.</p>
+    </div>
+  </aside>
+  <button type="button" id="reopen" hidden>‹ Crítica</button>
+  <div id="card" hidden></div>
+  <div class="vnote" id="vnote"></div>
+  <div class="hint">Arrastar: girar · Shift ou botão direito: mover · Roda: zoom · Clique em um componente</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js" integrity="sha384-wagZhIFgY4hD+7awjQjR4e2E294y6J2HSnd8eTNc15ZubTeQeVRZwhQJ+W6hnBsf" crossorigin="anonymous"></script>
+<script>
+(function(){
+const host=document.getElementById('scene'), labelsEl=document.getElementById('labels');
+const renderer=new THREE.WebGLRenderer({antialias:true}); renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap; host.appendChild(renderer.domElement);
+const scene=new THREE.Scene(); scene.background=new THREE.Color(0x06121C); scene.fog=new THREE.Fog(0x06121C,170,360);
+const camera=new THREE.PerspectiveCamera(38,1,0.5,600);
+const controls=new THREE.OrbitControls(camera,renderer.domElement); controls.enableDamping=true; controls.maxPolarAngle=Math.PI/2.1; controls.minDistance=12; controls.maxDistance=260;
+addEventListener('keydown',e=>{ if(e.key==='Shift') controls.mouseButtons.LEFT=THREE.MOUSE.PAN; });
+addEventListener('keyup',e=>{ if(e.key==='Shift') controls.mouseButtons.LEFT=THREE.MOUSE.ROTATE; });
+scene.add(new THREE.HemisphereLight(0xcfe3ff,0x0b1a26,.75));
+const sun=new THREE.DirectionalLight(0xffffff,.75); sun.position.set(-40,70,40); sun.castShadow=true; sun.shadow.mapSize.set(1536,1536);
+Object.assign(sun.shadow.camera,{left:-95,right:95,top:70,bottom:-70,far:260}); scene.add(sun);
+
+const SP=1.45;
+const C={field:0x2266E0, site:0x00A9F4, sec:0xF0A63A, mat:0x8A78D6, coe:0x3FC48C, grey:0x3A4E62};
+const css=h=>'#'+h.toString(16).padStart(6,'0');
+const L=(c,o)=>new THREE.MeshLambertMaterial(Object.assign({color:c},o||{}));
+const ITEMS=[], FLOWS=[], ZONES=[];
+let view='rec';
+
+// ---------- grid floor
+const grid=new THREE.GridHelper(380,190,0x15293A,0x0E1F2D); grid.position.y=-0.02; scene.add(grid);
+
+function plate(x1,z1,x2,z2,color,label,views){ views=views||['asis','orig','rec'];
+  const g=new THREE.Group();
+  x1*=SP; x2*=SP; z1*=SP; z2*=SP;
+  const m=new THREE.Mesh(new THREE.BoxGeometry(x2-x1,0.3,z2-z1),L(color,{transparent:true,opacity:.16}));
+  m.position.set((x1+x2)/2,0.15,(z1+z2)/2); m.receiveShadow=true; g.add(m);
+  const e=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(x2-x1,0.3,z2-z1)),new THREE.LineBasicMaterial({color,transparent:true,opacity:.7}));
+  e.position.copy(m.position); g.add(e); scene.add(g);
+  const d=document.createElement('div'); d.className='lbl zone'; d.textContent=label; d.style.setProperty('--cc',css(color)); labelsEl.appendChild(d);
+  ZONES.push({g,lbl:d,anchor:new THREE.Vector3(x1,0.35,z2+0.2),views});
+}
+function canvasTex(w,h,draw){ const c=document.createElement('canvas'); c.width=w; c.height=h; draw(c.getContext('2d'),w,h); return new THREE.CanvasTexture(c); }
+
+function item(o){
+  const g=new THREE.Group(); g.position.set(o.x*SP,0.3,o.z*SP); g.userData.id=o.id; scene.add(g);
+  o.build(g); g.traverse(m=>{ if(m.isMesh){ m.castShadow=true; m.receiveShadow=true; } });
+  const bb=new THREE.Box3().setFromObject(g); o.anchor=new THREE.Vector3((bb.min.x+bb.max.x)/2,bb.max.y+0.8,(bb.min.z+bb.max.z)/2);
+  o.g=g; o.views=o.views||['asis','orig','rec'];
+  if(o.label!==false){ const d=document.createElement('div'); d.className='lbl'+(o.isNew?' new':''); d.textContent=o.short||o.name; d.style.setProperty('--cc',css(o.color)); d.addEventListener('click',()=>select(o.id,true)); labelsEl.appendChild(d); o.lbl=d; }
+  o.views=o.views||['asis','orig','rec']; ITEMS.push(o); return o;
+}
+// primitivas
+const cabinet=(c)=>g=>{ const b=new THREE.Mesh(new THREE.BoxGeometry(1.3,2.2,0.7),L(0xD7DEE6)); b.position.y=1.1; g.add(b);
+  const f=new THREE.Mesh(new THREE.BoxGeometry(1.1,1.8,0.05),L(c)); f.position.set(0,1.15,0.37); g.add(f); if(!g.userData.front) g.userData.front=f;
+  const led=new THREE.Mesh(new THREE.BoxGeometry(0.5,0.12,0.06),new THREE.MeshBasicMaterial({color:0x7CF5B4})); led.position.set(0,1.85,0.4); g.add(led); };
+const rack=(c,h)=>g=>{ h=h||3; const b=new THREE.Mesh(new THREE.BoxGeometry(1.6,h,1.4),L(0x1B2B3A)); b.position.y=h/2; g.add(b);
+  for(let y=0.4;y<h-0.2;y+=0.42){ const s=new THREE.Mesh(new THREE.BoxGeometry(1.3,0.18,0.05),new THREE.MeshBasicMaterial({color:c})); s.position.set(0,y,0.72); g.add(s); } };
+const db=(c,r,h)=>g=>{ r=r||1.1; h=h||2.4; const m=L(c); for(let k=0;k<3;k++){ const d=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h/3-0.08,32),m); d.position.y=(k+0.5)*h/3; g.add(d); }
+  const top=new THREE.Mesh(new THREE.CylinderGeometry(r*.98,r*.98,0.06,32),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.35})); top.position.y=h+0.02; g.add(top); };
+const sw=(c)=>g=>{ const b=new THREE.Mesh(new THREE.BoxGeometry(2.4,0.5,1.1),L(0x1B2B3A)); b.position.y=0.25+0.6; g.add(b);
+  const st=new THREE.Mesh(new THREE.BoxGeometry(2.6,0.6,1.3),L(0x2A3B4C)); st.position.y=0.3; g.add(st);
+  for(let i=0;i<8;i++){ const p=new THREE.Mesh(new THREE.BoxGeometry(0.16,0.12,0.04),new THREE.MeshBasicMaterial({color:c})); p.position.set(-1+i*0.28,0.85,0.57); g.add(p); } };
+const wall=(c)=>g=>{ const b=new THREE.Mesh(new THREE.BoxGeometry(0.6,2.6,3.2),L(c)); b.position.y=1.3; g.add(b);
+  for(let i=0;i<4;i++){ const s=new THREE.Mesh(new THREE.BoxGeometry(0.64,0.08,3.24),L(0x5A3A10)); s.position.y=0.5+i*0.55; g.add(s); } };
+const gate=(c)=>g=>{ const b=new THREE.Mesh(new THREE.BoxGeometry(1.4,1.2,1.2),L(0x1B2B3A)); b.position.y=0.6; g.add(b);
+  const t=new THREE.Mesh(new THREE.BoxGeometry(1.42,0.18,1.22),new THREE.MeshBasicMaterial({color:c})); t.position.y=1.15; g.add(t);
+  const a=new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.05,1.2,8),L(0xcccccc)); a.position.set(0.4,1.8,0); g.add(a); };
+const desk=(c)=>g=>{ const t=new THREE.Mesh(new THREE.BoxGeometry(3,0.12,1.2),L(0x2A3B4C)); t.position.y=0.8; g.add(t);
+  [-1.3,1.3].forEach(x=>{ const l=new THREE.Mesh(new THREE.BoxGeometry(0.1,0.8,1),L(0x2A3B4C)); l.position.set(x,0.4,0); g.add(l); });
+  [-0.7,0.7].forEach(x=>{ const m=new THREE.Mesh(new THREE.BoxGeometry(1,0.65,0.06),new THREE.MeshBasicMaterial({color:c})); m.position.set(x,1.25,-0.35); g.add(m); }); };
+const dashTex=canvasTex(512,288,(x,w,h)=>{ x.fillStyle='#0A1621';x.fillRect(0,0,w,h);
+  const cols=['#2266E0','#00A9F4','#3FC48C','#F0A63A','#F0636B'];
+  for(let i=0;i<4;i++){ x.fillStyle='#132838'; x.fillRect(10+i*125,10,115,60); x.fillStyle=cols[i]; x.font='bold 26px Arial'; x.fillText(['405','128','7','8'][i],22+i*125,52); }
+  x.fillStyle='#132838'; x.fillRect(10,80,300,198); for(let i=0;i<12;i++){ x.fillStyle=i==8?'#F0636B':'#2266E0'; const hh=40+Math.abs(Math.sin(i*1.7))*110; x.fillRect(22+i*24,268-hh,16,hh); }
+  x.fillStyle='#132838'; x.fillRect(320,80,182,198); for(let r=0;r<6;r++){ x.fillStyle=r==2?'#F0636B':(r==4?'#F0A63A':'#3FC48C'); x.beginPath(); x.arc(338,104+r*30,6,0,7); x.fill(); x.fillStyle='#5D7891'; x.fillRect(352,99+r*30,130,10); } });
+const vwall=()=>g=>{ const fr=new THREE.Mesh(new THREE.BoxGeometry(0.4,4.6,10.4),L(0x111C26)); fr.position.y=2.9; g.add(fr);
+  for(let r=0;r<2;r++) for(let c=0;c<4;c++){ const s=new THREE.Mesh(new THREE.PlaneGeometry(2.45,2.05),new THREE.MeshBasicMaterial({map:dashTex}));
+    s.position.set(-0.22,1.85+r*2.12,-3.75+c*2.5); s.rotation.y=-Math.PI/2; g.add(s); } };
+const cloud=(c)=>g=>{ const m=L(c); [[0,1.2,0,1.3],[1.2,1.0,0,1],[-1.2,1.0,0,1],[0.5,1.9,0,1],[-0.5,1.8,0,0.9]].forEach(([x,y,z,r])=>{ const s=new THREE.Mesh(new THREE.SphereGeometry(r,20,14),m); s.position.set(x,y,z); g.add(s); }); };
+const erp=(c)=>g=>{ const b=new THREE.Mesh(new THREE.BoxGeometry(2.2,2.2,2.2),L(0xD7DEE6)); b.position.y=1.1; g.add(b);
+  const f=new THREE.Mesh(new THREE.BoxGeometry(1.8,0.4,0.05),new THREE.MeshBasicMaterial({color:c})); f.position.set(0,1.6,1.12); g.add(f); };
+
+const tablet=(c)=>g=>{ const st=new THREE.Mesh(new THREE.BoxGeometry(0.2,1.1,0.2),L(0x5D7891)); st.position.y=0.55; g.add(st); const t=new THREE.Mesh(new THREE.BoxGeometry(1.4,1,0.08),L(0x1B2B3A)); t.position.set(0,1.45,0); t.rotation.x=-0.35; g.add(t); const sc=new THREE.Mesh(new THREE.PlaneGeometry(1.2,0.82),new THREE.MeshBasicMaterial({color:c})); sc.position.set(0,1.47,0.05); sc.rotation.x=-0.35; g.add(sc); };
+const alarmT=canvasTex(256,256,(x,w,h)=>{ x.fillStyle='#0A1621';x.fillRect(0,0,w,h); const cs=['#F0636B','#F0A63A','#3FC48C','#F0636B','#3FC48C','#F0A63A']; for(let i=0;i<6;i++){ x.fillStyle=cs[i]; x.fillRect(16,18+i*39,22,22); x.fillStyle='#5D7891'; x.fillRect(50,24+i*39,180,10);} });
+const alarmB=(c)=>g=>{ const b=new THREE.Mesh(new THREE.BoxGeometry(0.5,2.4,2.4),L(0x1B2B3A)); b.position.y=1.5; g.add(b); const s=new THREE.Mesh(new THREE.PlaneGeometry(2.1,2.1),new THREE.MeshBasicMaterial({map:alarmT})); s.position.set(0.27,1.5,0); s.rotation.y=Math.PI/2; g.add(s); const st=new THREE.Mesh(new THREE.BoxGeometry(0.3,0.4,0.3),L(0x2A3B4C)); st.position.y=0.2; g.add(st); };
+// ---------- zonas
+plate(-46,-10,-22,10,C.field,'Camadas 1–2 · campo e controle · Unidade Avaré');
+plate(-20,-10,-6,10,C.site,'Camadas 3–4 · supervisão, borda e historiador · CCO Avaré');
+plate(-3,-6,4,6,C.sec,'Segurança · DMZ industrial',['rec']);
+plate(14,-12,34,12,C.mat,'Camada 5 · plataforma de dados · Matriz',['orig','rec']);
+plate(38,-8,52,8,C.coe,'Camada 6 · COE',['orig','rec']);
+plate(-46,-34,-6,-24,C.grey,'Demais unidades · mesmo padrão',['rec']);
+
+// ---------- CLPs (N1–N2)
+const PLC=[['SAUR','tombadores','iso'],['Autokraft','controle de acesso','iso'],['NBR Tech','transporte · S7-1200','iso'],['Kepler','pré-limpeza 1 e 2','iso'],
+['Omega','pré-limpeza 3 e armazém · S7-1500','int'],['Condutiva','temperatura e umidade dos secadores','iso'],['RM','proteção contra incêndio','iso'],['SanTec','depressões da fornalha','iso'],
+['FACH','fornalha e cavaco','iso'],['NBR Termo','termometria dos silos','iso'],['Fockink','aeração do armazém','iso'],['Atlas Copco','ar comprimido','iso']];
+PLC.forEach((p,i)=>{ const col=i%4, row=Math.floor(i/4);
+  item({id:'plc'+i,status:p[2],name:'CLP '+p[0],short:p[0],color:C.field,x:-42+col*5.2,z:-6+row*6,build:cabinet(C.field),cat:'Campo e controle · N1–N2',
+    desc:'Painel de '+p[1]+'. Executa controle e intertravamentos localmente.',why:p[2]==='int'?'Já integrado ao SCADA hoje: serve de referência para os demais.':'Hoje isolado. No To-Be, conecta-se à rede OT da unidade, sem alterar a lógica de controle.'}); });
+const DEF={
+ sw:{views:['orig','rec'],id:'sw',name:'Switch e rede OT da unidade',short:'Rede OT',color:C.site,x:-16,z:0,build:sw(C.site),cat:'CCO Avaré · N3',desc:'Rede industrial que interliga todos os painéis ao CCO, fim das ilhas de automação.',why:'Na recomendação, a rede OT é segmentada por zonas (controle, supervisão) conforme a IEC 62443.'},
+ scada:{views:['asis','orig','rec'],id:'scada',name:'SCADA do CCO (Altus)',short:'SCADA · CCO',color:C.site,x:-11,z:-5,build:rack(C.site),cat:'CCO Avaré · N3',desc:'Supervisão local: telas de operação, alarmes e comandos da unidade.',why:'Continua dedicado à operação. A coleta de dados para o COE passa pelo gateway de borda, sem sobrecarregar o SCADA.'},
+ hist:{views:['orig','rec'],id:'hist',name:'Historiador local da unidade',short:'Historiador local',color:C.site,x:-11,z:5,build:db(C.site),cat:'CCO Avaré · N3',desc:'Grava a série temporal de todas as variáveis da unidade.',why:'Com armazenamento e reenvio: se o link com a matriz cair, a unidade continua gravando e reenvia depois.'},
+ edge:{id:'edge',name:'Gateway de borda (OPC UA / MQTT)',short:'Gateway de borda',color:C.site,x:-8,z:0,build:gate(C.site),isNew:true,views:['rec'],cat:'CCO Avaré · N3',desc:'Lê os CLPs e publica os dados no padrão ISA-95, independente do fornecedor de cada painel.',why:'Desacopla a coleta de dados da supervisão e evita dependência de licença ou fornecedor.'},
+ ihm:{views:['asis','orig','rec'],id:'ihm',name:'Estação de operação do CCO',short:'Operação CCO',color:C.site,x:-16,z:6.5,build:desk(0x00A9F4),cat:'CCO Avaré · N3',desc:'Operadores da unidade acompanham e comandam o processo pelo SCADA.',why:'A unidade mantém autonomia de operação, mesmo sem conexão com a matriz.'},
+ fw:{id:'fw',name:'Firewall industrial',short:'Firewall',color:C.sec,x:0.5,z:-2.5,build:wall(C.sec),isNew:true,views:['rec'],cat:'Segurança',desc:'Controla tudo o que entra e sai da rede OT. Só fluxos autorizados atravessam.',why:'Sem firewall, os CLPs ficariam expostos à rede corporativa e à WAN.'},
+ jump:{id:'jump',name:'Acesso remoto seguro (VPN + MFA)',short:'Acesso remoto',color:C.sec,x:0.5,z:3,build:rack(C.sec,2.2),isNew:true,views:['rec'],cat:'Segurança',desc:'Servidor de salto na DMZ para acesso remoto de fornecedores e do COE, com autenticação multifator e registro de sessões.',why:'Substitui acessos diretos de fornecedores aos painéis, hoje cada um com protocolo e senha próprios.'},
+ broker:{id:'broker',name:'Broker central · Unified Namespace',short:'Unified Namespace',color:C.mat,x:19,z:-6,build:sw(C.mat),isNew:true,views:['rec'],cat:'Matriz · N4',desc:'Recebe os dados de todas as unidades em uma única hierarquia: Holambra / Unidade / Área / Equipamento / Variável.',why:'É o que torna a expansão às sete unidades uma replicação, e não um novo projeto.'},
+ chist:{views:['orig','rec'],id:'chist',name:'Banco central · historiador da matriz',short:'Historiador central',color:C.mat,x:19,z:3,build:db(C.mat,1.5,3.2),cat:'Matriz · N4',desc:'Consolida a série temporal de todas as unidades.',why:'Na proposta inicial era o banco da matriz. Na recomendação, faz parte da plataforma de dados.'},
+ lake:{id:'lake',name:'Plataforma de dados e KPIs',short:'Plataforma de dados',color:C.mat,x:27,z:-6,build:cloud(C.mat),isNew:true,views:['rec'],cat:'Matriz · N4',desc:'Integra automação, ERP, Império e formulários. Calcula os KPIs oficiais uma única vez e os serve ao COE.',why:'Sem essa camada, recepção, classificação e manutenção ficam fora da visão do COE.'},
+ erp:{id:'erp',name:'ERP Evolutize e Império',short:'ERP e Império',color:C.mat,x:28,z:5,build:erp(C.mat),isNew:true,views:['rec'],cat:'Sistemas corporativos',desc:'Recepção, pesagem, classificação e base de relatórios.',why:'Entram na plataforma de dados por integração, sem depender de exportações manuais.'},
+ vw:{views:['orig','rec'],id:'vw',name:'Video wall do COE',short:'Video wall',color:C.coe,x:49,z:0,build:vwall(),cat:'COE',desc:'Visão geral das unidades e visão de cada unidade em tempo real, com alertas.',why:'Consome os KPIs oficiais da plataforma, nunca calcula números na própria tela.'},
+ forms:{views:['asis','orig'],id:'forms',name:'Apontamentos manuais (MS Forms, Jotform)',short:'MS Forms · Jotform',color:C.sec,x:-18.5,z:-8,build:tablet(0xF0A63A),cat:'Apontamentos',desc:'Registros de secagem, resíduos, testes de coluna e ordens de serviço preenchidos à mão.',why:'Campos sem validação aumentam o risco de inconsistência. No To-Be, os apontamentos são digitalizados e padronizados (frente 3).'},
+ apont:{views:['rec'],isNew:true,id:'apont',name:'Apontamentos digitais padronizados',short:'Apontamentos digitais',color:C.site,x:-18.5,z:-8,build:tablet(0x00A9F4),cat:'Frente 3 · digitalização dos apontamentos',desc:'Registros que continuam manuais passam a usar formulários padronizados, com validação de campo, e entram no mesmo padrão de dados.',why:'Reduz erros e inconsistências e coloca esses dados ao lado dos dados de automação.'},
+ alarm:{views:['rec'],isNew:true,id:'alarm',name:'Visão única de alarmes',short:'Alarmes consolidados',color:C.mat,x:31.5,z:0,build:alarmB(0xF0636B),cat:'Frente 4 · visão única de alarmes',desc:'Alarmes e indicadores operacionais de todas as unidades consolidados em uma camada única, com prioridade e responsável.',why:'Hoje cada painel tem seus próprios alarmes, vistos só no local. O COE precisa de uma lista única e priorizada.'},
+ desks:{views:['orig','rec'],id:'desks',name:'Mesa de operação do COE',short:'Operação COE',color:C.coe,x:43,z:0,build:desk(0x3FC48C),cat:'COE',desc:'Operadores do COE acompanham alertas e acionam os pontos focais das unidades.',why:'Comando remoto, quando existir, passa pelo SCADA local com acesso seguro e registro.'},
+};
+Object.values(DEF).forEach(item);
+// demais unidades
+const UN=['Holambra','Takaoka','São Manuel','Taquarivaí','Itaberá','Taquarituba'];
+UN.forEach((u,i)=>item({id:'un'+i,name:'Unidade '+u,short:u,color:C.grey,x:-43+i*6.6,z:-29,views:['rec'],build:g=>{ cabinet(0x5D7891)(g); const e=new THREE.Group(); e.position.set(1.8,0,0); gate(C.site)(e); g.add(e); },
+  cat:'Expansão',desc:'CLPs, rede OT, gateway de borda e historiador local no mesmo padrão de Avaré.',why:'A matriz recebe as novas unidades sem refazer integrações.'}));
+
+// ---------- fluxos
+const P=(x,z,y)=>new THREE.Vector3(x*SP,(y===undefined?0.55:y),z*SP);
+function flow(pts,color,views,opt){ opt=opt||{};
+  const path=new THREE.CurvePath(); for(let i=0;i<pts.length-1;i++) path.add(new THREE.LineCurve3(pts[i],pts[i+1]));
+  const mat=opt.dash?new THREE.MeshBasicMaterial({color,transparent:true,opacity:.55}):new THREE.MeshBasicMaterial({color,transparent:true,opacity:.75});
+  const tube=new THREE.Mesh(new THREE.TubeGeometry(path,Math.max(8,pts.length*10),opt.r||0.09,6,false),mat); scene.add(tube);
+  const dots=[]; const n=opt.n||2; for(let k=0;k<n;k++){ const s=new THREE.Mesh(new THREE.SphereGeometry((opt.r||0.09)*2.4,10,8),new THREE.MeshBasicMaterial({color:opt.dash?0xF0A63A:0xffffff})); scene.add(s); dots.push({m:s,o:k/n}); }
+  const f={tube,dots,path,views,speed:opt.speed||0.18,rev:!!opt.rev}; FLOWS.push(f); return f; }
+const swP=P(-16,0), scP=P(-11,-5), hiP=P(-11,5), edP=P(-8,0);
+// CLPs -> rede (ambas as visões chegam ao CCO; na inicial direto ao SCADA)
+PLC.forEach((p,i)=>{ const col=i%4,row=Math.floor(i/4), x=-42+col*5.2, z=-6+row*6;
+  flow([P(x,z+0.6),P(x,z+1.6),P(-24,z+1.6),P(-24,0.6*(row-1)),swP],C.field,['rec'],{n:1,r:0.06,speed:0.12});
+  flow([P(x,z+0.6),P(x,z+1.6),P(-24,z+1.6),P(-24,-5+0.5*(row-1)),scP],C.field,['orig'],{n:1,r:0.06,speed:0.12}); });
+// unidade (recomendada)
+flow([swP,P(-16,-5),scP],C.site,['rec']); flow([swP,edP],C.site,['rec']); flow([edP,P(-8,5),hiP],C.site,['rec']);
+flow([edP,P(-3,0),P(0.5,0),P(4,0),P(9,0),P(9,-6),P(17.6,-6)],C.site,['rec'],{n:3});      // borda -> firewall -> broker
+flow([hiP,P(-11,8),P(4,8),P(10,8),P(10,3),P(17.4,3)],C.site,['rec'],{n:2});               // historiador local -> central (reenvio)
+flow([P(9,1.6),P(13,1.6)],0x6E7F90,['rec'],{n:1,r:0.05});                                 // 2º link (redundância)
+// matriz (recomendada)
+flow([P(20.4,-6),P(25.4,-6)],C.mat,['rec']); flow([P(19,-4.6),P(19,1.4)],C.mat,['rec']);
+flow([P(28,3.8),P(28,-4.4)],C.mat,['rec']); flow([P(20.6,3),P(25.6,-5)],C.mat,['rec'],{n:1});
+flow([P(29.4,-6),P(36,-6),P(36,-1.5),P(41.5,-1.5)],C.coe,['rec'],{n:3});
+flow([P(44.6,0),P(48.4,0)],C.coe,['rec','orig'],{n:2});
+// comando remoto controlado (futuro)
+flow([P(43,1.6,1.4),P(36,7,1.4),P(4,7,1.4),P(0.5,5,1.4),P(-9.6,-3.5,1.4)],0xF0A63A,['rec'],{dash:true,n:2,r:0.07,speed:0.08});
+// demais unidades -> broker
+UN.forEach((u,i)=>flow([P(-41.2+i*6.6,-29),P(-41.2+i*6.6,-21),P(11,-21),P(11,-7),P(17.6,-7)],0x5D7891,['rec'],{n:1,r:0.05,speed:0.1}));
+// frentes 3 e 4 (recomendada)
+flow([P(-18.5,-7),P(-18.5,-2.5),P(-9.5,-2.5),P(-8.6,-0.6)],C.site,['rec'],{n:1,r:0.06});
+flow([P(28.6,-4.8),P(30.4,-1)],C.mat,['rec'],{n:1}); flow([P(32.4,0),P(36.6,0),P(36.6,0.9),P(41.5,0.9)],0xF0636B,['rec'],{n:2});
+// hoje (As-Is): só o painel Omega chega ao SCADA
+flow([P(-42,0.6),P(-42,1.6),P(-24,1.6),P(-24,-5.5),scP],C.field,['asis'],{n:1,r:0.06,speed:0.12});
+// proposta inicial
+flow([scP,P(-11,1),P(-11,3.6)],C.site,['orig']);
+flow([hiP,P(-11,8),P(10,8),P(10,3),P(17.4,3)],C.site,['orig'],{n:3});
+flow([P(20.6,3),P(36,3),P(36,1.5),P(41.5,1.5)],C.coe,['orig'],{n:3});
+
+// ---------- interação
+const card=document.getElementById('card');
+function select(id,fly){
+  ITEMS.forEach(o=>o.g.traverse(m=>{ if(m.isMesh&&m.material.emissive) m.material.emissive.setHex(o.id===id?0x223344:0); }));
+  if(!id){ card.hidden=true; return; }
+  const o=ITEMS.find(x=>x.id===id); if(!o) return;
+  card.style.setProperty('--cc',css(o.color));
+  card.innerHTML='<button class="x" aria-label="Fechar">×</button><div class="cat">'+o.cat+(o.isNew?' · novo na recomendação':'')+'</div><h2>'+o.name+'</h2><p>'+o.desc+'</p><p class="why">'+o.why+'</p>';
+  card.querySelector('.x').onclick=()=>select(null); card.hidden=false;
+  if(fly){ const t=o.anchor.clone(); t.y=0; flyTo(t,new THREE.Vector3(t.x+16,20,t.z+24)); }
+}
+let anim=null; function flyTo(t,p){ anim={t0:performance.now(),d:matchMedia('(prefers-reduced-motion: reduce)').matches?1:900,fT:controls.target.clone(),tT:t,fP:camera.position.clone(),tP:p}; }
+const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); let down=null;
+renderer.domElement.addEventListener('pointerdown',e=>down=[e.clientX,e.clientY]);
+renderer.domElement.addEventListener('pointerup',e=>{ if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5) return; const id=pick(e); select(id,!!id); });
+renderer.domElement.addEventListener('pointermove',e=>{ if(e.buttons) return; renderer.domElement.style.cursor=pick(e)?'pointer':'grab'; });
+function pick(e){ const r=renderer.domElement.getBoundingClientRect(); mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1); ray.setFromCamera(mouse,camera);
+  const hits=ray.intersectObjects(ITEMS.filter(o=>o.g.visible).map(o=>o.g),true); for(const h of hits){ let o=h.object; while(o&&!o.userData.id) o=o.parent; if(o) return o.userData.id; } return null; }
+
+function setView(v){ view=v;
+  ITEMS.forEach(o=>{ const on=o.views.includes(v); o.g.visible=on; if(o.lbl) o.lbl.hidden=!on; });
+  ZONES.forEach(z=>{ const on=z.views.includes(v); z.g.visible=on; z.lbl.hidden=!on; });
+  FLOWS.forEach(f=>{ const on=f.views.includes(v); f.tube.visible=on; f.dots.forEach(d=>d.m.visible=on); });
+  ITEMS.forEach(o=>{ if(!o.status) return; const f=o.g.userData.front; if(f) f.material.color.setHex(v==='asis'&&o.status==='iso'?0xF0636B:C.field);
+    if(o.lbl) o.lbl.style.setProperty('--cc',v==='asis'&&o.status==='iso'?'#F0636B':css(C.field)); });
+  const hn=ITEMS.find(o=>o.id==='hist'), ch=ITEMS.find(o=>o.id==='chist');
+  hn.lbl.textContent=v==='rec'?'Historiador local':'Banco local'; ch.lbl.textContent=v==='rec'?'Historiador central':'Banco na matriz';
+  document.querySelectorAll('.tog button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v));
+  select(null); document.querySelectorAll('.fronts button').forEach(b=>b.setAttribute('aria-pressed','false'));
+  const note={asis:'Hoje: painéis em ilhas, só o Omega chega ao SCADA, sem historiador nem COE.',orig:'Proposta inicial: CLPs no SCADA do CCO, banco local, banco na matriz e COE.',rec:'To-Be recomendado: as quatro frentes mais os complementos de boa prática.'}[v];
+  document.getElementById('vnote').textContent=note;
+}
+document.querySelectorAll('.tog button').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.v)));
+const FRONTS={1:['sw','scada'].concat(PLC.map((p,i)=>'plc'+i)),2:['hist','chist'],3:['apont'],4:['alarm','scada']};
+const FRONT_VIEW={1:[-24,0],2:[4,0],3:[-16,-6],4:[24,-2]};
+document.querySelectorAll('.fronts button').forEach(b=>b.addEventListener('click',()=>{ const k=b.dataset.front; if(view!=='rec') setView('rec');
+  document.querySelectorAll('.fronts button').forEach(x=>x.setAttribute('aria-pressed',x===b)); const ids=FRONTS[k];
+  ITEMS.forEach(o=>o.g.traverse(m=>{ if(m.isMesh&&m.material.emissive) m.material.emissive.setHex(ids.includes(o.id)?0x2a4a6a:0); }));
+  card.hidden=true; const [x0,z0]=FRONT_VIEW[k], x=x0*SP, z=z0*SP; const t=new THREE.Vector3(x,0,z); flyTo(t,new THREE.Vector3(x+38,58,z+62)); }));
+const HOME_T=new THREE.Vector3(5,0,-13), HOME_P=new THREE.Vector3(-34,150,140);
+document.getElementById('bTop').onclick=()=>flyTo(new THREE.Vector3(18,0,-12),new THREE.Vector3(18,210,-11));
+document.getElementById('bPersp').onclick=()=>{ select(null); flyTo(HOME_T.clone(),HOME_P.clone()); };
+camera.position.copy(HOME_P); controls.target.copy(HOME_T);
+// painel lateral
+const side=document.getElementById('side'), reopen=document.getElementById('reopen');
+const appEl=document.getElementById('app');
+document.getElementById('closeSide').onclick=()=>{ side.classList.add('closed'); reopen.hidden=false; appEl.classList.remove('side-open'); resize(); };
+reopen.onclick=()=>{ side.classList.remove('closed'); reopen.hidden=true; appEl.classList.add('side-open'); resize(); };
+document.querySelectorAll('.atabs [data-t]').forEach(b=>b.addEventListener('click',()=>{ document.querySelectorAll('.atabs [data-t]').forEach(x=>x.setAttribute('aria-selected',x===b));
+  ['tobe','crit','leg'].forEach(t=>{ document.getElementById('p-'+t).hidden=b.dataset.t!==t; }); }));
+if(innerWidth<=860){ side.classList.add('closed'); reopen.hidden=false; document.getElementById('app').classList.remove('side-open'); }
+
+function resize(){ const w=host.clientWidth,h=host.clientHeight; renderer.setSize(w,h); camera.aspect=w/h; camera.fov=w<700?55:38; camera.updateProjectionMatrix(); }
+addEventListener('resize',resize); resize();
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2, v3=new THREE.Vector3();
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function loop(now){
+  if (!window.COE_MODELO_ATIVO || document.hidden) { setTimeout(() => requestAnimationFrame(loop), 250); return; }
+  if(anim){ const k=Math.max(0,Math.min(1,(now-anim.t0)/anim.d)), e=ease(k); controls.target.lerpVectors(anim.fT,anim.tT,e); camera.position.lerpVectors(anim.fP,anim.tP,e); if(k===1) anim=null; }
+  controls.update();
+  const t=now/1000;
+  FLOWS.forEach(f=>{ if(!f.tube.visible) return; f.dots.forEach(d=>{ let u=reduce?d.o:((t*f.speed+d.o)%1); f.path.getPointAt(u,v3); d.m.position.copy(v3); }); });
+  renderer.render(scene,camera);
+  const w=host.clientWidth,h=host.clientHeight;
+  ITEMS.concat(ZONES).forEach(o=>{ if(!o.lbl||o.lbl.hidden) return; v3.copy(o.anchor).project(camera); const vis=v3.z<1&&Math.abs(v3.x)<1.05&&Math.abs(v3.y)<1.05;
+    o.lbl.style.display=vis?'':'none'; if(vis){ o.lbl.style.left=((v3.x+1)/2*w)+'px'; o.lbl.style.top=((1-v3.y)/2*h)+'px'; } });
+  requestAnimationFrame(loop);
+}
+setView('rec');
+// o painel abre o modelo na visão escolhida no 2D (#asis ou #rec)
+const vistaDoEndereco=()=>{ const v=location.hash.slice(1); if(v==='asis'||v==='rec') setView(v); };
+addEventListener('hashchange',vistaDoEndereco); vistaDoEndereco();
+requestAnimationFrame(loop);
+
+// proteção: se a câmera ficar inválida, volta à vista inicial; se o WebGL for perdido, recarrega
+(function(){
+  const bad=v=>!isFinite(v.x)||!isFinite(v.y)||!isFinite(v.z);
+  const chk=()=>{ if(bad(camera.position)||bad(controls.target)){ anim=null; camera.position.copy(HOME_P); controls.target.copy(HOME_T); controls.update(); } requestAnimationFrame(chk); };
+  requestAnimationFrame(chk);
+  renderer.domElement.addEventListener('webglcontextlost',e=>{ e.preventDefault(); },false);
+  renderer.domElement.addEventListener('webglcontextrestored',()=>{ location.reload(); },false);
+})();
+
+(function(){
+  const pad=document.createElement('div'); pad.className='navpad'; pad.setAttribute('role','toolbar'); pad.setAttribute('aria-label','Navegação do modelo');
+  pad.title='Também é possível arrastar para girar, usar Shift ou o botão direito para mover e a roda para aproximar';
+  pad.innerHTML='<button type="button" data-a="l" aria-label="Mover para a esquerda">←</button><button type="button" data-a="u" aria-label="Mover para frente">↑</button><button type="button" data-a="d" aria-label="Mover para trás">↓</button><button type="button" data-a="r" aria-label="Mover para a direita">→</button><span></span><button type="button" data-a="rl" aria-label="Girar para a esquerda">⟲</button><button type="button" data-a="rr" aria-label="Girar para a direita">⟳</button><span></span><button type="button" data-a="in" aria-label="Aproximar">+</button><button type="button" data-a="out" aria-label="Afastar">−</button><button type="button" data-a="home" aria-label="Voltar à vista inicial">⌂</button>';
+  document.getElementById('app').appendChild(pad);
+  function act(a){
+    if(a==='home'){ const h=document.getElementById('bPersp'); if(h) h.click(); return; }
+    const t=controls.target.clone(), off=camera.position.clone().sub(t), dist=off.length();
+    const fh=new THREE.Vector3(-off.x,0,-off.z); if(fh.lengthSq()<1e-6){ camera.getWorldDirection(fh); fh.y=0; if(fh.lengthSq()<1e-6) fh.set(0,0,-1); } const fwd=fh.normalize(), right=new THREE.Vector3().crossVectors(fwd,new THREE.Vector3(0,1,0)).normalize(), step=dist*0.18;
+    let mv=null; if(a==='l') mv=right.multiplyScalar(-step); if(a==='r') mv=right.multiplyScalar(step); if(a==='u') mv=fwd.multiplyScalar(step); if(a==='d') mv=fwd.multiplyScalar(-step);
+    if(mv){ flyTo(t.clone().add(mv),camera.position.clone().add(mv)); return; }
+    if(a==='in'||a==='out'){ off.multiplyScalar(a==='in'?0.75:1.33); flyTo(t,t.clone().add(off)); return; }
+    if(a==='rl'||a==='rr'){ off.applyAxisAngle(new THREE.Vector3(0,1,0),(a==='rl'?1:-1)*Math.PI/10); flyTo(t,t.clone().add(off)); }
+  }
+  pad.addEventListener('click',e=>{ const b=e.target.closest('button'); if(b) act(b.dataset.a); });
+})();
+
+})();
+</script>
+
+</body></html>
