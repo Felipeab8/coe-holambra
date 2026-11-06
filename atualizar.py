@@ -8,6 +8,9 @@ recalcula as contagens e gera js/indicadores.js, js/viabilidade-dados.js e
 index.html. Nada aqui depende de biblioteca externa.
 """
 import csv
+from collections import Counter
+import os
+from html.parser import HTMLParser
 import hashlib
 import json
 import re
@@ -37,12 +40,15 @@ def falha(msg):
 
 def csv_mais_recente():
     def versao(p):
-        m = re.search(r"(\d+(?:\.\d+)?)v", p.stem)
-        return float(m.group(1)) if m else -1.0
-    arquivos = sorted((FONTE / "mapeamento").glob("*.csv"), key=versao)
+        match = re.search(r"(\d+(?:\.\d+)*)v", p.stem)
+        return tuple(map(int, match.group(1).split("."))) if match else (-1,)
+    arquivos = sorted((FONTE / "mapeamento").glob("*.csv"), key=lambda p: (versao(p), p.name))
     if not arquivos:
         falha("nenhum CSV em fonte/mapeamento/.")
-    return arquivos[-1], versao(arquivos[-1])
+    caminho = arquivos[-1]
+    if versao(caminho) == (-1,):
+        falha("nome do CSV sem versão; use, por exemplo, indicadores_1.10v.csv.")
+    return caminho, re.search(r"(\d+(?:\.\d+)*)v", caminho.stem).group(1)
 
 
 def ler_indicadores(caminho):
@@ -51,9 +57,17 @@ def ler_indicadores(caminho):
         faltando = [c for c in COLUNAS.values() if c not in (leitor.fieldnames or [])]
         if faltando:
             falha(f"colunas ausentes no CSV: {', '.join(faltando)}")
-        linhas = [{k: (l[c] or "").strip() for k, c in COLUNAS.items()} for l in leitor]
-    ids = [l["id"] for l in linhas]
-    repetidos = sorted({i for i in ids if ids.count(i) > 1})
+        linhas = []
+        for numero, registro in enumerate(leitor, 2):
+            if None in registro or any(registro[c] is None for c in COLUNAS.values()):
+                falha(f"linha {numero} do CSV tem quantidade de colunas incorreta.")
+            linha = {k: registro[c].strip() for k, c in COLUNAS.items()}
+            if not linha["id"]:
+                falha(f"ID vazio na linha {numero} do CSV.")
+            linhas.append(linha)
+    if not linhas:
+        falha("CSV sem indicadores.")
+    repetidos = sorted(i for i, quantidade in Counter(l["id"] for l in linhas).items() if quantidade > 1)
     if repetidos:
         falha(f"IDs repetidos no CSV: {', '.join(repetidos)}")
     for l in linhas:
@@ -111,7 +125,7 @@ def main():
         falha("nenhuma planilha em Viabilidade/.")
     try:
         viab, onda_por_id = ler_viabilidade.ler(planilhas[-1])
-    except ler_viabilidade.Erro as e:
+    except (ler_viabilidade.Erro, KeyError, StopIteration, ValueError) as e:
         falha(f"{planilhas[-1].name}: {e}")
     so_no_csv = sorted(set(l["id"] for l in linhas) - set(onda_por_id))
     if so_no_csv:
@@ -122,13 +136,14 @@ def main():
     tatica = montar_mural(vw["tatica"], telas)
     estrategica = montar_mural(vw["estrategica"], telas)
 
-    versao_txt = f"{versao:g}"
+    versao_txt = versao
     atualizacao = ultima_atualizacao(linhas)
     nas_tvs = sum(t["ind"] for t in tatica)
     por_onda = {o: sum(l["onda"] == o for l in linhas) for o in "123"}
     estrategicos = sum(t["ind"] for t in estrategica)
     valores = {
         "total": len(linhas),
+        "tvs": len(tatica),
         "nas_tvs": nas_tvs,
         "no_mural": len(linhas) - nas_tvs - estrategicos,
         "estrategicos": estrategicos,
@@ -149,24 +164,36 @@ def main():
     }
     js = "/* Gerado por atualizar.py a partir de " + caminho.name + ". Não edite à mão. */\n"
     js += "window.COE=" + json.dumps(dados, ensure_ascii=False, separators=(",", ":")) + ";\n"
-    (RAIZ / "js" / "indicadores.js").write_text(js, encoding="utf-8")
+    saidas = {"js/indicadores.js": js}
     js = "/* Gerado por atualizar.py a partir de " + planilhas[-1].name + ". Não edite à mão. */\n"
     js += "window.VIAB=" + json.dumps(viab, ensure_ascii=False, separators=(",", ":")) + ";\n"
-    (RAIZ / "js" / "viabilidade-dados.js").write_text(js, encoding="utf-8")
+    saidas["js/viabilidade-dados.js"] = js
 
     blocos, estrutura = [], []
+    rotas = set()
+    etapas_ids = set()
     for e in etapas:
+        if not re.fullmatch(r"[a-z0-9-]+", e["id"]) or e["id"] in etapas_ids:
+            falha(f"etapa inválida ou repetida: {e['id']}")
+        etapas_ids.add(e["id"])
         estrutura.append({"id": e["id"], "nome": e["nome"], "palavra": e.get("palavra", ""),
                           "paginas": [{"id": p["id"], "titulo": p["titulo"], "grupo": p.get("grupo", "")} for p in e["paginas"]]})
         for p in e["paginas"]:
             arq = FONTE / "paginas" / p["arquivo"]
             if not arq.exists():
                 falha(f"página não encontrada: {arq.name}")
-            blocos.append(f'<article class="page" id="p-{e["id"]}-{p["id"]}" hidden>\n'
+            rota = f'{e["id"]}/{p["id"]}'
+            if not re.fullmatch(r"[a-z0-9-]+", p["id"]) or rota in rotas:
+                falha(f"rota inválida ou repetida: {rota}")
+            rotas.add(rota)
+            classe = "page " + p.get("classe", "")
+            if not re.fullmatch(r"[a-zA-Z0-9 _-]+", classe):
+                falha(f"classe inválida na rota: {rota}")
+            blocos.append(f'<article class="{classe.strip()}" id="p-{e["id"]}-{p["id"]}" hidden>\n'
                           f'{arq.read_text(encoding="utf-8")}</article>')
 
     html = (FONTE / "modelo.html").read_text(encoding="utf-8")
-    html = html.replace("{{ESTRUTURA}}", json.dumps(estrutura, ensure_ascii=False))
+    html = html.replace("{{ESTRUTURA}}", json.dumps(estrutura, ensure_ascii=False).replace("<", "\\u003c"))
     html = html.replace("{{PAGINAS}}", "\n".join(blocos))
     for chave, valor in valores.items():
         html = html.replace("{{" + chave + "}}", str(valor))
@@ -174,12 +201,42 @@ def main():
     if sobras:
         falha(f"marcadores sem valor: {', '.join(sobras)}")
 
-    # versão nos links, para o navegador não usar css/js antigos
-    for nome in ("css/componentes.css", "css/painel.css", "js/painel.js", "js/arquitetura.js", "js/indicadores.js",
-                 "js/viabilidade.js", "js/viabilidade-dados.js"):
-        marca = hashlib.md5((RAIZ / nome).read_bytes()).hexdigest()[:8]
-        html = html.replace(f'"{nome}"', f'"{nome}?v={marca}"')
-    (RAIZ / "index.html").write_text(html, encoding="utf-8")
+    # Valida toda a saída antes de substituir qualquer artefato publicado.
+    class ValidarHTML(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.ids = set()
+
+        def handle_starttag(self, tag, attrs):
+            attrs = dict(attrs)
+            ident = attrs.get("id")
+            if ident:
+                if ident in self.ids:
+                    falha(f"ID HTML repetido: {ident}")
+                self.ids.add(ident)
+            for atributo in ("src", "href", "data-src", "data-base", "data-zoom"):
+                recurso = attrs.get(atributo, "")
+                if not recurso or recurso.startswith(("#", "https://", "http://", "data:", "mailto:")):
+                    continue
+                caminho = (RAIZ / recurso.split("?")[0].split("#")[0]).resolve()
+                if not caminho.is_relative_to(RAIZ) or not caminho.is_file():
+                    falha(f"recurso local ausente ou fora do projeto: {recurso}")
+
+    ValidarHTML().feed(html)
+
+    def versionar(match):
+        nome = match.group(1)
+        conteudo = (saidas[nome] if nome in saidas else (RAIZ / nome).read_text(encoding="utf-8")).encode("utf-8")
+        marca = hashlib.sha256(conteudo).hexdigest()[:12]
+        return f'"{nome}?v={marca}"'
+
+    html = re.sub(r'"((?:css|js)/[a-zA-Z0-9_-]+\.(?:css|js))"', versionar, html)
+    saidas["index.html"] = html
+    for nome, conteudo in saidas.items():
+        destino = RAIZ / nome
+        temporario = destino.with_suffix(destino.suffix + ".tmp")
+        temporario.write_text(conteudo, encoding="utf-8", newline="\n")
+        os.replace(temporario, destino)
 
     print(f"Painel atualizado com {caminho.name}")
     print(f"  {len(linhas)} indicadores: {nas_tvs} nas TVs, {valores['no_mural']} no mural, {estrategicos} estratégicos")

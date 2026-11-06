@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><style>body{margin:0}</style></head><body>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<script src="../js/modelo-host.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><style>body{margin:0}</style></head><body>
 <title>Arquitetura To-Be do COE</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -186,8 +187,8 @@ aside.closed{transform:translateX(calc(100% + 24px));opacity:0;pointer-events:no
   <div class="hint">Arrastar: girar · Shift ou botão direito: mover · Roda: zoom · Clique em um componente</div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js" integrity="sha384-wagZhIFgY4hD+7awjQjR4e2E294y6J2HSnd8eTNc15ZubTeQeVRZwhQJ+W6hnBsf" crossorigin="anonymous"></script>
 <script>
 (function(){
 const host=document.getElementById('scene'), labelsEl=document.getElementById('labels');
@@ -399,6 +400,7 @@ addEventListener('resize',resize); resize();
 const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2, v3=new THREE.Vector3();
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function loop(now){
+  if (!window.COE_MODELO_ATIVO || document.hidden) { setTimeout(() => requestAnimationFrame(loop), 250); return; }
   if(anim){ const k=Math.max(0,Math.min(1,(now-anim.t0)/anim.d)), e=ease(k); controls.target.lerpVectors(anim.fT,anim.tT,e); camera.position.lerpVectors(anim.fP,anim.tP,e); if(k===1) anim=null; }
   controls.update();
   const t=now/1000;

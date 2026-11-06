@@ -1,170 +1,154 @@
 # Painel COE Holambra
 
-Site que reúne, em um só lugar, os entregáveis do desenho do **Centro de Excelência Operacional (COE)** da Cooperativa Agroindustrial Holambra: objetivos, desafios, indicadores, infraestrutura, viabilidade, governança e roadmap. O piloto é a Unidade Avaré.
+Painel do desenho do **Centro de Excelência Operacional da Cooperativa Agroindustrial Holambra**, com piloto na Unidade Avaré. Reúne objetivos, desafios, indicadores, infraestrutura, estudo de viabilidade, governança e roadmap.
 
-> [!CAUTION]
-> **Conteúdo restrito.** O estudo de viabilidade tem classificação restrita e está em emissão preliminar (revisão A). Mantenha este repositório privado. Não publique o painel, nem ative o GitHub Pages, sem autorização.
+A home foi integrada ao gerador do sistema a partir do redesign fornecido. As **19 páginas em 8 seções**, os **416 indicadores**, a planilha, as fotos, os gráficos, os modelos 3D e o videowall continuam no mesmo projeto.
 
-![Tela inicial do painel no tema escuro](docs/capturas/inicio-escuro.jpg)
+> O conteúdo inclui estudo corporativo classificado como restrito. Um repositório privado não protege uma hospedagem pública. Esta entrega prepara os arquivos e não publica o painel. Para disponibilização externa, use uma hospedagem com controle de acesso e a autorização responsável pelo conteúdo.
 
-## Sumário
+![Página inicial integrada](docs/capturas/inicio-claro.jpg)
 
-- [Como abrir](#como-abrir)
-- [O que há no painel](#o-que-há-no-painel)
-- [Como o projeto funciona](#como-o-projeto-funciona)
-- [Estrutura das pastas](#estrutura-das-pastas)
-- [Como atualizar](#como-atualizar)
-- [Conteúdo que depende de internet](#conteúdo-que-depende-de-internet)
-- [Navegação e atalhos](#navegação-e-atalhos)
-- [Regras do projeto](#regras-do-projeto)
+## Executar localmente
 
-## Como abrir
-
-Baixe o repositório e abra `index.html` no navegador, com dois cliques. Não há instalação nem servidor.
+Para **visualizar**, não há dependências de produção nem instalação de pacotes. Pode abrir `index.html` diretamente. Para desenvolvimento e comportamento consistente de origem/localStorage, prefira HTTP local:
 
 ```powershell
-git clone https://github.com/Felipeab8/coe-holambra.git
-cd coe-holambra
-start index.html
+python -m http.server 8000 --bind 127.0.0.1
 ```
 
-## O que há no painel
+Abra [http://127.0.0.1:8000](http://127.0.0.1:8000). Encerre o servidor com `Ctrl+C`. Esse servidor é para desenvolvimento, não para produção.
 
-São 19 páginas em 8 seções. O menu do topo segue esta ordem. Páginas irmãs ficam em abas e os detalhes longos em seções recolhíveis, para o título e o recado de cada bloco ficarem à vista.
+Para clonar após criar o repositório:
 
-| Seção | Páginas | O que mostra |
-| --- | --- | --- |
-| Início | 1 | Objetivo do COE e um resumo de todo o site |
-| Objetivos | 1 | O que a Holambra espera do COE, a partir de 12 entrevistas e da visita técnica a Avaré |
-| Desafios | 1 | Dores relatadas pelas áreas, gerais e por etapa da operação |
-| Indicadores | 2 | Mural com as telas do video wall ao vivo, camadas de leitura e ficha de cada KPI |
-| Infraestrutura | 7 | Diagnóstico da unidade; física: diagnóstico de campo e soluções, piloto Avaré em 3D, fichas dos equipamentos e sala do COE; software: arquitetura As-Is e To-Be em 2D e 3D, sistemas e históricos |
-| Viabilidade | 5 | Situação atual, investimento e retorno, solução e contratação, plano e gates, decisões e próximos passos |
-| Governança | 1 | Níveis de decisão, rituais, papéis, equipe de Avaré e áreas envolvidas |
-| Roadmap | 1 | Expansão às sete unidades, ondas de implementação e jornada de automação |
-
-| Mural de indicadores | Piloto Avaré em 3D |
-| --- | --- |
-| ![Mural com as telas do video wall](docs/capturas/mural.jpg) | ![Modelo 3D da Unidade Avaré](docs/capturas/piloto-3d.jpg) |
-
-### Versões das fontes
-
-| Fonte | Versão atual | Alimenta |
-| --- | --- | --- |
-| Mapeamento de indicadores (CSV) | 1.5v, com 416 indicadores | Mural, ficha de KPI, busca e contagens do site |
-| Estudo de viabilidade (planilha) | Revisão A, emissão preliminar | Cenários, fluxo de caixa, priorização, gates, riscos, plano mestre e sala do COE |
-| Estudo de viabilidade (Word) | Revisão A, emissão preliminar | Textos das páginas `05-*`, já transcritos para `fonte/paginas/` |
-
-## Como o projeto funciona
-
-O site é montado por um script a partir da pasta `fonte/`. Os arquivos gerados também ficam no repositório, para o painel abrir sem nenhuma etapa prévia.
-
-```mermaid
-flowchart LR
-    A["CSV do mapeamento<br>fonte/mapeamento/"] --> S
-    B["Planilha do estudo<br>Viabilidade/"] --> S
-    C["Páginas HTML<br>fonte/paginas/"] --> S
-    D["Ordem das páginas<br>fonte/etapas.json"] --> S
-    E["Telas e TVs<br>fonte/videowall.json"] --> S
-    S(["python atualizar.py"]) --> F["index.html"]
-    S --> G["js/indicadores.js"]
-    S --> H["js/viabilidade-dados.js"]
+```powershell
+git clone <URL-DO-REPOSITORIO-PRIVADO>
+cd coe-holambra-main
 ```
 
-O `atualizar.py` usa apenas a biblioteca padrão do Python, sem `pip install`. Além de montar o site, ele:
+## Gerar e atualizar
 
-- escolhe o CSV de versão mais alta;
-- recalcula todas as contagens exibidas nas páginas;
-- para com erro se faltar uma coluna no CSV, um rótulo na planilha, um ID ficar repetido ou uma página não existir;
-- avisa quando um indicador fica sem onda;
-- versiona os links de CSS e JS, para o navegador não usar arquivos antigos.
-
-## Estrutura das pastas
-
-```text
-.
-├── index.html                 Site completo (gerado)
-├── atualizar.py               Monta o site a partir de fonte/
-├── fonte/
-│   ├── modelo.html            Esqueleto do site: barra do topo, rodapé, janelas
-│   ├── etapas.json            Seções, páginas e sua ordem
-│   ├── videowall.json         Endereço e organização das telas e TVs
-│   ├── ler_viabilidade.py     Lê a planilha do estudo
-│   ├── gerar_paisagem.py      Desenha a ilustração da tela inicial
-│   ├── mapeamento/            CSVs do mapeamento de indicadores
-│   └── paginas/               Uma página HTML por arquivo
-├── Viabilidade/               Planilha do estudo
-├── css/
-│   ├── painel.css             Layout, navegação e tema
-│   └── componentes.css        Cartões, tabelas e diagramas
-├── js/
-│   ├── painel.js              Navegação, mural, ficha de KPI e busca
-│   ├── viabilidade.js         Tabelas e gráficos da seção Viabilidade
-│   ├── arquitetura.js         Diagrama de arquitetura
-│   ├── indicadores.js         Dados dos indicadores (gerado)
-│   └── viabilidade-dados.js   Dados do estudo (gerado)
-├── holambra-avare-3d/         Modelo 3D da Unidade Avaré
-├── arq3d/                     Modelo 3D da arquitetura To-Be
-├── dados/                     Imagens das fichas por sistema e fotos do diagnóstico
-├── img/                       Ícones e imagens da cadeia operacional
-└── docs/capturas/             Imagens deste README
-```
-
-Os arquivos das páginas têm número no nome, mas quem define a ordem no site é o `fonte/etapas.json`.
-
-## Como atualizar
-
-Depois de qualquer mudança em `fonte/` ou em `Viabilidade/`, rode:
+**Python 3.10 ou superior**, apenas biblioteca padrão. Validado localmente com Python 3.13.7. Não é necessário `pip install`, Node ou npm para gerar o painel.
 
 ```powershell
 python atualizar.py
 ```
 
-Não edite à mão `index.html`, `js/indicadores.js` nem `js/viabilidade-dados.js`: eles são regravados a cada execução.
+Esse é o **build de produção** do projeto: gera `index.html`, `js/indicadores.js` e `js/viabilidade-dados.js`. Esses três arquivos precisam ficar versionados, pois permitem abrir o painel sem Python. Não há bundle, pasta `dist/` ou compilação de framework.
 
-| Para mudar | Mexa em |
+O gerador seleciona a maior versão numérica do CSV (`1.10` vem depois de `1.9`), lê os valores calculados do XLSX, valida IDs, rotas, marcadores e recursos locais e só então substitui as saídas. As substituições são atômicas por arquivo; não constituem uma transação de diretório. Antes de trocar um XLSX, recalcule e salve a planilha no Excel/LibreOffice: Python não calcula fórmulas.
+
+| Alteração | Fonte correta |
 | --- | --- |
-| Mapeamento de indicadores | Coloque o CSV novo em `fonte/mapeamento/`. O de versão mais alta é usado (`..._1.6v.csv`), e todas as contagens se recalculam. |
-| Estudo de viabilidade | Coloque a planilha nova em `Viabilidade/`. Cenários, fluxo de caixa, priorização, roadmap, gates, plano mestre (aba 01) e sala do COE (aba 02) se atualizam sozinhos. Textos vindos do Word ficam nas páginas `05-*`. |
-| Texto de uma página | O arquivo dela em `fonte/paginas/`. |
-| Resumo da tela inicial | O bloco "O que você vai ver neste site" em `fonte/paginas/00-01-objetivo-do-coe.html`. É escrito à mão: revise se uma seção mudar de conteúdo. |
-| Nova página ou ordem das páginas | `fonte/etapas.json` e o arquivo em `fonte/paginas/`. O campo `palavra` é o nome curto no menu. O campo opcional `grupo` vira coluna no menu suspenso; páginas do mesmo grupo devem ficar em sequência. |
-| Telas e TVs do mural | `fonte/videowall.json`. Uma tela nova no CSV precisa do código aqui; se faltar, o `atualizar.py` avisa. |
-| Visual | `css/painel.css` (layout) e `css/componentes.css` (componentes). |
-| Ilustração da tela inicial | Cores: variáveis `--ps-*` em `css/painel.css`, uma paleta por tema. Desenho: `python fonte/gerar_paisagem.py fonte/paginas/00-01-objetivo-do-coe.html`, depois `python atualizar.py`. |
+| Home | `fonte/paginas/00-01-objetivo-do-coe.html`, `css/home.css`, `js/home.js`, `js/home-media.js` |
+| Imagens da home | `img/home/`; nomes usados em `js/home-media.js` |
+| Texto e imagens das demais páginas | `fonte/paginas/` |
+| Ordem, rotas e grupos | `fonte/etapas.json` |
+| Navegação, busca, KPIs, tema | `js/painel.js` |
+| Estilos e identidade compartilhada | `css/painel.css`, `css/componentes.css` |
+| Indicadores | Novo CSV versionado em `fonte/mapeamento/` |
+| Viabilidade | `Viabilidade/COE_Holambra_Estudo_Viabilidade.xlsx` |
+| Endereço e composição do videowall | `fonte/videowall.json` |
+| Modelos 3D | `holambra-avare-3d/index.html`, `arq3d/index.html`, `js/modelo-host.js` |
 
-Para registrar a mudança no GitHub:
+**Não edite manualmente os três arquivos gerados.** Depois de mudar fontes, dados ou CSS/JS, execute o gerador para atualizar também os hashes de cache. O cálculo normaliza quebras de linha para que o build seja reproduzível em checkouts Windows e Linux. Há um fragmento histórico `04-05-arquitetura-to-be-em-3d.html` fora de `etapas.json`; foi preservado, sem acrescentar uma rota duplicada.
+
+As imagens de marca fornecidas posteriormente pelo usuário foram incorporadas em `img/marca/`: moinho no cabeçalho, na home e no favicon; marca completa no rodapé. Os arquivos foram preservados sem edição de pixels.
+
+## Tecnologias e dependências
+
+- HTML5, CSS3 e JavaScript nativo; roteamento por hash, sem servidor de aplicação.
+- Python 3.10+ para geração, testes de dados e leitura do CSV/XLSX.
+- Three.js **0.128.0 (r128)** e OrbitControls **0.128.0**, carregados por CDN com verificação SRI.
+- Plus Jakarta Sans e Fraunces por Google Fonts, com fontes de sistema como fallback. Os modelos mantêm suas fontes originais.
+- Imagens responsivas WebP na home; fotos originais e miniaturas locais preservadas. O herói solicita só a variante necessária e os recursos fora de tela usam carregamento tardio.
+- Apenas para testes opcionais: Node.js 20+, pnpm **11.25.0**, Playwright **1.56.1** e axe-core **4.11.0**, travados no `pnpm-lock.yaml`.
+
+Não há `.env`, banco, backend, autenticação própria nem endpoints privados implementados. Criar `.env.example` sem variáveis usadas não teria função. Configuração de acesso pertence à hospedagem.
+
+## Testes
+
+Verificações de dados e sintaxe, sem instalar dependências Python:
 
 ```powershell
-git add .
-git commit -m "Descreva o que mudou"
-git push
+python atualizar.py
+python -m unittest discover -s tests -v
+node scripts/check-javascript.cjs
 ```
 
-## Conteúdo que depende de internet
+Para navegador real e acessibilidade, instale as ferramentas opcionais (requer pnpm 11.25.0; se necessário, instale-o com `npm install --global pnpm@11.25.0`):
 
-O painel abre offline, mas estes itens só carregam conectado:
+```powershell
+pnpm install --frozen-lockfile --ignore-scripts
+pnpm exec playwright install chromium
+```
 
-| Item | De onde vem |
-| --- | --- |
-| Telas do video wall | Ao vivo, em iframe, de [felipeab8.github.io/videowall-coe](https://felipeab8.github.io/videowall-coe/). Não são capturas: clique em uma tela para abri-la e usar os filtros. |
-| Modelos 3D | Bibliotecas carregadas de CDN (jsDelivr e cdnjs) |
-| Fonte Plus Jakarta Sans | Google Fonts |
+Inicie o servidor em um terminal:
 
-## Navegação e atalhos
+```powershell
+python -m http.server 8765 --bind 127.0.0.1
+```
 
-Os botões **Anterior** e **Próxima** ficam fixos no canto inferior direito, em qualquer ponto da rolagem.
+Em outro terminal, na raiz do projeto:
 
-| Tecla | Ação |
-| --- | --- |
-| Setas para esquerda e direita | Página anterior e próxima |
-| `Ctrl K` ou `/` | Busca |
-| `F` | Tela cheia |
-| `M` | Abrir o menu em telas menores |
+```powershell
+pnpm run test:browser
+pnpm run audit:ui
+pnpm audit
+```
 
-## Regras do projeto
+Os scripts usam `http://127.0.0.1:8765`. `COE_BASE_URL` permite escolher outro servidor. `COE_EVIDENCE_DIR` altera a pasta de capturas/relatórios; o padrão `test-results/` é ignorado pelo Git. Parte dos testes abre modelos com bibliotecas externas: exige internet e suporte WebGL. A auditoria registra falhas externas separadamente e falha se houver erro próprio, recurso local ausente, overflow ou violação WCAG detectada nas páginas verificadas. Uma varredura automática não certifica acessibilidade integral.
 
-- **Sigilo:** repositório privado, e nada de publicar o painel sem autorização. Se o repositório virar público, o histórico inteiro fica exposto, incluindo a planilha.
-- **Documento Word:** o Word do estudo fica fora do repositório, porque nenhum script o utiliza. Ele não deve ser adicionado sem necessidade. A regra está no `.gitignore`.
-- **Telas sempre ao vivo:** as telas do video wall entram por iframe, nunca como imagem.
-- **Fotos de campo:** confira uma a uma antes de usar. Não publique imagens em que apareçam pessoas identificáveis.
+O workflow `.github/workflows/validar.yml` gera e verifica os arquivos, executa testes Python em 3.10/3.13 e testes Chromium. Foi revisado localmente; sua execução no GitHub só poderá ser confirmada após o envio ao repositório.
+
+## Funcionalidades e atalhos
+
+- Menu por seção, abas, detalhes recolhíveis e navegação anterior/próxima.
+- Busca global por texto e ID; filtros por tela, fornecedor, situação, onda e alerta.
+- Mural tático/estratégico com iframes ao vivo, rodízio e telão.
+- Fotos ampliáveis, arquitetura 2D/3D, modelo de Avaré, simulador e tabelas da viabilidade.
+- Temas claro/escuro, navegação por teclado, foco visível e movimento reduzido.
+- `Ctrl+K` ou `/`: busca. Setas esquerda/direita: páginas, quando o foco não está num controle. `F`: tela cheia. `M`: menu móvel. `Escape`: fechar diálogos/menu. Setas cima/baixo: escolher KPI na lista.
+
+**Câmeras do modelo Avaré:** o editor preserva as alterações no `localStorage` do navegador/origem em uso e exporta CSV. O painel informa explicitamente o modo local. Não existe colaboração, login ou banco compartilhado implementado neste repositório. Trocar de porta, navegador ou domínio muda esse armazenamento; exporte antes de migrar.
+
+## Internet e limites operacionais
+
+O conteúdo local funciona sem internet; fontes usam fallback. O videowall depende de [felipeab8.github.io/videowall-coe](https://felipeab8.github.io/videowall-coe/), e os modelos 3D dependem das duas CDNs. O painel trata indisponibilidade sem substituir TVs por imagens. Carregar um iframe não comprova a atualidade nem a correção dos dados do serviço externo.
+
+O catálogo inclui campos “Validar”, simulações e premissas preliminares; a integração preserva esses avisos. Não conectamos sistemas corporativos ou sensores inexistentes no código.
+
+## Estrutura
+
+```text
+index.html                 # painel gerado; necessário para execução estática
+atualizar.py               # gerador e validação
+fonte/                     # modelo, 20 fragmentos, JSON, CSV e leitor XLSX
+Viabilidade/               # planilha necessária ao build
+css/                       # componentes, painel e home
+js/                        # módulos, integração 3D e dados gerados
+img/                       # ícones e WebPs da home
+dados/                     # fotos e miniaturas
+arq3d/                     # arquitetura 3D
+holambra-avare-3d/          # modelo Avaré e editor de câmeras
+tests/                     # testes Python, Chromium e auditoria
+scripts/                   # verificação de sintaxe
+docs/                      # diagnóstico, relatório, segurança e manutenção
+.github/workflows/         # validação; sem implantação automática
+```
+
+## Colocar no GitHub
+
+Crie um **repositório privado vazio**, sem README automático. Na pasta deste projeto:
+
+```powershell
+git init -b main
+git add .
+git diff --cached --stat
+git commit -m "Integra home modernizada ao painel COE Holambra"
+git remote add origin <URL-DO-REPOSITORIO-PRIVADO>
+git push -u origin main
+```
+
+Revise o conteúdo antes do primeiro envio. `.gitignore` exclui credenciais, ambientes reais, `node_modules`, caches, ZIPs e temporários; não exclui os dados e HTML gerados necessários. Não foi adicionado um arquivo LICENSE porque os anexos não concedem uma licença para redistribuição.
+
+Para hospedagem, consulte [Segurança e produção](docs/SEGURANCA-E-PRODUCAO.md). Para o trabalho realizado e resultados reais, veja [Relatório de integração](docs/RELATORIO-FINAL.md), [Diagnóstico e plano](docs/DIAGNOSTICO-E-PLANO.md) e [Inventário das alterações](docs/ALTERACOES.md).
