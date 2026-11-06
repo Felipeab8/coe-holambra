@@ -1,17 +1,17 @@
 /* Layout e identidade do painel. Os componentes das páginas estão em componentes.css. */
 :root,:root[data-theme="light"]{
-  --bg:#EDF0F4; --surface:#FFFFFF; --soft:#E2E7EE; --line:#CCD5E0;
-  --fg:#0F2233; --dim:#4F6075; --deep:#0A1F33; --deep-ink:#FFFFFF; --deep-dim:#A9BACB;
-  --accent:#1B4DD4; --accent-2:#3DB8F0; --accent-soft:#DDE7FF;
+  --bg:#F3F7FB; --surface:#FFFFFF; --soft:#E7EFF7; --line:#CDD9E6;
+  --fg:#122C46; --dim:#4D6278; --deep:#003A70; --deep-ink:#FFFFFF; --deep-dim:#CFDFF0;
+  --accent:#003A70; --accent-2:#B82030; --accent-soft:#DFEBF7;
   --ok:#0F7A54; --warn:#9A5B00; --crit:#C42B36; --off:#CCD5E0; --warn-soft:#FBEFD9;
   --grao:#E6A92E; --sala:#06121E; --sala-linha:#1A2E42;
-  --f-display:'Archivo',Arial,Helvetica,sans-serif; --f-body:'Archivo',Arial,Helvetica,sans-serif;
+  --f-display:'Plus Jakarta Sans',Arial,sans-serif; --f-body:'Plus Jakarta Sans',Arial,sans-serif;
   color-scheme:light;
 }
 :root[data-theme="dark"]{
-  --bg:#081523; --surface:#0F2133; --soft:#152B40; --line:#25405A;
-  --fg:#E7EEF5; --dim:#A0B3C6; --deep:#050F1A; --deep-ink:#FFFFFF; --deep-dim:#9DB0C3;
-  --accent:#86A7FF; --accent-2:#4CC4F5; --accent-soft:#17294D;
+  --bg:#06172B; --surface:#0D223B; --soft:#142F4C; --line:#34516E;
+  --fg:#F0F5FB; --dim:#AFBFD2; --deep:#0B3158; --deep-ink:#FFFFFF; --deep-dim:#BFD3E8;
+  --accent:#91C8FF; --accent-2:#FF8791; --accent-soft:#12365D;
   --ok:#3FC48C; --warn:#F0A63A; --crit:#F0636B; --off:#2A445A; --warn-soft:#3A2C12;
   color-scheme:dark;
 }
@@ -26,9 +26,9 @@ svg{stroke-linecap:round;stroke-linejoin:round}
 /* ---------- barra flutuante: marca, etapas com menu suspenso e ferramentas ---------- */
 .barra-topo{position:sticky;top:12px;z-index:30;display:flex;align-items:center;gap:10px;min-height:60px;margin:12px var(--mx) -72px;padding:8px 12px 8px 14px;border:1px solid var(--line);border-radius:18px;background:color-mix(in srgb,var(--bg) 80%,transparent);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);box-shadow:0 10px 30px rgba(20,26,34,.07);color:var(--fg);transition:background-color .3s,border-color .3s,box-shadow .3s}
 .marca{display:flex;align-items:center;gap:9px;flex:0 0 auto;color:inherit;text-decoration:none}
-.marca-selo{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent-2);color:#FFF8F2;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.marca-selo{display:grid;place-items:center;width:144px;height:37px;background:transparent;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .marca:hover .marca-selo{transform:scale(1.04)}
-.marca-selo img{display:block;width:32px;height:32px;object-fit:contain;border-radius:6px}
+.marca-selo img{grid-area:1/1;display:block;width:100%;height:auto;object-fit:contain}
 .marca b{font-family:var(--f-display);font-size:22px;font-weight:400;letter-spacing:-.01em;white-space:nowrap}
 .trilho{flex:1 1 auto;min-width:0;display:flex;justify-content:center}
 .etapas{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:2px}
@@ -36,7 +36,7 @@ svg{stroke-linecap:round;stroke-linejoin:round}
 .etapa.larga{position:static}
 .etapa-l{display:flex;align-items:center;gap:4px;height:40px;padding:0 10px;border:0;border-radius:11px;background:none;color:var(--texto-2);font:inherit;font-size:14.5px;font-weight:500;white-space:nowrap;cursor:pointer;transition:background-color .2s,color .2s}
 .etapa-l:hover,.etapa.aberta .etapa-l{background:var(--soft);color:var(--fg)}
-.etapa.ativa .etapa-l{color:var(--accent);font-weight:600}
+.etapa.ativa .etapa-l{color:var(--accent);font-weight:600;box-shadow:inset 0 -2px var(--holambra-vermelho)}
 .seta{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;opacity:.6;transition:transform .28s cubic-bezier(.2,.8,.2,1)}
 .etapa.aberta .seta{transform:rotate(180deg)}
 
@@ -173,8 +173,8 @@ dialog::backdrop{background:rgba(3,10,17,.97)}
 .step h4{font-size:14.5px;font-stretch:90%}
 
 /* ---------- estudo de viabilidade ---------- */
-:root{--o1:#1B4DD4;--o2:#17917F;--o3:#D9921A}
-:root[data-theme="dark"]{--o1:#6C8FF2;--o2:#27A596;--o3:#D08C1A}
+:root{--o1:#003A70;--o2:#EF3340;--o3:#C48B24}
+:root[data-theme="dark"]{--o1:#91C8FF;--o2:#FF7783;--o3:#EDBB60}
 .o1{background:var(--o1)} .o2{background:var(--o2)} .o3{background:var(--o3)}
 .o-ponto{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;vertical-align:-1px}
 .vb-leg{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--dim);margin-bottom:10px}
@@ -423,21 +423,22 @@ a.vb-lin:hover .nome{color:var(--accent)}
 [data-theme="dark"] .g-trilha i.crit,[data-theme="dark"] .o-ponto.pm-crit{background:var(--accent-2)}
 @media (max-width:860px){.vw-ops{grid-template-columns:minmax(0,1fr)}.vw-area{min-height:0}}
 
-/* ---------- tema: creme, areia e terracota, títulos em serifa e cartões arredondados ---------- */
+/* ---------- identidade Holambra: azul oficial, vermelho e superfícies em marinho ---------- */
 :root,:root[data-theme="light"]{
-  --bg:#F7F8F3; --surface:#FFFFFF; --soft:#EDF2E6; --line:#D5DFD0; --line-2:#E5EBDF; --sala:var(--bg);
-  --fg:#222E26; --dim:#536159; --texto-2:#3D4D43; --deep:#1E3A5F; --deep-ink:#F4F7FB; --deep-dim:#C3D1E0;
-  --accent:#28613B; --accent-2:#A92525; --accent-soft:#E2EEDC;
+  --holambra-azul:#003A70; --holambra-vermelho:#EF3340;
+  --bg:#F3F7FB; --surface:#FFFFFF; --soft:#E7EFF7; --line:#CDD9E6; --line-2:#E0E8F1; --sala:var(--bg);
+  --fg:#122C46; --dim:#4D6278; --texto-2:#334E69; --deep:#003A70; --deep-ink:#FFFFFF; --deep-dim:#CFDFF0;
+  --accent:var(--holambra-azul); --accent-2:#B82030; --accent-soft:#DFEBF7;
   --ok:#23704F; --warn:#8A5D0B; --crit:#A8322F; --off:#DCE3EB; --warn-soft:#FBEFD6; --grao:#3A82C4;
-  --ok-soft:#DDF0E6; --crit-soft:#F9E1DF; --sobre-accent:#F7FAFD; --o1:#2F6CA8; --o2:#2A9D8F; --o3:#E2A73C;
+  --ok-soft:#DDF0E6; --crit-soft:#F9E1DF; --sobre-accent:#FFFFFF; --o1:#003A70; --o2:#EF3340; --o3:#C48B24;
   --f-display:'Plus Jakarta Sans',Arial,sans-serif; --f-body:'Plus Jakarta Sans',Arial,sans-serif;
 }
 :root[data-theme="dark"]{
-  --bg:#0A0F15; --surface:#131B26; --soft:#1B2933; --line:#334451; --line-2:#263743; --sala:var(--bg);
-  --fg:#E8EEF5; --dim:#A3B3C5; --texto-2:#C6D2DF; --deep:#203043; --deep-ink:#E8EEF5; --deep-dim:#A3B3C5;
-  --accent:#A8D587; --accent-2:#FF8277; --accent-soft:#243929;
+  --bg:#06172B; --surface:#0D223B; --soft:#142F4C; --line:#34516E; --line-2:#223F5D; --sala:var(--bg);
+  --fg:#F0F5FB; --dim:#AFBFD2; --texto-2:#C8D8E9; --deep:#0B3158; --deep-ink:#FFFFFF; --deep-dim:#BFD3E8;
+  --accent:#91C8FF; --accent-2:#FF8791; --accent-soft:#12365D;
   --ok:#62CBA0; --warn:#EDBB60; --crit:#EF8A85; --off:#2B3C51; --warn-soft:#37290F; --grao:#74B3EE;
-  --ok-soft:#173428; --crit-soft:#3A1F21; --sobre-accent:#0D1521; --o1:#74B3EE; --o2:#4FC3B4; --o3:#EDBB60;
+  --ok-soft:#173428; --crit-soft:#3A1F21; --sobre-accent:#06172B; --o1:#91C8FF; --o2:#FF7783; --o3:#EDBB60;
 }
 :root{--mx:max(clamp(16px,3vw,40px),calc((100% - 1280px) / 2));--toph:84px;--curva:cubic-bezier(.2,.75,.2,1)}
 body{font-family:var(--f-body);font-size:15.5px;line-height:1.55;font-stretch:normal;background:var(--bg);color:var(--fg);transition:background-color .3s,color .3s}
@@ -511,11 +512,11 @@ a{transition:color .2s}
 .esc i{color:var(--accent)}
 .prow .bar{border-radius:0!important}
 .prow .bar b{font-weight:400!important}
-.pyr2 .prow:nth-of-type(2) .bar{background:#1E3A5F!important}
-.pyr2 .prow:nth-of-type(3) .bar{background:#27507E!important}
-.pyr2 .prow:nth-of-type(5) .bar{background:#2F6299!important}
-.pyr2 .prow:nth-of-type(6) .bar{background:#285E91!important}
-.pyr2 .prow:nth-of-type(7) .bar{background:#2D6395!important}
+.pyr2 .prow:nth-of-type(2) .bar{background:#003A70!important}
+.pyr2 .prow:nth-of-type(3) .bar{background:#0B467E!important}
+.pyr2 .prow:nth-of-type(5) .bar{background:#155489!important}
+.pyr2 .prow:nth-of-type(6) .bar{background:#195B91!important}
+.pyr2 .prow:nth-of-type(7) .bar{background:#226395!important}
 
 /* tabelas */
 .tbl{border:1px solid var(--line);border-radius:20px;background:var(--surface)}
@@ -702,6 +703,11 @@ td:first-child{font-weight:600}
 .passos-fixos .pg-bt:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .pg-bt.fim{padding-inline:20px;background:none;border-color:transparent;color:var(--dim);text-align:right;justify-content:flex-end}
 .rodape{margin-top:auto;padding-bottom:88px}
+/* Na home móvel, a navegação fica após o conteúdo para não encobrir CTAs. */
+@media (max-width:999px){
+  [data-pagina="inicio"] .passos-fixos{position:static;align-self:flex-end;max-width:calc(100% - 36px);margin:20px 18px 0;box-shadow:none}
+  [data-pagina="inicio"] .rodape{padding-bottom:28px}
+}
 @media (max-width:760px){
   .passos-fixos{left:10px;right:10px;bottom:max(10px,env(safe-area-inset-bottom))}
   .passos-fixos .pg-bt{flex:1 1 0;min-width:0;width:auto}
@@ -785,7 +791,18 @@ html:has(.model:fullscreen){scrollbar-gutter:auto}
 
 .fh > span{color:var(--deep-ink)}
 
-/* Marca fornecida pelo usuário: arquivos preservados, sem recoloração ou distorção. */
-.marca-selo{border-radius:6px;background:#07375C}
-.rodape-marca{display:block;width:160px;background:#fff;border-radius:10px;overflow:hidden}
-.rodape-marca img{display:block;width:160px;height:80px;object-fit:contain}
+/* SVG original transparente. A versão escura altera apenas o azul das letras para branco. */
+.marca{gap:12px}
+.marca b{padding-left:12px;border-left:1px solid var(--line);font-size:15px;letter-spacing:.08em;color:var(--accent)}
+.marca-selo,.rodape-marca{padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+.rodape-marca{display:grid;width:192px}
+.rodape-marca img{grid-area:1/1;display:block;width:100%;height:auto;object-fit:contain}
+.marca-selo .marca-escura,.rodape-marca .marca-escura{display:none}
+[data-theme="dark"] .marca-clara{display:none}
+[data-theme="dark"] .marca-selo .marca-escura,[data-theme="dark"] .rodape-marca .marca-escura{display:block}
+.rodape-id{gap:12px}
+.arch .rh.rcoe b{color:var(--deep-ink)}
+@media(max-width:760px){.marca-selo{width:128px;height:33px}.marca{gap:10px}.marca b{padding-left:10px;font-size:14px}}
+@media(max-width:480px){.marca-selo{width:116px;height:30px}.marca{gap:8px}.marca b{padding-left:8px;font-size:13px}}
+@media(max-width:380px){.marca b{display:none}}
+@media(max-width:360px){.marca-selo{width:96px;height:25px}}
