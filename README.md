@@ -52,14 +52,14 @@ O gerador seleciona a maior versão numérica do CSV (`1.10` vem depois de `1.9`
 
 **Não edite manualmente os três arquivos gerados.** Depois de mudar fontes, dados ou CSS/JS, execute o gerador para atualizar também os hashes de cache. O cálculo normaliza quebras de linha para que o build seja reproduzível em checkouts Windows e Linux. Há um fragmento histórico `04-05-arquitetura-to-be-em-3d.html` fora de `etapas.json`; foi preservado, sem acrescentar uma rota duplicada.
 
-As imagens de marca fornecidas posteriormente pelo usuário foram incorporadas em `img/marca/`: moinho no cabeçalho, na home e no favicon; marca completa no rodapé. Os arquivos foram preservados sem edição de pixels.
+A identidade foi revista com base no site oficial e no novo SVG enviado: azul `#003A70`, vermelho `#EF3340`, logotipo vetorial transparente no cabeçalho/rodapé e ícones de traço fino. Dia e noite agora mostram a mesma cena e o mesmo enquadramento. Consulte [a revisão visual](docs/REVISAO-VISUAL.md) para fontes e detalhes.
 
 ## Tecnologias e dependências
 
 - HTML5, CSS3 e JavaScript nativo; roteamento por hash, sem servidor de aplicação.
 - Python 3.10+ para geração, testes de dados e leitura do CSV/XLSX.
 - Three.js **0.128.0 (r128)** e OrbitControls **0.128.0**, carregados por CDN com verificação SRI.
-- Plus Jakarta Sans e Fraunces por Google Fonts, com fontes de sistema como fallback. Os modelos mantêm suas fontes originais.
+- Plus Jakarta Sans por Google Fonts, com fontes de sistema como fallback. Os modelos mantêm suas fontes originais.
 - Imagens responsivas WebP na home; fotos originais e miniaturas locais preservadas. O herói solicita só a variante necessária e os recursos fora de tela usam carregamento tardio.
 - Apenas para testes opcionais: Node.js 20+, pnpm **11.25.0**, Playwright **1.56.1** e axe-core **4.11.0**, travados no `pnpm-lock.yaml`.
 

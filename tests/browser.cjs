@@ -24,6 +24,28 @@ test('home remains integrated with the original router', async () => {
     await page.locator('#p-inicio-objetivo-do-coe:not([hidden])').waitFor();
   } finally { await page.close(); }
 });
+
+test('mobile home actions and card descriptions are not covered by navigation or arrows', async () => {
+  const page = await visit('', { viewport: { width: 390, height: 844 } });
+  try {
+    for (const width of [320, 390, 699, 768]) {
+      await page.setViewportSize({ width, height: 844 });
+      const cta = page.getByRole('link', { name: 'Ver os objetivos', exact: true });
+      await cta.scrollIntoViewIfNeeded();
+      assert.equal(await cta.evaluate(link => {
+        const box = link.getBoundingClientRect();
+        return link.contains(document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2));
+      }), true, 'Primary action covered at ' + width + 'px');
+      assert.deepEqual(await page.locator('.hm-card').evaluateAll(cards => cards.filter(card => {
+        const text = card.querySelector('.hm-card-d').getBoundingClientRect();
+        const arrow = card.querySelector('.hm-card-go').getBoundingClientRect();
+        return arrow.top < text.bottom;
+      }).map(card => card.querySelector('b').textContent)), [], 'Arrow overlaps card copy at ' + width + 'px');
+    }
+    await page.getByRole('link', { name: 'Ver os objetivos', exact: true }).click();
+    await page.locator('#p-objetivos-ponto-de-partida-e-objetivos:not([hidden])').waitFor();
+  } finally { await page.close(); }
+});
 test('malformed percent encoding does not interrupt navigation', async () => {
   const page = await visit(); const errors = [];
   page.on('pageerror', error => errors.push(error.message));
@@ -108,8 +130,11 @@ test('camera editing in the embedded model uses local persistence', async () => 
     await frame.locator('#ed-save').click();
     const stored = await frame.evaluate(() => JSON.parse(localStorage.getItem('holambra-avare-cams-v1') || '{}'));
     assert.ok(Object.values(stored).some(camera => camera.d === 'Câmera validada em teste'));
-    await frame.evaluate(() => location.reload());
-    await frame.locator('#camEdit').waitFor({ state: 'attached' });
+    await Promise.all([
+      frame.waitForNavigation({ waitUntil: 'load' }),
+      frame.evaluate(() => location.reload()),
+    ]);
+    await frame.locator('.item.cam').filter({ hasText: 'Câmera validada em teste' }).waitFor({ state: 'attached' });
     assert.match(await frame.locator('body').textContent(), /Câmera validada em teste/);
   } finally { await page.close(); }
 });

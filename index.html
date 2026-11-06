@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>COE Holambra</title>
-<link rel="icon" type="image/png" href="img/marca/holambra-moinho.png">
+<link rel="icon" type="image/svg+xml" href="img/marca/holambra-moinho.svg">
 <meta name="description" content="Painel do Centro de Excelência Operacional Holambra: objetivos, indicadores, infraestrutura, viabilidade, governança e roadmap.">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <script>
@@ -15,10 +15,10 @@ document.documentElement.dataset.theme=t;
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="css/componentes.css?v=b8efeef5ba69">
-<link rel="stylesheet" href="css/painel.css?v=c2f93db7c162">
-<link rel="stylesheet" href="css/home.css?v=5a206346b297">
+<link rel="stylesheet" href="css/painel.css?v=6b1cad4e9ec1">
+<link rel="stylesheet" href="css/home.css?v=30db7e89f9ea">
 </head>
 <body>
 <a class="pular" href="#conteudo">Pular para o conteúdo</a>
@@ -27,9 +27,9 @@ document.documentElement.dataset.theme=t;
 
 <div class="palco">
   <header class="barra-topo">
-    <a class="marca" href="#inicio">
-      <span class="marca-selo"><img src="img/marca/holambra-moinho.png" alt="" width="500" height="500" decoding="async"></span>
-      <b>COE Holambra</b>
+    <a class="marca" href="#inicio" aria-label="COE Holambra — início">
+      <span class="marca-selo"><img class="marca-clara" src="img/marca/holambra.svg" alt="" width="239" height="60" decoding="async"><img class="marca-escura" src="img/marca/holambra-escuro.svg" alt="" width="239" height="60" decoding="async"></span>
+      <b>COE</b>
     </a>
     <nav class="trilho" id="trilho" aria-label="Etapas do projeto"><ol class="etapas" id="etapas"></ol></nav>
     <div class="ferramentas">
@@ -51,22 +51,22 @@ document.documentElement.dataset.theme=t;
   <div class="migalha"><p id="migalha"></p><span id="posicao"></span></div>
   <main id="conteudo" tabindex="-1">
 <article class="page hm-root" id="p-inicio-objetivo-do-coe" hidden>
-<!-- ============ HERÓI: silos, moinho vermelho e céu dia → noite ============ -->
+<!-- ============ HERÓI: silos, moinho vermelho e mesmo enquadramento de dia e de noite ============ -->
   <section class="hm-hero full" aria-labelledby="hm-h1">
     <div class="hm-stage">
       <div class="hm-media">
         <picture class="hm-pic" id="hm-picture">
-          <img width="800" height="1241" alt="Ilustração de silos e moinho vermelho em um campo agrícola, do dia ao entardecer e à noite" decoding="async" fetchpriority="high">
+          <img width="1852" height="849" alt="Ilustração de silos e moinho vermelho em um campo agrícola; a mesma cena de dia ou de noite, conforme o tema" decoding="async" fetchpriority="high">
         </picture>
         <script src="js/home-media.js?v=b9dc33df3a0f"></script>
         <div class="hm-shade"></div>
       </div>
       <div class="hm-in hm-top">
         <div class="hm-copy">
-          <p class="hm-kicker hm-up" style="--i:0"><img class="hm-mill" src="img/marca/holambra-moinho.png" alt="" width="500" height="500" decoding="async"><span>Centro de Excelência Operacional · Cooperativa Agroindustrial Holambra</span></p>
+          <p class="hm-kicker hm-up" style="--i:0"><img class="hm-mill" src="img/marca/holambra-moinho.svg" alt="" width="44" height="60" decoding="async"><span>Centro de Excelência Operacional · Cooperativa Agroindustrial Holambra</span></p>
           <h1 class="hm-title hm-up" id="hm-h1" style="--i:1">
             <span class="hm-t1">Visibilidade das <em class="hm-r">operações.</em></span>
-            <span class="hm-t2">Eficiência operacional e <em class="hm-g">financeira.</em></span>
+            <span class="hm-t2">Eficiência operacional e <em class="hm-b">financeira.</em></span>
           </h1>
         </div>
       </div>
@@ -101,7 +101,7 @@ document.documentElement.dataset.theme=t;
       </header>
       <ol class="hm-guide-grid">
         <li class="hm-card hm-rv" style="--i:0"><a href="#objetivos">
-          <span class="hm-card-ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg></span><b>Objetivos</b><span class="hm-card-n">01</span>
+          <span class="hm-card-ico"><img src="img/icones/ico-telescope.svg" alt="" width="109" height="48" loading="lazy" decoding="async"></span><b>Objetivos</b><span class="hm-card-n">01</span>
           <span class="hm-card-d">O que a Holambra espera do COE, a partir de 12 entrevistas e da visita a Avaré.</span><span class="hm-card-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
         <li class="hm-card hm-rv" style="--i:1"><a href="#desafios">
           <span class="hm-card-ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.5 21.5 20h-19Z"/><path d="M12 10v4.5M12 17.4h.01"/></svg></span><b>Desafios</b><span class="hm-card-n">02</span>
@@ -110,10 +110,10 @@ document.documentElement.dataset.theme=t;
           <span class="hm-card-ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3.5 20h17"/><rect x="5" y="11" width="3.2" height="9" rx=".8"/><rect x="10.4" y="5" width="3.2" height="15" rx=".8"/><rect x="15.8" y="8" width="3.2" height="12" rx=".8"/></svg></span><b>Indicadores</b><span class="hm-card-n">03</span>
           <span class="hm-card-d">Os 416 indicadores mapeados, as telas do video wall de Avaré e a ficha de cada KPI.</span><span class="hm-card-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
         <li class="hm-card hm-rv" style="--i:3"><a href="#dados">
-          <span class="hm-card-ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="4" width="17" height="6" rx="1.6"/><rect x="3.5" y="14" width="17" height="6" rx="1.6"/><path d="M7 7h.01M7 17h.01"/></svg></span><b>Infraestrutura</b><span class="hm-card-n">04</span>
+          <span class="hm-card-ico"><img src="img/icones/ico-armazenamento.svg" alt="" width="58" height="48" loading="lazy" decoding="async"></span><b>Infraestrutura</b><span class="hm-card-n">04</span>
           <span class="hm-card-d">Diagnóstico da unidade, infraestrutura física (equipamentos, modelo 3D e sala do COE) e de software (arquitetura e sistemas).</span><span class="hm-card-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
         <li class="hm-card hm-rv" style="--i:4"><a href="#viabilidade">
-          <span class="hm-card-ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3.5 17 9 11.5l4 4 7.5-8"/><path d="M15 7.5h5.5V13"/></svg></span><b>Viabilidade</b><span class="hm-card-n">05</span>
+          <span class="hm-card-ico"><img src="img/icones/ico-creditos.svg" alt="" width="38" height="48" loading="lazy" decoding="async"></span><b>Viabilidade</b><span class="hm-card-n">05</span>
           <span class="hm-card-d">Situação atual, investimento e retorno e, a partir deles, solução, plano e decisões.</span><span class="hm-card-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
         <li class="hm-card hm-rv" style="--i:5"><a href="#governanca">
           <span class="hm-card-ico"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8.3 7.5 9.5 4.4-1.2 7.5-4.9 7.5-9.5V6Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></span><b>Governança</b><span class="hm-card-n">06</span>
@@ -198,7 +198,7 @@ document.documentElement.dataset.theme=t;
         <span class="hm-eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21V8"/><path d="M12 12c-3 0-5-2-5-5 3 0 5 2 5 5Z"/><path d="M12 12c3 0 5-2 5-5-3 0-5 2-5 5Z"/><path d="M12 17c-3 0-5-2-5-5 3 0 5 2 5 5Z"/><path d="M12 17c3 0 5-2 5-5-3 0-5 2-5 5Z"/><path d="M12 8c-1.2-1-1.8-2.2-1.8-3.5C10.2 3.3 11 2.5 12 2c1 .5 1.8 1.3 1.8 2.5C13.8 5.8 13.2 7 12 8Z"/></svg>Objetivos do COE</span>
         <h2 class="hm-h2" id="hm-objs-t">Objetivos estratégicos do COE</h2>
         <blockquote>“Operacionalizar as unidades a distância: a decisão tomada no CoE e o time local fazendo a assistência.”</blockquote>
-        <p class="hm-objs-mill"><img class="hm-mill" src="img/marca/holambra-moinho.png" alt="" width="500" height="500" decoding="async"><span>Cooperativa Agroindustrial Holambra</span></p>
+        <p class="hm-objs-mill"><img class="hm-mill" src="img/marca/holambra-moinho.svg" alt="" width="44" height="60" decoding="async"><span>Cooperativa Agroindustrial Holambra</span></p>
       </div>
       <div class="hm-o6">
         <div class="hm-ocard hm-rv" style="--i:0"><b>Visibilidade ponta a ponta</b><p>Um único dado confiável, integrado entre processos e unidades, no lugar de bases paralelas e comunicação informal.</p></div>
@@ -1391,7 +1391,7 @@ document.documentElement.dataset.theme=t;
 </article>
   </main>
   <nav class="passos-fixos" id="passos" aria-label="Página anterior e próxima"></nav>
-  <footer class="rodape"><div class="rodape-id"><a class="rodape-marca" href="#inicio" aria-label="Holambra — voltar ao início"><img src="img/marca/holambra-logo.png" alt="Holambra — Cooperativa Agroindustrial" width="320" height="160" loading="lazy" decoding="async"></a><small>COE · Documento de classificação restrita</small></div><p class="rodape-autoria">Elaborado pela <strong>KPMG</strong> para a Cooperativa Agroindustrial Holambra</p><button type="button" id="btTopo">Voltar ao topo</button></footer>
+  <footer class="rodape"><div class="rodape-id"><a class="rodape-marca" href="#inicio" aria-label="Holambra — Cooperativa Agroindustrial — voltar ao início"><img class="marca-clara" src="img/marca/holambra.svg" alt="" width="239" height="60" loading="lazy" decoding="async"><img class="marca-escura" src="img/marca/holambra-escuro.svg" alt="" width="239" height="60" loading="lazy" decoding="async"></a><small>COE · Documento de classificação restrita</small></div><p class="rodape-autoria">Elaborado pela <strong>KPMG</strong> para a Cooperativa Agroindustrial Holambra</p><button type="button" id="btTopo">Voltar ao topo</button></footer>
 </div>
 
 <div class="dica" id="dica" hidden></div>
