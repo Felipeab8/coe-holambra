@@ -1,0 +1,27 @@
+✔ home remains integrated with the original router (1103.459ms)
+✔ malformed percent encoding does not interrupt navigation (536.3074ms)
+✔ KPI with no matching data clears the previously selected card (282.0875ms)
+✔ menu arrow keys do not change the current page (362.3381ms)
+✔ Escape closes the mobile drawer and restores focus (236.0464ms)
+✔ KPI list can be navigated with arrow keys (229.277ms)
+✔ embedded 3D models follow the panel theme and pause off-page (1165.6482ms)
+✔ camera editing in the embedded model uses local persistence (1495.2002ms)
+✔ skip link preserves the current route (889.9987ms)
+✔ unknown KPI deep link displays a missing-data state (256.5149ms)
+✔ all 19 original routes and home shortcuts remain reachable (3971.5221ms)
+✔ search opens the exact KPI and can be dismissed with Escape (522.016ms)
+✔ return simulator and tabs respond to keyboard and scenario changes (579.2677ms)
+✔ field photo opens, advances and closes in the existing viewer (294.4112ms)
+✔ architecture switches between 2D, 3D and the original As-Is view (727.2864ms)
+✔ only the selected hero theme is downloaded and motion preference is honored (604.5677ms)
+✔ file protocol keeps local navigation working (505.5161ms)
+✔ inherited property names are not treated as KPI IDs (447.4556ms)
+✔ expanded diagnostic and architecture diagrams are accessible on mobile (2019.0694ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16721.6287

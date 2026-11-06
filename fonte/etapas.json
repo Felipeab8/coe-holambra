@@ -6,7 +6,8 @@
       {
         "id": "objetivo-do-coe",
         "titulo": "Objetivo do COE",
-        "arquivo": "00-01-objetivo-do-coe.html"
+        "arquivo": "00-01-objetivo-do-coe.html",
+        "classe": "hm-root"
       }
     ],
     "palavra": "Início"

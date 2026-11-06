@@ -49,6 +49,9 @@
     const total = a.etapa.paginas.length;
     $('#posicao').textContent = total > 1 ? 'Página ' + (a.pi + 1) + ' de ' + total : '';
     document.title = a.pagina.titulo + ' | COE Holambra';
+    raiz.dataset.pagina = a.etapa.id;
+    window.dispatchEvent(new Event('coe:pagina'));
+    document.querySelector('.migalha').hidden = a.etapa.id === 'inicio';
     const i = paginas.indexOf(a), ant = paginas[i - 1], prox = paginas[i + 1];
     const ponta = d => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + (d < 0 ? 'm15 5-7 7 7 7' : 'm9 5 7 7-7 7') + '"/></svg>';
     const botao = (p, d, rot) => (p
@@ -70,6 +73,7 @@
       if (a === MURAL) ligarMural();
       window.scrollTo(0, 0);
       $('#conteudo').focus({ preventScroll: true });
+      sincronizarModelos();
       window.dispatchEvent(new Event('resize')); // o diagrama de arquitetura mede a página visível
       fecharGaveta();
     }
@@ -78,7 +82,10 @@
   }
 
   function rota() {
-    const [e, p, extra] = decodeURIComponent(location.hash.slice(1)).split('/');
+    let partes;
+    try { partes = decodeURIComponent(location.hash.slice(1)).split('/'); }
+    catch (erro) { partes = []; }
+    const [e, p, extra] = partes;
     mostrar(paginas.find(x => x.etapa.id === e && (!p || x.pagina.id === p)) || paginas.find(x => x.etapa.id === e) || paginas[0], extra);
   }
   window.addEventListener('hashchange', rota);
@@ -194,6 +201,15 @@
       }
     });
   });
+  document.querySelector('.barra-topo').addEventListener('focusout', () => {
+    setTimeout(() => {
+      if (!document.activeElement.closest('.barra-topo')) fecharGaveta();
+    }, 0);
+  });
+  gavetaQuery.addEventListener('change', fecharGaveta);
+  $('.pular').addEventListener('click', e => {
+    e.preventDefault(); $('#conteudo').focus({ preventScroll: true }); window.scrollTo(0, 0);
+  });
   $('#btMenu').addEventListener('click', alternarMenu);
   $('#veu').addEventListener('click', fecharGaveta);
   $('#btTopo').addEventListener('click', () => window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }));
@@ -203,12 +219,13 @@
   $('#btTema').addEventListener('click', () => {
     raiz.dataset.theme = raiz.dataset.theme === 'light' ? 'dark' : 'light';
     guardar('coe:tema', raiz.dataset.theme);
-    $$('iframe.vw').forEach(f => { if (f.src && f.contentWindow) f.contentWindow.postMessage({ tipo: 'videowall:tema', tema: temaTela() }, '*'); });
+    sincronizarModelos();
+    $$('iframe.vw').forEach(f => { if (f.src && f.contentWindow) f.contentWindow.postMessage({ tipo: 'videowall:tema', tema: temaTela() }, new URL(C.url).origin); });
   });
   /* uma TV que ainda carregava quando o tema mudou recebe o tema atual ao terminar */
   document.addEventListener('load', e => {
     const f = e.target;
-    if (f.matches && f.matches('iframe.vw') && f.src && f.contentWindow) f.contentWindow.postMessage({ tipo: 'videowall:tema', tema: temaTela() }, '*');
+    if (f.matches && f.matches('iframe.vw') && f.src && f.contentWindow) f.contentWindow.postMessage({ tipo: 'videowall:tema', tema: temaTela() }, new URL(C.url).origin);
   }, true);
 
   function telaCheia() {
@@ -216,6 +233,27 @@
     else if (raiz.requestFullscreen) raiz.requestFullscreen().catch(() => {});
   }
   $('#btCheia').addEventListener('click', telaCheia);
+
+  function sincronizarModelos() {
+    $$('iframe', document.querySelector('#conteudo')).forEach(f => {
+      if (f.classList.contains('vw') || !f.getAttribute('src') || !f.contentWindow) return;
+      const url = new URL(f.getAttribute('src'), location.href);
+      if (url.origin !== location.origin) return;
+      const visivel = !document.hidden && !!f.getClientRects().length;
+      f.contentWindow.postMessage({ tipo: 'coe:modelo', tema: raiz.dataset.theme, ativo: visivel }, url.origin === 'null' ? '*' : url.origin);
+    });
+  }
+  // O projeto fornecido não possui persistência compartilhada: responde ao handshake com modo local.
+  window.addEventListener('message', e => {
+    if (e.origin !== location.origin || !e.data || e.data.ns !== 'camedit' || e.data.type !== 'hello') return;
+    const frame = $$('iframe').find(f => f.contentWindow === e.source && /holambra-avare-3d\/index\.html/.test(f.getAttribute('src') || ''));
+    if (frame) e.source.postMessage({ ns: 'camedit', type: 'state', mode: 'local' }, e.origin === 'null' ? '*' : e.origin);
+  });
+  document.addEventListener('visibilitychange', sincronizarModelos);
+  document.addEventListener('coe:modelos', sincronizarModelos);
+  document.addEventListener('load', e => {
+    if (e.target.tagName === 'IFRAME') sincronizarModelos();
+  }, true);
 
   /* modelos 3D: o scroll da página não fica preso no modelo; clique para interagir */
   $$('.model').forEach(m => {
@@ -245,7 +283,20 @@
   const naVista = q => { const r = q.getBoundingClientRect(); return r.top < innerHeight + 120 && r.bottom > -120; };
   function ligarIframe(f, depois) {
     const aviso = f.parentElement && $('.tv-aviso', f.parentElement);
-    f.addEventListener('load', () => { f.dataset.ligada = Date.now(); if (aviso) aviso.hidden = true; if (depois) depois(); }, { once: true });
+    let terminou = false;
+    const finalizar = carregou => {
+      if (terminou) return;
+      terminou = true; clearTimeout(limite);
+      if (carregou) f.dataset.ligada = Date.now();
+      if (aviso) {
+        aviso.hidden = carregou;
+        if (!carregou) aviso.textContent = 'Tela indisponível. Abra o videowall ou tente novamente.';
+      }
+      if (depois) depois();
+    };
+    const limite = setTimeout(() => finalizar(false), 15000);
+    f.addEventListener('load', () => finalizar(true), { once: true });
+    f.addEventListener('error', () => finalizar(false), { once: true });
     f.src = f.dataset.tela;
   }
   function proximaTv() {
@@ -421,7 +472,7 @@
 
   function ficha(id) {
     const r = POR_ID[id];
-    if (!r) return;
+    if (!Object.hasOwn(POR_ID, id)) return;
     idAtual = id;
     const al = /^sim/i.test(r.alerta), t = C.telas[r.cod];
     el.card.innerHTML =
@@ -441,7 +492,10 @@
           (r.crit ? '<p class="kf-txt"><span>Critério de alerta</span>' + esc(r.crit) + '</p>' : '')
         : '<p class="kf-al">Sem regra de alerta</p>') + '</div>' +
       (r.obs ? '<div class="kf-sec"><b>Observação</b><p class="kf-txt">' + esc(r.obs) + '</p></div>' : '');
-    $$('.kf-i', el.lista).forEach(b => b.setAttribute('aria-selected', b.dataset.id === id));
+    $$('.kf-i', el.lista).forEach(b => {
+      const selecionado = b.dataset.id === id;
+      b.setAttribute('aria-selected', selecionado); b.tabIndex = selecionado ? 0 : -1;
+    });
     if (t && t.id === 'geral') $('.kf-ver', el.card).textContent = 'Ver o mural';
   }
 
@@ -458,12 +512,18 @@
     });
     el.lista.innerHTML = h || '<p class="kf-c kf-nada">Nenhum indicador com esses filtros. Limpe a busca ou escolha outra tela.</p>';
     if (F.length) ficha(F.some(r => r.id === idAtual) ? idAtual : F[0].id);
+    else el.card.innerHTML = '<p class="kf-nada" role="status">Nenhum indicador com esses filtros. Ajuste os filtros para exibir uma ficha.</p>';
   }
 
   function abrirIndicador(id) {
     const limpar = () => { el.tela.value = ''; el.busca.value = ''; el.forn.value = ''; el.sit.value = ''; el.onda.value = ''; el.alerta.checked = false; };
     if (id.startsWith('tela:')) { limpar(); el.tela.value = id.slice(5); listar(); return; } // link vindo da origem dos dados
-    if (!POR_ID[id]) return;
+    if (!Object.hasOwn(POR_ID, id)) {
+      el.card.innerHTML = '<p class="kf-nada" role="status">Indicador não encontrado. Escolha um indicador na lista ou revise o endereço.</p>';
+      $$('.kf-i', el.lista).forEach(b => { b.setAttribute('aria-selected', 'false'); b.tabIndex = -1; });
+      const primeiro = $('.kf-i', el.lista); if (primeiro) primeiro.tabIndex = 0;
+      return;
+    }
     limpar();
     idAtual = id; listar();
     const b = $('.kf-i[data-id="' + id + '"]', el.lista);
@@ -471,6 +531,14 @@
   }
 
   el.lista.addEventListener('click', e => { const b = e.target.closest('.kf-i'); if (b) ficha(b.dataset.id); });
+  el.lista.addEventListener('keydown', e => {
+    const opcoes = $$('.kf-i', el.lista), indice = opcoes.indexOf(e.target);
+    if (indice < 0 || !['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) return;
+    e.preventDefault(); e.stopPropagation();
+    const proximo = e.key === 'Home' ? 0 : e.key === 'End' ? opcoes.length - 1 :
+      (indice + (e.key === 'ArrowDown' ? 1 : -1) + opcoes.length) % opcoes.length;
+    ficha(opcoes[proximo].dataset.id); opcoes[proximo].focus();
+  });
   [el.tela, el.forn, el.sit, el.onda, el.alerta].forEach(x => x.addEventListener('change', listar));
   el.busca.addEventListener('input', listar);
   el.card.addEventListener('click', e => {
@@ -533,8 +601,39 @@
   busca.addEventListener('click', e => { if (e.target === busca) busca.close(); });
   $('#abrirBusca').addEventListener('click', abrirBusca);
 
+  document.addEventListener('error', e => {
+    const imagem = e.target;
+    if (imagem.tagName !== 'IMG' || imagem.dataset.erro) return;
+    imagem.dataset.erro = 'true';
+    const aviso = document.createElement('span'); aviso.className = 'recurso-erro';
+    aviso.textContent = 'Imagem indisponível: ' + (imagem.alt || 'recurso visual');
+    imagem.insertAdjacentElement('afterend', aviso);
+  }, true);
+
+  // Tabelas extensas podem ser roladas também por quem usa apenas teclado.
+  const tabelas = $$('.tbl, .archw');
+  function tabelasAcessiveis() {
+    tabelas.forEach(caixa => {
+      const larga = caixa.scrollWidth > caixa.clientWidth + 1;
+      if (larga && caixa.getClientRects().length) {
+        caixa.tabIndex = 0; caixa.setAttribute('role', 'region');
+        const titulo = caixa.closest('section,article').querySelector('h2,h3,h4');
+        caixa.setAttribute('aria-label', (caixa.classList.contains('archw') ? 'Diagrama: ' : 'Tabela: ') + (titulo ? titulo.textContent.trim() : 'dados do painel'));
+      } else {
+        caixa.removeAttribute('tabindex'); caixa.removeAttribute('role'); caixa.removeAttribute('aria-label');
+      }
+    });
+  }
+  $$('thead th').forEach(cabecalho => cabecalho.setAttribute('scope', 'col'));
+  window.addEventListener('resize', tabelasAcessiveis);
+  document.addEventListener('toggle', tabelasAcessiveis, true);
+
   /* ---------- teclado ---------- */
   document.addEventListener('keydown', e => {
+    if (e.defaultPrevented) return;
+    if (e.key === 'Escape' && $('#btMenu').getAttribute('aria-expanded') === 'true' && !busca.open && !telao.open && !lente.open) {
+      e.preventDefault(); fecharGaveta(); $('#btMenu').focus(); return;
+    }
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); if (!busca.open) abrirBusca(); return; }
     if (telao.open) {
       if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') $('[data-a="' + (e.key === 'ArrowRight' ? 'proxima' : 'anterior') + '"]', telao).click();
@@ -544,7 +643,7 @@
       if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') $('[data-a="' + (e.key === 'ArrowRight' ? 'proxima' : 'anterior') + '"]', lente).click();
       return;
     }
-    if (busca.open || e.target.closest('input,textarea,select,[role="tab"]') || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (busca.open || e.target.closest('input,textarea,select,button,a,summary,[contenteditable],[role="tab"],[role="option"]') || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === 'ArrowRight' || e.key === 'PageDown') { passoPagina(1); e.preventDefault(); }
     if (e.key === 'ArrowLeft' || e.key === 'PageUp') { passoPagina(-1); e.preventDefault(); }
     if (e.key === '/') { e.preventDefault(); abrirBusca(); }

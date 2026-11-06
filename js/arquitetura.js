@@ -67,6 +67,7 @@
     const tres=b.dataset.d==='3d';
     formato.forEach(x=>x.setAttribute('aria-pressed',x===b));
     v2.hidden=tres; v3.hidden=!tres;
+    document.dispatchEvent(new Event('coe:modelos'));
     document.querySelectorAll('.so2d').forEach(e=>{ e.hidden=tres; });
     document.querySelectorAll('.so3d').forEach(e=>{ e.hidden=!tres; });
     if(!tres){ render(); return; }

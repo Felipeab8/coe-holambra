@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<script src="../js/modelo-host.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>[hidden]{display:none!important} body{margin:0} :root{color-scheme:light}
 /* edição de câmeras */
@@ -209,8 +210,8 @@ button.t.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
   <div class="hint">Arrastar: girar · Botão direito ou Shift + arrastar: mover para os lados · Setas do teclado: mover · Roda: zoom</div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js" integrity="sha384-wagZhIFgY4hD+7awjQjR4e2E294y6J2HSnd8eTNc15ZubTeQeVRZwhQJ+W6hnBsf" crossorigin="anonymous"></script>
 <script>
 // Referência: vista aérea original, 1 px ≈ 1 m (estimado). Close-ups usados para refinar formas.
 const W = 1275, H = 297;
@@ -985,6 +986,7 @@ function resize(){ const w=host.clientWidth,h=host.clientHeight; renderer.setSiz
 addEventListener("resize",resize); resize();
 const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2; const v=new THREE.Vector3();
 function loop(now){
+  if (!window.COE_MODELO_ATIVO || document.hidden) { setTimeout(() => requestAnimationFrame(loop), 250); return; }
   if(anim){ const k=Math.max(0,Math.min(1,(now-anim.t0)/anim.dur)), e=ease(k);
     controls.target.lerpVectors(anim.fT,anim.tT,e); camera.position.lerpVectors(anim.fP,anim.tP,e); if(k===1)anim=null; }
   controls.update(); renderer.render(scene,camera);
@@ -1074,7 +1076,7 @@ new MutationObserver(recolor).observe(document.documentElement,{attributes:true,
   const LSK="holambra-avare-cams-v1";
   const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const camById=id=>CAMS.find(c=>c.id===id);
-  const toParent=m=>{ try{ parent.postMessage(Object.assign({ns:"camedit"},m),"*"); }catch(_){} };
+  const toParent=m=>{ try{ parent.postMessage(Object.assign({ns:"camedit"},m),location.origin==="null"?"*":location.origin); }catch(_){} };
 
   // ---- aplicar estado salvo ----
   function applyFields(c,f){
@@ -1099,13 +1101,24 @@ new MutationObserver(recolor).observe(document.documentElement,{attributes:true,
   function draftDirty(){ return !!(draft&&draft.dirty); }
 
   // ---- armazenamento: compartilhado (painel) ou local ----
-  function saveLocal(){ try{ localStorage.setItem(LSK,JSON.stringify(docs)); }catch(_){} }
-  function loadLocal(){ try{ return JSON.parse(localStorage.getItem(LSK)||"{}")||{}; }catch(_){ return {}; } }
-  function store(id,f){ if(mode==="pending"){ setInfo("Aguarde a conexão com o painel para salvar."); return; } if(mode==="shared"){ toParent({type:"save",id,doc:f}); setInfo("Salvando…"); } else { f.at=Date.now(); docs[id]=f; saveLocal(); applyAll(); setInfo(); } }
-  function unstore(id){ if(mode==="shared"){ toParent({type:"remove",id}); setInfo("Salvando…"); } else { delete docs[id]; saveLocal(); applyAll(); setInfo(); } }
+  function validDocs(input){
+    if(!input||typeof input!=="object"||Array.isArray(input)) return {};
+    const vector=v=>Array.isArray(v)&&v.length===3&&v.every(n=>typeof n==="number"&&Number.isFinite(n));
+    return Object.fromEntries(Object.entries(input).filter(([id,f])=>
+      /^[a-zA-Z0-9_-]+$/.test(id)&&f&&typeof f==="object"&&vector(f.p)&&vector(f.t)&&
+      typeof f.d==="string"&&CAM_AREAS.some(a=>a.id===f.a)&&(!f.status||Object.hasOwn(ST,f.status))));
+  }
+  function saveLocal(){ localStorage.setItem(LSK,JSON.stringify(docs)); }
+  function loadLocal(){ try{ return validDocs(JSON.parse(localStorage.getItem(LSK)||"{}")); }catch(_){ return {}; } }
+  function persistLocal(){
+    applyAll();
+    try{saveLocal();setInfo();}catch(_){setInfo("Não foi possível salvar no navegador. Alterações mantidas nesta sessão; use Exportar CSV antes de fechar.");}
+  }
+  function store(id,f){ if(mode==="pending"){ setInfo("Aguarde a conexão com o painel para salvar."); return; } if(mode==="shared"){ toParent({type:"save",id,doc:f}); setInfo("Salvando…"); } else { f.at=Date.now(); docs[id]=f; persistLocal(); } }
+  function unstore(id){ if(mode==="shared"){ toParent({type:"remove",id}); setInfo("Salvando…"); } else { delete docs[id]; persistLocal(); } }
   addEventListener("message",e=>{
-    if(e.source!==parent) return; const m=e.data; if(!m||m.ns!=="camedit") return;
-    if(m.type==="state"){ connected=true; if(m.mode==="shared"){ mode="shared"; canWrite=m.canWrite!==false; docs=m.docs&&typeof m.docs==="object"?m.docs:{}; }
+    if(e.source!==parent||e.origin!==location.origin) return; const m=e.data; if(!m||m.ns!=="camedit") return;
+    if(m.type==="state"){ connected=true; if(m.mode==="shared"){ mode="shared"; canWrite=m.canWrite!==false; docs=validDocs(m.docs); }
       else if(mode!=="shared"){ mode="local"; docs=loadLocal(); }
       applyAll(); setInfo(); }
     if(m.type==="error"){ setInfo(m.code==="readonly"?"Seu acesso a este painel é apenas de leitura. Peça acesso de colaborador para editar.":"Não foi possível salvar ("+esc(m.code||"erro")+"). Tente novamente."); }
@@ -1123,7 +1136,7 @@ new MutationObserver(recolor).observe(document.documentElement,{attributes:true,
   camPane.querySelector(".camtog").after(box);
   const tools=box.querySelector(".ce-tools");
   function setInfo(msg){ const el=document.getElementById("ceInfo"); if(!el) return;
-    el.textContent=msg||(mode==="pending"?"Conectando ao painel…":mode==="shared"?(canWrite?"As alterações ficam salvas no painel e aparecem para todo o time.":"Acesso de leitura: você vê as posições validadas, mas não pode editar."):"Modelo aberto fora do painel: as alterações ficam salvas apenas neste navegador. Use Exportar CSV para compartilhar.");
+    el.textContent=msg||(mode==="pending"?"Conectando ao painel…":mode==="shared"?(canWrite?"As alterações ficam salvas no painel e aparecem para todo o time.":"Acesso de leitura: você vê as posições validadas, mas não pode editar."):"As alterações ficam salvas apenas neste navegador. Use Exportar CSV para compartilhar.");
     summary(); }
   function summary(){ const live=CAMS.filter(c=>!c.deleted), k={validar:0,ok:0,ajustar:0}; live.forEach(c=>k[c.status||"validar"]++);
     const el=document.getElementById("ceSum"); if(el) el.innerHTML=`<b>${live.length}</b> câmeras · <i style="--d:${ST.ok[1]}"></i>${k.ok} validadas · <i style="--d:${ST.ajustar[1]}"></i>${k.ajustar} ajustar · <i style="--d:${ST.validar[1]}"></i>${k.validar} a validar`; }
@@ -1266,7 +1279,7 @@ new MutationObserver(recolor).observe(document.documentElement,{attributes:true,
     const csv="﻿"+rows.map(r=>r.map(v=>{ const s=String(v==null?"":v).replace(/\./g,typeof v==="number"?",":"."); return /[;"\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; }).join(";")).join("\r\n");
     const fn="cameras-avare-"+new Date().toISOString().slice(0,10)+".csv";
     if(mode==="shared") toParent({type:"download",filename:fn,data:csv});
-    else { const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"})); a.download=fn; document.body.appendChild(a); a.click(); a.remove(); }
+    else { const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"})); a.download=fn; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),1000); }
   };
   window.CAMEDIT={ dragging:()=>!!drag, card, placing:()=>EDIT&&!!placingWhat, place,
     tag:c=>c.edited?(c.status==="ok"?"Posição validada pelo time":"Posição ajustada pelo time"):"Posição revisada pelo time em 03/11/2026" };

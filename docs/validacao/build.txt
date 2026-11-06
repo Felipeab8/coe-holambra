@@ -1,0 +1,8 @@
+$ python atualizar.py
+Painel atualizado com Mapeamento_dos_indicadores_1.5v.csv
+  416 indicadores: 343 nas TVs, 2 no mural, 71 estratégicos
+  173 com alerta (132 na camada tática)
+  19 páginas em 8 seções
+  Viabilidade: COE_Holambra_Estudo_Viabilidade.xlsx (300/79/37 por onda)
+
+Exit code: 0

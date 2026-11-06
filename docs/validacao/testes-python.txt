@@ -1,0 +1,21 @@
+$ python -m unittest discover -s tests -v
+test_each_published_document_has_unique_ids_and_existing_local_resources (test_artifacts.ArtifactTests.test_each_published_document_has_unique_ids_and_existing_local_resources) ... ok
+test_generated_html_has_no_unresolved_markers (test_artifacts.ArtifactTests.test_generated_html_has_no_unresolved_markers) ... ok
+test_blank_indicator_id_is_rejected (test_build.BuildTests.test_blank_indicator_id_is_rejected) ... ok
+test_csv_version_1_10_wins_over_1_9 (test_build.BuildTests.test_csv_version_1_10_wins_over_1_9) ... ok
+test_current_workbook_and_csv_counts_are_preserved (test_build.BuildTests.test_current_workbook_and_csv_counts_are_preserved) ... ok
+test_duplicate_indicator_ids_are_rejected (test_build.BuildTests.test_duplicate_indicator_ids_are_rejected) ... ok
+test_generation_is_deterministic_and_keeps_home (test_build.BuildTests.test_generation_is_deterministic_and_keeps_home) ... ok
+test_invalid_page_does_not_overwrite_generated_data (test_build.BuildTests.test_invalid_page_does_not_overwrite_generated_data) ... ok
+test_ragged_csv_has_a_clear_error (test_build.BuildTests.test_ragged_csv_has_a_clear_error) ... ok
+test_resource_versions_are_stable_across_platform_newlines (test_build.BuildTests.test_resource_versions_are_stable_across_platform_newlines) ... ok
+test_formula_without_calculated_cache_is_rejected (test_workbook.WorkbookTests.test_formula_without_calculated_cache_is_rejected) ... ok
+test_inline_strings_work_without_shared_string_table (test_workbook.WorkbookTests.test_inline_strings_work_without_shared_string_table) ... ok
+test_invalid_numeric_value_is_not_silently_zero (test_workbook.WorkbookTests.test_invalid_numeric_value_is_not_silently_zero) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 3.256s
+
+OK
+
+Exit code: 0

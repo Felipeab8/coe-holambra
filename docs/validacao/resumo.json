@@ -1,0 +1,31 @@
+{
+  "data_local": "2026-11-05",
+  "python": "3.13.7",
+  "node": "24.22.1",
+  "playwright": "1.56.1",
+  "chromium": "141.0.7390.37",
+  "axe-core": "4.11.0",
+  "testes_python": 13,
+  "testes_navegador": 19,
+  "scripts_sintaxe": 11,
+  "paginas": 19,
+  "indicadores": 416,
+  "ondas": [
+    300,
+    79,
+    37
+  ],
+  "verificacoes_acessibilidade": 100,
+  "violacoes_detectadas": 0,
+  "verificacoes_responsividade_paginas": 57,
+  "capturas_home": 12,
+  "overflow_detectado": 0,
+  "erros_javascript_capturados": [],
+  "http_404_externo": [
+    "https://felipeab8.github.io/videowall-coe/logo-holambra.png"
+  ],
+  "ci_github_executada": false,
+  "publicado": false,
+  "marcas_fornecidas_integradas": true,
+  "hashes_estaveis_entre_quebras_de_linha": true
+}

@@ -5,6 +5,8 @@ assim, inserir uma linha na planilha não muda o resultado. Se um rótulo sumir,
 a leitura para com erro em vez de publicar um número errado.
 """
 import re
+import math
+import posixpath
 import zipfile
 import xml.etree.ElementTree as ET
 
@@ -14,25 +16,41 @@ PONTOS = {"Baixa": 1, "Baixo": 1, "Média": 2, "Médio": 2, "Alta": 3, "Alto": 3
 
 
 def abrir(caminho):
-    z = zipfile.ZipFile(caminho)
-    comuns = ["".join(t.text or "" for t in si.iter(N + "t"))
-              for si in ET.fromstring(z.read("xl/sharedStrings.xml"))]
-    wb = ET.fromstring(z.read("xl/workbook.xml"))
-    rels = {r.get("Id"): r.get("Target") for r in ET.fromstring(z.read("xl/_rels/workbook.xml.rels"))}
-    abas = {}
-    for s in wb.find(N + "sheets"):
-        alvo = rels[s.get(RID + "id")].lstrip("/")
-        alvo = alvo if alvo.startswith("xl/") else "xl/" + alvo
-        linhas = {}
-        for c in ET.fromstring(z.read(alvo)).iter(N + "c"):
-            v = c.find(N + "v")
-            if v is None or v.text in (None, ""):
-                continue
-            m = re.match(r"([A-Z]+)(\d+)", c.get("r"))
-            valor = comuns[int(v.text)] if c.get("t") == "s" else v.text
-            linhas.setdefault(int(m.group(2)), {})[m.group(1)] = valor
-        abas[s.get("name")] = linhas
-    return abas
+    try:
+        with zipfile.ZipFile(caminho) as z:
+            comuns = []
+            if "xl/sharedStrings.xml" in z.namelist():
+                comuns = ["".join(t.text or "" for t in si.iter(N + "t"))
+                          for si in ET.fromstring(z.read("xl/sharedStrings.xml"))]
+            wb = ET.fromstring(z.read("xl/workbook.xml"))
+            rels = {r.get("Id"): r.get("Target") for r in ET.fromstring(z.read("xl/_rels/workbook.xml.rels"))}
+            abas = {}
+            for s in wb.find(N + "sheets"):
+                alvo = rels[s.get(RID + "id")]
+                alvo = alvo.lstrip("/") if alvo.startswith("/") else posixpath.normpath("xl/" + alvo)
+                if not alvo.startswith("xl/"):
+                    raise Erro("referência de aba fora do workbook")
+                linhas = {}
+                for c in ET.fromstring(z.read(alvo)).iter(N + "c"):
+                    if c.get("t") == "e":
+                        raise Erro(f"erro de cálculo em {s.get('name')}!{c.get('r')}")
+                    if c.get("t") == "inlineStr":
+                        valor = "".join(t.text or "" for t in c.iter(N + "t"))
+                    else:
+                        v = c.find(N + "v")
+                        if v is None or v.text in (None, ""):
+                            if c.find(N + "f") is not None and c.get("t") != "str":
+                                raise Erro(f"fórmula sem valor calculado em {s.get('name')}!{c.get('r')}; recalcule e salve a planilha antes de gerar")
+                            continue
+                        valor = comuns[int(v.text)] if c.get("t") == "s" else v.text
+                    m = re.fullmatch(r"([A-Z]+)(\d+)", c.get("r", ""))
+                    if not m:
+                        raise Erro("célula sem referência válida")
+                    linhas.setdefault(int(m.group(2)), {})[m.group(1)] = valor
+                abas[s.get("name")] = linhas
+            return abas
+    except (zipfile.BadZipFile, KeyError, IndexError, ET.ParseError, ValueError) as exc:
+        raise Erro(f"estrutura XLSX inválida: {exc}") from exc
 
 
 class Erro(Exception):
@@ -48,10 +66,15 @@ def linha(aba, rotulo, depois=0):
 
 
 def num(x):
-    try:
-        return float(x)
-    except (TypeError, ValueError):
+    if x is None or x == "":
         return 0.0
+    try:
+        valor = float(x)
+    except (TypeError, ValueError) as exc:
+        raise Erro(f"valor numérico inválido na planilha: {x!r}") from exc
+    if not math.isfinite(valor):
+        raise Erro(f"valor numérico não finito na planilha: {x!r}")
+    return valor
 
 
 def faixa(aba, regex, cols):
