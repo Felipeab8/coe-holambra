@@ -1,5 +1,0 @@
-Painel atualizado com Mapeamento_dos_indicadores_1.5v.csv
-  416 indicadores: 343 nas TVs, 2 no mural, 71 estratÃ©gicos
-  173 com alerta (132 na camada tÃ¡tica)
-  19 pÃ¡ginas em 8 seÃ§Ãµes
-  Viabilidade: COE_Holambra_Estudo_Viabilidade.xlsx (300/79/37 por onda)

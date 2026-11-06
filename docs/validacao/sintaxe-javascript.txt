@@ -1,1 +1,0 @@
-Sintaxe JavaScript válida: 11 scripts locais/inline.
