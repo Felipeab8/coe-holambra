@@ -10,7 +10,7 @@
 ## Home
 O fragmento vive em `fonte/paginas/00-01-objetivo-do-coe.html`. `etapas.json` aplica a classe `hm-root` ao article gerado. Os estilos `hm-*` ficam isolados em `css/home.css`; o tema e a barra seguem os tokens compartilhados em `painel.css`.
 
-`home-media.js` seleciona uma imagem no parsing da home, respeitando tema e viewport, e muda a seleção quando necessário. Links diretos para páginas internas adiam a imagem até a home ser exibida. As variantes originais têm enquadramentos diferentes; trocar todos os arquivos por uma única miniatura prejudicaria o layout.
+`home-media.js` seleciona uma imagem no parsing da home, respeitando tema e viewport, e muda a seleção quando necessário. Links diretos para páginas internas adiam a imagem até a home ser exibida. Cada par claro/escuro usa a mesma cena e o mesmo recorte. Ao substituir imagens, mantenha perspectiva, estruturas, proporção e coordenadas do recorte iguais entre os dois temas. No celular, o título fica separado da imagem para não cobrir o moinho.
 
 `home.js` cuida da entrada de seções, contagens visuais, parallax e altura da barra. O conteúdo é visível se animações forem reduzidas ou IntersectionObserver não estiver disponível. Contagens para leitores de tela ficam estáveis; as contagens reais vêm do gerador.
 
@@ -34,4 +34,8 @@ O mural remove suas TVs ao sair da página. Os modelos agora pausam renderizaç�
 Chromium automatizado não cobre Safari/iOS, Firefox, leitores de tela humanos, GPU real, autenticação de hospedagem ou serviços corporativos não presentes no ZIP. A CI entregue precisa ser executada no GitHub. Os relatórios registram o que foi executado localmente e as falhas de terceiros observadas.
 
 ## Marca institucional fornecida
-`img/marca/holambra-logo.png` e `holambra-moinho.png` são cópias exatas das duas imagens enviadas pelo usuário. Preserve cores, proporções e fundos fornecidos. A marca completa aparece sobre superfície branca no rodapé, e o moinho é usado como símbolo compacto; não há recoloração por tema. O moinho SVG estilizado da home foi substituído por essa referência e sua animação de pás foi retirada para não girar/distorcer a marca. A ilustração do herói continua como cena decorativa.
+`img/marca/holambra.svg` preserva exatamente o novo vetor enviado pelo usuário, já transparente. `holambra-escuro.svg` mantém a geometria e o vermelho, com letras brancas para leitura no tema escuro. `holambra-moinho.svg` contém o traçado original do moinho com viewBox ajustado. Não acrescente retângulos de fundo nem gire/distorça o desenho. Os PNGs antigos com fundo foram removidos após a troca de todas as referências.
+
+Os três ícones institucionais em `img/icones/` são SVGs locais, com fonte registrada em `REVISAO-VISUAL.md`; os demais atalhos usam traços vetoriais na mesma linguagem. A home usa a fonte sans compartilhada, dispensando Fraunces. Cores semânticas de sucesso/alerta/erro das telas operacionais continuam distintas da paleta decorativa.
+
+A navegação anterior/próxima permanece flutuante nas páginas internas. Na home com largura até 999 px, aparece após o conteúdo para não encobrir as ações.

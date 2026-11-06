@@ -8,11 +8,11 @@ O diagnóstico e o plano foram apresentados antes da implementação, e estão r
 ## Melhorias implementadas
 
 ### Home e identidade
-- Herói panorâmico com moinho e silos, variantes claras/escuras e enquadramentos para desktop, tablet e celular.
+- Herói panorâmico com a mesma cena de moinho e silos, reiluminada de dia e de noite; recortes pareados para desktop, tablet e celular.
 - Preservados os textos, os quatro números com links, os sete atalhos, a torre SVG, os seis objetivos estratégicos e a citação.
 - Contagem de indicadores e TVs ligada ao gerador; novas versões de dados não deixam números fixos desatualizados na home.
-- Marca fornecida pelo usuário incorporada sem alteração de pixels: logotipo completo no rodapé e moinho no cabeçalho, na home e no favicon. Removida a rotação de pás do símbolo estilizado para preservar a integridade da marca.
-- Fraunces nos títulos da home e Plus Jakarta Sans compartilhada; fallback de sistema.
+- Novo SVG fornecido preservado, transparente no cabeçalho e rodapé; versão negativa para o tema escuro e moinho extraído do vetor original para home/favicon. Os dois PNGs antigos com fundo foram substituídos.
+- Plus Jakarta Sans compartilhada, azul e vermelho institucionais; cartões e ícones inspirados no site oficial. Fraunces removida da requisição de fontes.
 - Tokens de cor, cabeçalho, navegação, foco e rodapé consistentes entre home e páginas internas.
 - Animações respeitam movimento reduzido; números acessíveis ficam estáveis para leitores de tela.
 
@@ -53,7 +53,7 @@ A relação completa está em [ALTERACOES.md](ALTERACOES.md), com justificativas
 
 Os principais modificados são a fonte da home, o modelo HTML, `etapas.json`, o gerador, o leitor XLSX, os estilos compartilhados, `painel.js`, `arquitetura.js`, os dois modelos 3D e as páginas que receberam metadados de imagem/acessibilidade. `index.html` e os dados JS continuam sendo os artefatos necessários à abertura estática.
 
-**Removido:** `fonte/gerar_paisagem.py`, que só gerava o SVG da paisagem antiga e não tinha consumidor no redesign. Não foram removidas rotas, dados, fotos, diagramas ou funções operacionais do painel. Caches gerados durante testes são excluídos do pacote.
+**Removido:** `fonte/gerar_paisagem.py`, que só gerava o SVG da paisagem antiga e não tinha consumidor no redesign. Os dois PNGs antigos de marca foram substituídos por três SVGs transparentes na revisão visual. Não foram removidas rotas, dados, fotos, diagramas ou funções operacionais do painel. Caches gerados durante testes são excluídos do pacote.
 
 ## Validações executadas
 
@@ -64,7 +64,7 @@ Os principais modificados são a fonte da home, o modelo HTML, `etapas.json`, o 
 | Duas gerações e mudança controlada de CSV | Saída determinística; home acompanha 417 indicadores na fixture |
 | Testes Python | 13 aprovados |
 | Compilação sintática JS local/inline | 11 scripts aprovados |
-| Testes reais de navegador | 19 aprovados com Playwright 1.56.1 e Chromium 141 |
+| Testes reais de navegador | 20 aprovados com Playwright 1.56.1 e Chromium 141 |
 | Rotas e links da home | 19 rotas e 13 links verificados |
 | Acessibilidade automatizada nas páginas principais | 38 verificações: 19 rotas × 2 temas; zero violações detectadas |
 | Responsividade das páginas | 57 verificações: 19 rotas × 360/768/1024 px; sem overflow |
@@ -77,7 +77,7 @@ Testes cobrem erros de CSV, cache XLSX ausente, strings inline, entradas inváli
 
 Falhas foram reproduzidas antes das respectivas correções. A revisão independente encontrou o caso de fórmula sem cache e o ID herdado; ambos receberam regressões. A primeira proteção ampla de cache bloqueou fórmulas textuais vazias do XLSX original; foi refinada por tipo de célula e o build/testes da fonte real voltaram a passar.
 
-Os registros estão em `docs/validacao/`; capturas completas e relatório detalhado da interface acompanham a entrega na pasta `evidencias/`. A primeira varredura também encontrou contrastes em abas móveis e o diagrama sem foco de teclado; foram corrigidos e incluídos nos testes.
+Os registros estão em `docs/validacao/`; o relatório detalhado acompanha o projeto, e as capturas representativas ficam em `docs/capturas/`. A primeira varredura também encontrou contrastes em abas móveis e o diagrama sem foco de teclado; foram corrigidos e incluídos nos testes.
 
 ## Pendências e limites reais
 1. **Serviço externo:** o videowall respondeu, mas seu `logo-holambra.png` retorna HTTP 404. Esse erro aparece no console dos iframes e precisa ser corrigido no repositório do videowall. Os frames não foram substituídos por imagens ou por uma integração fictícia.
@@ -95,3 +95,6 @@ Crie um repositório privado vazio e siga os comandos `git init`, `git add`, `gi
 
 ## Conferência para commit e PR
 Na preparação do commit completo para `Felipeab8/coe-holambra`, foi comprovado que a base remota de 149 arquivos era idêntica ao ZIP original. A conferência do snapshot Git detectou hashes dependentes de CRLF/LF; a geração passou a normalizar texto no cálculo de versões de recursos, com um novo teste que reproduziu a falha e passou após a correção. O commit local e os arquivos de publicação são entregues separadamente. A integração GitHub retornou 403 ao tentar gravar; sem publicação remota ou PR criado por essa conexão.
+
+## Revisão visual de 6/11/2026
+A paleta, a marca e as imagens foram revistas após novo feedback. O escopo, as referências e a validação desta versão estão em [REVISAO-VISUAL.md](REVISAO-VISUAL.md). Relatórios de dependências da integração anterior mantêm a data original; esta revisão não altera dependências.

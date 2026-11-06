@@ -1,0 +1,97 @@
+{
+  "data_local": "2026-11-06",
+  "build": "aprovado",
+  "testes_python": 13,
+  "testes_navegador": 20,
+  "scripts_sintaxe": 11,
+  "rotas": 19,
+  "indicadores": 416,
+  "acessibilidade": {
+    "verificacoes": 100,
+    "violacoes": 0
+  },
+  "responsividade": {
+    "rotas_por_largura": 57,
+    "capturas_home": 12,
+    "overflow": 0
+  },
+  "javascript_pageerrors": [],
+  "browser": "141.0.7390.37",
+  "logo_original_sha256": "e6d6b3129d7e25f3bb310282e9561e7f0b22e5b06eae3d5f906764884191a980",
+  "cena": "Mesmo enquadramento de moinho, silos e campo; edição diurna e noturna com ferramenta image_gen integrada.",
+  "recortes_pareados": [
+    {
+      "file": "hero-claro.webp",
+      "width": 1852,
+      "height": 849,
+      "bytes": 189210
+    },
+    {
+      "file": "hero-claro-1600.webp",
+      "width": 1600,
+      "height": 734,
+      "bytes": 151694
+    },
+    {
+      "file": "hero-claro-s.webp",
+      "width": 1400,
+      "height": 900,
+      "bytes": 194840
+    },
+    {
+      "file": "hero-claro-m.webp",
+      "width": 1150,
+      "height": 890,
+      "bytes": 188688
+    },
+    {
+      "file": "hero-claro-m-800.webp",
+      "width": 800,
+      "height": 620,
+      "bytes": 116028
+    },
+    {
+      "file": "hero-escuro.webp",
+      "width": 1852,
+      "height": 849,
+      "bytes": 155822
+    },
+    {
+      "file": "hero-escuro-1600.webp",
+      "width": 1600,
+      "height": 734,
+      "bytes": 124128
+    },
+    {
+      "file": "hero-escuro-s.webp",
+      "width": 1400,
+      "height": 900,
+      "bytes": 158396
+    },
+    {
+      "file": "hero-escuro-m.webp",
+      "width": 1150,
+      "height": 890,
+      "bytes": 155220
+    },
+    {
+      "file": "hero-escuro-m-800.webp",
+      "width": 800,
+      "height": 620,
+      "bytes": 94756
+    }
+  ],
+  "problemas_corrigidos": [
+    "Contraste dos textos em cartões azulados",
+    "Foco de teclado claro demais",
+    "Contraste do contador 02",
+    "Pager cobrindo CTA móvel",
+    "Seta do Roadmap sobrepondo texto móvel",
+    "Teste de câmera aguardava DOM anterior ao recarregamento; agora aguarda navegação e item persistido"
+  ],
+  "pendencias_externas": [
+    "https://felipeab8.github.io/videowall-coe/logo-holambra.png"
+  ],
+  "publicado": false,
+  "ci_github_executada": false
+}

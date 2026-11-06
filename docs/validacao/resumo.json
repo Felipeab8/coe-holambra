@@ -1,12 +1,12 @@
 {
-  "data_local": "2026-11-05",
+  "data_local": "2026-11-06",
   "python": "3.13.7",
   "node": "24.22.1",
   "playwright": "1.56.1",
   "chromium": "141.0.7390.37",
   "axe-core": "4.11.0",
   "testes_python": 13,
-  "testes_navegador": 19,
+  "testes_navegador": 20,
   "scripts_sintaxe": 11,
   "paginas": 19,
   "indicadores": 416,
@@ -27,5 +27,7 @@
   "ci_github_executada": false,
   "publicado": false,
   "marcas_fornecidas_integradas": true,
-  "hashes_estaveis_entre_quebras_de_linha": true
+  "hashes_estaveis_entre_quebras_de_linha": true,
+  "logos_svg_transparentes": true,
+  "mesma_cena_dia_noite": true
 }

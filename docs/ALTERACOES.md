@@ -25,18 +25,16 @@ Comparação com o ZIP principal: **42 criados, 24 modificados e 1 removido(s)**
 | `docs/validacao/testes-python.txt` | Evidência de validações realmente executadas. |
 | `docs/validacao/three-osv.json` | Evidência de validações realmente executadas. |
 | `docs/validacao/ui-audit.json` | Evidência de validações realmente executadas. |
-| `img/home/hero-claro-1600.webp` | WebP responsivo/temático do redesign, preservado sem recompressão. |
-| `img/home/hero-claro-m-800.webp` | WebP responsivo/temático do redesign, preservado sem recompressão. |
-| `img/home/hero-claro-m.webp` | WebP responsivo/temático do redesign, preservado sem recompressão. |
-| `img/home/hero-claro-s.webp` | WebP responsivo/temático do redesign, preservado sem recompressão. |
-| `img/home/hero-claro.webp` | WebP responsivo/temático do redesign, preservado sem recompressão. |
-| `img/home/hero-escuro-1600.webp` | WebP responsivo/temático do redesign, preservado sem recompressão. |
-| `img/home/hero-escuro-m-800.webp` | WebP responsivo/temático do redesign, preservado sem recompressão. |
-| `img/home/hero-escuro-m.webp` | WebP responsivo/temático do redesign, preservado sem recompressão. |
-| `img/home/hero-escuro-s.webp` | WebP responsivo/temático do redesign, preservado sem recompressão. |
-| `img/home/hero-escuro.webp` | WebP responsivo/temático do redesign, preservado sem recompressão. |
-| `img/marca/holambra-logo.png` | Imagem de marca enviada pelo usuário, copiada sem alteração de pixels, cores ou proporções. |
-| `img/marca/holambra-moinho.png` | Imagem de marca enviada pelo usuário, copiada sem alteração de pixels, cores ou proporções. |
+| `img/home/hero-claro-1600.webp` | WebP atualizado: mesma cena reiluminada de dia/noite, com recorte pareado por viewport. |
+| `img/home/hero-claro-m-800.webp` | WebP atualizado: mesma cena reiluminada de dia/noite, com recorte pareado por viewport. |
+| `img/home/hero-claro-m.webp` | WebP atualizado: mesma cena reiluminada de dia/noite, com recorte pareado por viewport. |
+| `img/home/hero-claro-s.webp` | WebP atualizado: mesma cena reiluminada de dia/noite, com recorte pareado por viewport. |
+| `img/home/hero-claro.webp` | WebP atualizado: mesma cena reiluminada de dia/noite, com recorte pareado por viewport. |
+| `img/home/hero-escuro-1600.webp` | WebP atualizado: mesma cena reiluminada de dia/noite, com recorte pareado por viewport. |
+| `img/home/hero-escuro-m-800.webp` | WebP atualizado: mesma cena reiluminada de dia/noite, com recorte pareado por viewport. |
+| `img/home/hero-escuro-m.webp` | WebP atualizado: mesma cena reiluminada de dia/noite, com recorte pareado por viewport. |
+| `img/home/hero-escuro-s.webp` | WebP atualizado: mesma cena reiluminada de dia/noite, com recorte pareado por viewport. |
+| `img/home/hero-escuro.webp` | WebP atualizado: mesma cena reiluminada de dia/noite, com recorte pareado por viewport. |
 | `js/home-media.js` | Comportamento integrado de home, navegação, estados, teclado ou contratos de modelos. |
 | `js/home.js` | Comportamento integrado de home, navegação, estados, teclado ou contratos de modelos. |
 | `js/modelo-host.js` | Comportamento integrado de home, navegação, estados, teclado ou contratos de modelos. |
@@ -86,6 +84,14 @@ Comparação com o ZIP principal: **42 criados, 24 modificados e 1 removido(s)**
 
 ## Preservação e exclusões
 
-COE/VIAB foram comparados semanticamente e permanecem idênticos. Planilha, CSV, fotos e ícones originais foram preservados. Os dez WebPs do redesign e as duas imagens de marca enviadas pelo usuário estão intactos.
+COE/VIAB foram comparados semanticamente e permanecem idênticos. Planilha, CSV, fotos e ícones originais foram preservados. Os dez WebPs foram substituídos por versões pareadas da mesma cena. O SVG novo enviado pelo usuário foi preservado byte a byte; a marca escura e o moinho derivam da mesma geometria.
 
 Ficam fora do pacote node_modules, navegadores/perfis de teste, caches, ZIPs intermediários, arquivos temporários e ambientes reais. O HTML e os dois JS gerados são necessários ao painel estático e permanecem versionáveis. Não foi adicionada uma licença de redistribuição não autorizada.
+
+## Revisão visual — 6/11/2026
+
+Criados: `img/marca/holambra.svg`, `holambra-escuro.svg`, `holambra-moinho.svg`; `img/icones/ico-armazenamento.svg`, `ico-telescope.svg`, `ico-creditos.svg`; `docs/REVISAO-VISUAL.md` e registro dos prompts.
+
+Atualizados: `css/painel.css`, `css/home.css`, `fonte/modelo.html`, fonte da home, dez WebPs, `index.html`, documentação e capturas. A lógica de rotas e os dados operacionais foram mantidos.
+
+Removidos: `img/marca/holambra-logo.png` e `holambra-moinho.png`, substituídos por vetores transparentes de melhor definição. Nenhum consumidor dos PNGs permaneceu.

@@ -430,23 +430,13 @@
     "Failed to load resource: the server responded with a status of 404 ()",
     "Failed to load resource: the server responded with a status of 404 ()",
     "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
     "Failed to load resource: the server responded with a status of 404 ()"
   ],
   "failed": [
     {
-      "url": "https://tiles.openfreemap.org/sprites/ofm_f384/ofm.json",
-      "error": "net::ERR_ABORTED"
-    },
-    {
       "url": "https://tiles.openfreemap.org/sprites/ofm_f384/ofm.png",
-      "error": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://tiles.openfreemap.org/planet",
-      "error": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://felipeab8.github.io/videowall-coe/?telas=1&tema=claro",
       "error": "net::ERR_ABORTED"
     },
     {
@@ -458,7 +448,19 @@
       "error": "net::ERR_ABORTED"
     },
     {
+      "url": "https://felipeab8.github.io/videowall-coe/logo-holambra.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet",
+      "error": "net::ERR_ABORTED"
+    },
+    {
       "url": "https://tiles.openfreemap.org/sprites/ofm_f384/ofm.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tiles.openfreemap.org/sprites/ofm_f384/ofm.json",
       "error": "net::ERR_ABORTED"
     },
     {
@@ -468,17 +470,17 @@
     {
       "url": "https://tiles.openfreemap.org/styles/fiord",
       "error": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://felipeab8.github.io/videowall-coe/logo-holambra.png",
-      "error": "net::ERR_ABORTED"
-    },
-    {
-      "url": "https://felipeab8.github.io/videowall-coe/logo-holambra.png",
-      "error": "net::ERR_ABORTED"
     }
   ],
   "httpErrors": [
+    {
+      "url": "https://felipeab8.github.io/videowall-coe/logo-holambra.png",
+      "status": 404
+    },
+    {
+      "url": "https://felipeab8.github.io/videowall-coe/logo-holambra.png",
+      "status": 404
+    },
     {
       "url": "https://felipeab8.github.io/videowall-coe/logo-holambra.png",
       "status": 404

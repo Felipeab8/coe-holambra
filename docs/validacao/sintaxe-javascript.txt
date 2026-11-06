@@ -1,4 +1,1 @@
-$ node scripts/check-javascript.cjs
 Sintaxe JavaScript válida: 11 scripts locais/inline.
-
-Exit code: 0
