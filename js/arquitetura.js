@@ -10,8 +10,8 @@
   function render(){
     const to=cur==='tobe'; let h='';
     h+=C(1,1,'', 0,0,'ch corner'); D.stages.forEach((x,k)=>{ h+=C(1,k+2,x,0,0,'ch'); });
-    h+=C(2,1,'<b>COE</b>Centro de Excelência Operacional',0,0,'rh rcoe');
-    h+=C(2,2,to?'<div class="box coe on" data-id="coe"><b>COE · Centro de Excelência Operacional</b><span>gestão integrada de toda a cadeia, da recepção às utilidades, com dados padronizados do historiador e do ERP</span></div>':'<div class="box coe" data-id="coe"><b>COE</b><span>ainda não existe: nenhum dado chega padronizado</span></div>',7);
+    h+=C(2,1,'<b>COE</b>Centro Operacional de Excelência',0,0,'rh rcoe');
+    h+=C(2,2,to?'<div class="box coe on" data-id="coe"><b>COE · Centro Operacional de Excelência</b><span>gestão integrada de toda a cadeia, da recepção às utilidades, com dados padronizados do historiador e do ERP</span></div>':'<div class="box coe" data-id="coe"><b>COE</b><span>ainda não existe: nenhum dado chega padronizado</span></div>',7);
     h+=C(3,1,'<b>N4</b>Negócio · ERP',0,0,'rh');
     h+=C(3,2,box('erp','','int','Evolutize (Delsoft) · ERP','base central de relatórios; cobre recepção e classificação','erpb')); h+=C(3,3,'',6);
     h+=C(4,1,'<b>N3</b>Gestão de planta · CCO, SCADA',0,0,'rh');

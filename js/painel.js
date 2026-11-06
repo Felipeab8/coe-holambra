@@ -78,7 +78,11 @@
       fecharGaveta();
     }
     if (a === FICHA && extra) abrirIndicador(extra);
-    else if (extra && abrirAba(a.el, extra)) window.scrollTo(0, 0);
+    else if (extra) {
+      const secao = $$('[data-secao]', a.el).find(el => el.dataset.secao === extra);
+      if (secao) requestAnimationFrame(() => secao.scrollIntoView({ block: 'start', behavior: 'instant' }));
+      else if (abrirAba(a.el, extra)) window.scrollTo(0, 0);
+    }
   }
 
   function rota() {

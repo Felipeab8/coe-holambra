@@ -1,10 +1,42 @@
 # Manual consolidado COE Holambra
 
-## Refinamento profissional da interface
+## Revisão executiva — entrega atual
+
+**Referências e diagnóstico.** A revisão usa o pedido da conversa e `revisao html.docx` como referência editorial. A arquitetura permanece HTML/CSS/JavaScript nativo, com gerador Python e roteamento por hash. A abertura repetia objetivos, usava números sem contexto executivo e os desafios dependiam de alternância entre abas. O documento continha também solicitações sobre viabilidade; elas não foram executadas, conforme a instrução expressa de preservar essa seção intacta e acessível.
+
+**Plano aplicado.** Reaproveitar identidade, imagens, fontes, logos e componentes; adaptar abertura e objetivos; converter os desafios para fluxo vertical; preparar campos pendentes sem inventar dados; preservar as rotas; testar os comportamentos e consolidar a entrega em um ZIP. O menu por seções foi mantido provisoriamente porque o material contém 19 páginas, consultas de indicadores e visualizações interativas. A decisão final continua marcada como `[DEFINIR APÓS TESTE DE USABILIDADE]`.
+
+**Conteúdo e experiência.**
+
+- Abertura com “Centro Operacional de Excelência”, subtítulo e apresentação solicitados, sem números de entrevistas, indicadores, unidades ou TVs. Índice com os 11 temas e destinos funcionais.
+- Seis objetivos em uma única seção canônica. A escuta das áreas, as entrevistas, os depoimentos e o diagrama conceitual foram preservados na página de objetivos. Os contadores decorativos e seu código foram retirados.
+- Sete dores transversais com redação mais curta e sete etapas da cadeia em sequência vertical. Os problemas e criticidades do levantamento foram preservados; não foram recalculados. Impactos, indicadores e soluções sem vínculo confirmado têm campos sinalizados.
+- Complementos para indicadores, soluções/integrações, governança, priorização, marcos e dados finais. Nenhum campo pendente foi tratado como definição aprovada. Os blocos recolhíveis fora da viabilidade iniciam abertos.
+- Azul, vermelho e branco preservados, com hierarquia e espaçamento adaptados. Os campos pendentes receberam correção de contraste, confirmada na nova auditoria.
+- Terminologia do material padronizada. No CSV, apenas o termo “site” em observações sobre o videowall foi substituído por “painel”. Os demais campos dos 416 registros permaneceram iguais. Identificadores internos de código e o conteúdo congelado de viabilidade não foram renomeados.
+
+**Preservação.** As 19 rotas, filtros, busca, tema, fotos, arquitetura, modelos 3D, videowall, navegação por teclado e integração com o gerador permanecem. As imagens de dia/noite e a logo transparente continuam as mesmas da versão refinada. Não há dependência nova. São 173 arquivos no pacote; nenhum arquivo de produção foi criado ou removido nesta revisão. O CSS dos antigos blocos da abertura foi reduzido e a documentação continua concentrada neste manual e no README.
+
+**Arquivos modificados.** A lista completa, comparada à versão `coe-holambra-refinado`, está em `docs/validacao.json`, chave `revisao_executiva.preservacao.modificados`. Abrange as fontes editoriais, o modelo e títulos das rotas, dois estilos, navegação, textos da arquitetura, observações do CSV e suas saídas geradas, testes, README, manual, evidências e duas capturas. Arquivos criados: nenhum. Arquivos removidos: nenhum; somente código de contagem e estilos de seções consolidadas foram retirados.
+
+**Validação executada.** Build concluído; 13 testes Python; 23 testes Chromium; sintaxe de 11 scripts. O teste específico de cenários do simulador permaneceu no projeto, mas foi excluído desta revisão. Os testes de leitura da planilha apenas verificam contratos de software, sem análise de premissas, cálculos ou viabilidade. Auditoria editorial: 28 visitas (14 páginas × dois temas), 38 vistas expandidas, 42 combinações de rota/resolução e 12 capturas da abertura. Zero violações axe, overflow, imagens locais quebradas, IDs duplicados ou erros JavaScript de página no resultado final. O teste funcional de navegação confirmou acesso às 19 rotas. O conteúdo do ZIP foi extraído e reconstruído para verificar integridade e reprodução do build.
+
+**Limites e pendências.**
+
+- Realizar teste de usabilidade com leitores reais para confirmar a navegação. Nenhum teste com usuários foi alegado ou simulado.
+- Validar e preencher os marcadores visíveis, especialmente vínculos problema → impacto → KPI → solução, papéis, metas, prioridades e prazos.
+- O videowall externo retorna 404 para `https://felipeab8.github.io/videowall-coe/logo-holambra.png`. A logo local está íntegra; alterar o projeto principal não corrige um arquivo de outra origem. O erro permanece documentado para correção no repositório externo. Requisições externas abortadas durante mudanças de rota também foram registradas.
+- Não foi feito estudo de viabilidade, alteração de autenticação, integração com sistemas corporativos, publicação remota, commit ou pull request. O README orienta execução local e envio do conjunto completo ao GitHub.
+
+As seções seguintes são registros históricos de versões anteriores. Datas, resultados e descrições nelas não representam nova validação nesta revisão.
+
+---
+
+## Histórico — refinamento profissional da interface
 Hierarquia de títulos e largura de leitura ajustadas, cartões com raios coerentes, bordas e sombras mais discretas, navegação e tabelas mais legíveis. Movimentos decorativos retirados de blocos sem ação; links/botões mantêm feedback sutil e foco visível. Cores semânticas dos dados preservadas. Textos, fotos, CSV, planilha, rotas, modelos e lógica funcional não foram alterados. Sem arquivos ou dependências adicionais. Os resultados desta revisão estão na chave refinamento de validacao.json.
 
 
-## Versão atual — 6/11/2026
+## Histórico — revisão de identidade em 6/11/2026
 Esta versão usa azul, vermelho e branco. Corrigida a cobertura da imagem até em monitores 4K/ultrawide. Os estilos são incorporados automaticamente ao index.html pelo gerador para evitar CSS desatualizado. As fontes CSS continuam organizadas para manutenção.
 
 A home usa somente hero-claro.webp e hero-escuro.webp: a mesma cena em duas iluminações, com enquadramento responsivo por CSS. Eliminadas oito variantes redundantes. Os registros abaixo preservam o histórico; menções a dez variantes e folhas externas descrevem versões anteriores.

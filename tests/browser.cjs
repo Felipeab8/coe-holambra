@@ -18,10 +18,61 @@ test('home remains integrated with the original router', async () => {
   try {
     assert.equal(await page.locator('article.page').count(), 19);
     assert.equal(await page.locator('.hm-hero h1').count(), 1);
-    await page.getByRole('link', { name: 'Ver os objetivos', exact: true }).click();
+    await page.getByRole('link', { name: 'Iniciar leitura', exact: true }).click();
     await page.locator('#p-objetivos-ponto-de-partida-e-objetivos:not([hidden])').waitFor();
     await page.locator('.marca').click();
     await page.locator('#p-inicio-objetivo-do-coe:not([hidden])').waitFor();
+  } finally { await page.close(); }
+});
+
+test('executive opening is concise and objectives have one canonical location', async () => {
+  const page = await visit();
+  try {
+    assert.equal(await page.locator('.hm-title').innerText(), 'Centro Operacional de Excelência');
+    assert.equal(await page.locator('.hm-stats, .hm-objs, .hm-fase').count(), 0);
+    assert.equal(await page.locator('.executive-topics > li').count(), 11);
+    await page.getByRole('link', { name: 'Iniciar leitura', exact: true }).click();
+    const objectives = page.locator('#p-objetivos-ponto-de-partida-e-objetivos');
+    await objectives.waitFor();
+    assert.equal(await objectives.locator('.g3 .card').count(), 6);
+    assert.match(await objectives.innerText(), /Contexto e escuta das áreas/);
+    assert.equal(await objectives.locator('details:not([open])').count(), 0);
+  } finally { await page.close(); }
+});
+
+test('all challenge stages remain visible and deep links scroll within the page', async () => {
+  const page = await visit('#desafios/dores-operacionais/cadeia', { viewport: { width: 390, height: 844 } });
+  const stages = page.locator('[data-secao="cadeia"]');
+  async function assertAnchor(locator) {
+    await page.waitForFunction(selector => {
+      const r = document.querySelector(selector).getBoundingClientRect();
+      return r.top >= 75 && r.top < 200;
+    }, '[data-secao="' + await locator.getAttribute('data-secao') + '"]');
+  }
+  try {
+    await assertAnchor(stages);
+    assert.equal(await page.locator('.editorial-chain .step:visible').count(), 7);
+    assert.equal(await page.locator('[data-secao="transversais"]:visible').count(), 1);
+    assert.equal(await page.locator('#p-desafios-dores-operacionais [role="tab"]').count(), 0);
+    assert.equal(await page.locator('.stage-complements').count(), 7);
+    assert.equal(await page.locator('.stage-complements section').count(), 21);
+    await page.locator('.editorial-jumps a').first().click();
+    await assertAnchor(page.locator('[data-secao="transversais"]'));
+    await page.goBack();
+    await assertAnchor(stages);
+    for (const width of [320, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+    }
+  } finally { await page.close(); }
+});
+
+test('roadmap exposes pending decisions without inventing final priorities', async () => {
+  const page = await visit('#roadmap/expansao-e-jornada/priorizacao');
+  try {
+    assert.match(await page.locator('[data-secao="priorizacao"]').innerText(), /\[PENDENTE DE DEFINIÇÃO\]/);
+    assert.equal(await page.getByText('[DEFINIR APÓS TESTE DE USABILIDADE]', { exact: true }).count(), 1);
+    assert.equal(await page.getByText('[INSERIR MARCOS]', { exact: true }).count(), 1);
   } finally { await page.close(); }
 });
 
@@ -30,7 +81,7 @@ test('mobile home actions and card descriptions are not covered by navigation or
   try {
     for (const width of [320, 390, 699, 768]) {
       await page.setViewportSize({ width, height: 844 });
-      const cta = page.getByRole('link', { name: 'Ver os objetivos', exact: true });
+      const cta = page.getByRole('link', { name: 'Iniciar leitura', exact: true });
       await cta.scrollIntoViewIfNeeded();
       assert.equal(await cta.evaluate(link => {
         const box = link.getBoundingClientRect();
@@ -42,7 +93,7 @@ test('mobile home actions and card descriptions are not covered by navigation or
         return arrow.top < text.bottom;
       }).map(card => card.querySelector('b').textContent)), [], 'Arrow overlaps card copy at ' + width + 'px');
     }
-    await page.getByRole('link', { name: 'Ver os objetivos', exact: true }).click();
+    await page.getByRole('link', { name: 'Iniciar leitura', exact: true }).click();
     await page.locator('#p-objetivos-ponto-de-partida-e-objetivos:not([hidden])').waitFor();
   } finally { await page.close(); }
 });
@@ -264,7 +315,7 @@ test('only the selected hero theme is downloaded and motion preference is honore
     await page.locator('#hm-picture img').evaluate(image => image.decode());
     assert.equal(heroRequests.length, 1);
     assert.ok(heroRequests[0].endsWith('hero-escuro.webp'));
-    assert.equal(await page.locator('.hm-up').first().evaluate(element => getComputedStyle(element).animationName), 'none');
+    assert.equal(await page.locator('.hm-title').evaluate(element => getComputedStyle(element).animationName), 'none');
   } finally { await page.close(); }
 });
 test('file protocol keeps local navigation working', async () => {

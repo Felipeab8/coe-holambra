@@ -72,7 +72,7 @@ class BuildTests(unittest.TestCase):
             self.assertTrue('class="hm-hero full"' in html, 'home do redesign ausente')
             self.assertIn('id="p-inicio-objetivo-do-coe"', html)
             self.assertEqual(html.count('<article class="page'), 19)
-            # A new valid CSV record must flow to the home, not just its data JS.
+            # A new valid CSV record must flow to the KPI content, not just its data JS.
             csv_path = next((target / "fonte/mapeamento").glob("*.csv"))
             with csv_path.open(encoding="utf-8-sig", newline="") as stream:
                 reader = csv.DictReader(stream)
@@ -83,8 +83,8 @@ class BuildTests(unittest.TestCase):
                 writer = csv.DictWriter(stream, fieldnames=fieldnames)
                 writer.writeheader(); writer.writerows(rows)
             html = build()[0].decode("utf-8")
-            self.assertIn('<b>417</b>', html)
-            self.assertIn('Os 417 indicadores mapeados', html)
+            self.assertNotIn('hm-stats', html.split('<article class="page hm-root"')[1].split('</article>')[0])
+            self.assertIn('Os 417 indicadores do mapeamento', html)
 
     def test_resource_versions_are_stable_across_platform_newlines(self):
         with tempfile.TemporaryDirectory() as tmp:

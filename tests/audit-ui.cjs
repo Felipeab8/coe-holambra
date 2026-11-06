@@ -17,7 +17,9 @@ const evidence = process.env.COE_EVIDENCE_DIR || path.resolve(__dirname, '../tes
   try {
     await page.goto(base, { waitUntil: 'networkidle' });
     await page.addScriptTag({ path: require.resolve('axe-core/axe.min.js') });
-    const routes = await page.locator('#estrutura').textContent().then(JSON.parse);
+    const allRoutes = await page.locator('#estrutura').textContent().then(JSON.parse);
+    const routes = process.env.COE_SCOPE === 'editorial' ? allRoutes.filter(section => section.id !== 'viabilidade') : allRoutes;
+    report.scope = process.env.COE_SCOPE === 'editorial' ? 'Revisão editorial: viabilidade fora do escopo' : 'Completo';
     for (const theme of ['light', 'dark']) {
       await page.evaluate(theme => { document.documentElement.dataset.theme = theme; }, theme);
       for (const section of routes) for (const route of section.paginas) {

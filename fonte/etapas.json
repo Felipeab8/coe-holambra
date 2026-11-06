@@ -5,7 +5,7 @@
     "paginas": [
       {
         "id": "objetivo-do-coe",
-        "titulo": "Objetivo do COE",
+        "titulo": "Apresentação do material",
         "arquivo": "00-01-objetivo-do-coe.html",
         "classe": "hm-root"
       }
@@ -14,11 +14,11 @@
   },
   {
     "id": "objetivos",
-    "nome": "Objetivos com stakeholders",
+    "nome": "Objetivos",
     "paginas": [
       {
         "id": "ponto-de-partida-e-objetivos",
-        "titulo": "Ponto de partida e objetivos",
+        "titulo": "Objetivos Estratégicos do COE",
         "arquivo": "01-01-ponto-de-partida-e-objetivos.html"
       }
     ],
@@ -30,7 +30,7 @@
     "paginas": [
       {
         "id": "dores-operacionais",
-        "titulo": "Dores operacionais",
+        "titulo": "Desafios operacionais",
         "arquivo": "02-01-dores-operacionais.html"
       }
     ],

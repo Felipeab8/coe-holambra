@@ -1,6 +1,5 @@
 /* COE Holambra · comportamento da Home (somente leitura/visual)
    - Revelação suave das seções ao rolar
-   - Contagem animada dos números do projeto
    - Parallax leve da imagem do herói
    - Ajuste do espaço da barra superior do painel
    Não altera rotas, dados nem outras páginas. */
@@ -22,34 +21,6 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
     items.forEach(function (el) { io.observe(el); });
-  }
-
-  /* 2. Contagem dos números --------------------------------------------- */
-  var nums = [].slice.call(root.querySelectorAll('.hm-stats b'));
-  function countUp(el) {
-    var end = parseInt(el.textContent, 10);
-    if (isNaN(end)) return;
-    var reader = document.createElement('span');
-    reader.className = 'sr-only'; reader.textContent = String(end);
-    var visual = document.createElement('span'); visual.setAttribute('aria-hidden', 'true');
-    el.textContent = ''; el.append(reader, visual);
-    var t0 = null, dur = 1100;
-    function step(ts) {
-      if (t0 === null) t0 = ts;
-      var p = Math.min((ts - t0) / dur, 1), k = 1 - Math.pow(1 - p, 3);
-      visual.textContent = String(Math.round(end * k));
-      if (p < 1) requestAnimationFrame(step); else visual.textContent = String(end);
-    }
-    visual.textContent = '0';
-    requestAnimationFrame(step);
-  }
-  if (!reduce && 'IntersectionObserver' in window && nums.length) {
-    var ioN = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { countUp(e.target); ioN.unobserve(e.target); }
-      });
-    }, { threshold: 0.6 });
-    nums.forEach(function (n) { ioN.observe(n); });
   }
 
   /* 3. O cabeçalho é compartilhado com as páginas internas. */
