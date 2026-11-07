@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<script src="../js/modelo-host.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important} body{margin:0} :root{color-scheme:light}
+/* câmeras: observação somente leitura no cartão */
+.ce-st::before{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--d);margin:0 4px 0 6px;vertical-align:middle}
+.item.cam{position:relative;padding-right:30px}
+.ce-ro{margin-top:10px;border-top:1px solid var(--line);padding-top:8px;font-size:13px}
+.ce-ro p{margin:6px 0 0}
+.ce-st{font-weight:700;font-size:12px}
+.ce-st::before{content:"";margin-left:0}
+</style>
+<title>Holambra Unidade Avaré 3D</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: full-bleed 3D canvas, collapsible inventory rail at left, floating detail card */
+:root{
+  --bg:#eef1f5; --panel:#fffffff2; --fg:#0c233c; --muted:#5b6b7f; --line:#d5dce5;
+  --accent:#00338d; --accent-soft:#e6edf8;
+  --c-ent:#005eb8; --c-rec:#00a3a1; --c-arm:#00338d; --c-exp:#483698; --c-cam:#0091da;
+  --f-display:"Source Sans 3","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Source Sans 3","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0b1a2e; --panel:#10233df2; --fg:#e8eef6; --muted:#9aabc0; --line:#24395a; --accent:#4f9cff; --accent-soft:#16325a;
+  --c-ent:#3d8fe0; --c-rec:#2cc4c1; --c-arm:#5b7fd6; --c-exp:#8a78d6; --c-cam:#33b5f0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b1a2e; --panel:#10233df2; --fg:#e8eef6; --muted:#9aabc0; --line:#24395a; --accent:#4f9cff; --accent-soft:#16325a;
+  --c-ent:#3d8fe0; --c-rec:#2cc4c1; --c-arm:#5b7fd6; --c-exp:#8a78d6; --c-cam:#33b5f0; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);overflow:hidden}
+#app{position:relative;height:100%}
+#scene{position:absolute;inset:0}
+#scene canvas{display:block;outline:none;touch-action:none}
+.labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lbl{position:absolute;transform:translate(-50%,-100%);font:600 12px var(--f-body);background:var(--panel);
+  color:var(--fg);padding:3px 8px;border-radius:2px;border-left:3px solid var(--cc);white-space:nowrap;
+  box-shadow:0 1px 2px #0c233c26;transition:opacity .15s}
+.lbl.dim{opacity:.3}
+.lbl.cam{border:0;background:var(--c-cam);color:#fff;font:600 10px/1 var(--f-mono);padding:3px 5px;border-radius:2px;transform:translate(-50%,-140%)}
+.lbl.cam.on{outline:2px solid #fff;transform:translate(-50%,-140%) scale(1.25)}
+.camlayer[hidden]{display:none}
+.tabs{display:flex;gap:4px;padding:0 10px 6px;border-bottom:1px solid var(--line);position:sticky;top:-6px;background:var(--panel);z-index:1;padding-top:4px}
+.tabs button{flex:1 1 auto;font:600 11.5px var(--f-body);background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);padding:6px 4px;cursor:pointer}
+.tabs button.min{flex:0 0 28px;font:600 18px/1 var(--f-body);color:var(--muted);border:1px solid var(--line);border-radius:2px;margin:2px 0 4px 2px;padding:0}
+.tabs button.min:hover{color:var(--fg);border-color:var(--accent)}
+#panelOpen{position:absolute;left:max(16px,env(safe-area-inset-left,0px));top:64px;z-index:2}
+#panelOpen[hidden]{display:none}
+@media (max-width:760px){#panelOpen{top:auto;bottom:max(16px,env(safe-area-inset-bottom,0px))}}
+.tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+.camsum{display:flex;align-items:baseline;gap:8px;margin:12px 14px 2px}
+.camsum b{font:700 34px/1 var(--f-display);color:var(--c-cam)}
+.camsum span{font-size:13px;color:var(--muted)}
+.camtog{margin:8px 14px 2px;display:flex;align-items:center;gap:8px;font-size:13px}
+.item .n{display:inline-block;min-width:44px;font:500 11px var(--f-mono);color:var(--c-cam)}
+.item.cam{padding-left:14px;font-size:13px;line-height:1.3}
+h3 .ct{margin-left:auto;font:500 11px var(--f-mono);letter-spacing:0;color:var(--muted)}
+.lbl.ctx{font-weight:500;color:var(--muted);border-left-color:var(--muted);box-shadow:none}
+header{position:absolute;top:0;left:0;right:0;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+  padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  pointer-events:none;z-index:3}
+header > *{pointer-events:auto}
+.brand{display:flex;flex-direction:column;background:var(--panel);padding:8px 14px;border-radius:2px;border:1px solid var(--line)}
+.brand b{font:700 19px/1.1 var(--f-display);letter-spacing:0;color:var(--accent)}
+.brand span{font:12px var(--f-body);color:var(--muted)}
+.tools{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+button.t{font:600 12px var(--f-body);background:var(--panel);color:var(--fg);border:1px solid var(--line);
+  padding:7px 11px;border-radius:2px;cursor:pointer}
+button.t[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+aside{position:absolute;left:max(16px,env(safe-area-inset-left,0px));top:64px;max-height:calc(100% - 80px);width:250px;
+  background:var(--panel);border:1px solid var(--line);border-radius:2px;overflow:auto;padding:6px 0 10px;z-index:2;
+  transition:transform .25s ease, opacity .25s ease}
+aside.closed{transform:translateX(calc(-100% - 24px));opacity:0;pointer-events:none}
+aside h3{font:700 12px var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  margin:12px 14px 4px;display:flex;align-items:center;gap:7px}
+aside h3 i{width:9px;height:9px;border-radius:2px;background:var(--cc)}
+.item{display:block;width:100%;text-align:left;font:14px var(--f-body);background:none;border:0;color:var(--fg);
+  padding:5px 14px 5px 30px;cursor:pointer}
+.item:hover{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.item.on{background:color-mix(in srgb,var(--accent) 18%,transparent);font-weight:600}
+#card.wide{width:400px}
+#card{max-height:calc(100% - 100px);overflow:auto}
+#card ul.ve{margin:6px 0 0;padding-left:18px;font-size:13.5px;line-height:1.45}
+#card ul.ve li{margin-bottom:3px}
+#card .ganho{margin-top:10px;padding:9px 11px;border-radius:2px;font-size:13.5px;line-height:1.45;background:var(--accent-soft);border-left:3px solid var(--accent)}
+#card .ganho b{display:block;font:600 11px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:2px}
+#card p.nomes{font-size:13px;color:var(--muted)}
+.enav{display:flex;gap:6px;margin-top:14px}
+.enav .primary{flex:1}
+button.t.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.telas{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+.telas.one{grid-template-columns:1fr}
+.tela{display:flex;flex-direction:column;gap:4px;background:none;border:0;padding:0;text-align:left;cursor:pointer;color:var(--fg);font:500 12px var(--f-body)}
+.tela img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:2px;border:1px solid var(--line);display:block;background:#0b1422}
+.tela:hover img{outline:2px solid var(--accent)}
+.telas-h{font:600 11px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:14px}
+.etapa{display:flex;align-items:baseline;gap:8px;width:100%;text-align:left;background:none;border:0;color:var(--fg);font:600 14px var(--f-body);padding:8px 14px;cursor:pointer}
+.etapa .n{font:500 12px var(--f-mono);color:var(--accent);min-width:22px}
+.etapa .k{margin-left:auto;font:500 11px var(--f-mono);color:var(--muted)}
+.etapa:hover{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.etapa.on{background:color-mix(in srgb,var(--accent) 18%,transparent)}
+.subtela{display:block;width:100%;text-align:left;background:none;border:0;color:var(--muted);font:13px var(--f-body);padding:3px 14px 3px 44px;cursor:pointer}
+.subtela:hover{color:var(--fg)}
+#lightbox{position:fixed;inset:0;z-index:20;background:rgba(6,10,16,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+  padding-block:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+#lightbox[hidden],#card[hidden]{display:none}
+#lightbox img{max-width:min(96vw,1600px);max-height:calc(100% - 90px);border-radius:2px;box-shadow:0 10px 40px #0008}
+#lightbox .bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;color:#e6edf3;font:14px var(--f-body)}
+#lightbox .bar b{font:700 18px var(--f-display);letter-spacing:.02em}
+#lightbox .bar .c{font:12px var(--f-mono);color:#9fb0c2}
+#lightbox button,#lightbox a{font:600 13px var(--f-body);color:#e6edf3;background:#1c2836;border:1px solid #33465c;border-radius:2px;padding:7px 12px;cursor:pointer;text-decoration:none}
+#lightbox a{background:#1f5f7a;border-color:#2c7a9a}
+#card{position:absolute;right:max(16px,env(safe-area-inset-right,0px));bottom:16px;width:300px;background:var(--panel);
+  border:1px solid var(--line);border-top:4px solid var(--cc,var(--accent));border-radius:2px;padding:14px 16px;z-index:2}
+#card .cat{font:600 11px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--cc)}
+#card h2{font:700 24px/1.15 var(--f-display);color:var(--fg);margin:2px 0 8px;text-wrap:balance}
+#card p{font-size:14px;line-height:1.45;margin:0 0 10px}
+#card dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin:0;font-size:13px}
+#card dt{color:var(--muted)} #card dd{margin:0;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+#card .x{position:absolute;top:8px;right:8px;background:none;border:0;color:var(--muted);font-size:18px;cursor:pointer;line-height:1}
+.tag{display:inline-block;font:600 11px var(--f-body);padding:2px 7px;border-radius:2px;margin-top:10px;
+  background:color-mix(in srgb,var(--c-rec) 20%,transparent)}
+.hint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);font:12px var(--f-body);color:var(--muted);
+  background:var(--panel);padding:5px 10px;border-radius:2px;border:1px solid var(--line);white-space:nowrap}
+@media (max-width:760px){
+  aside{top:auto;bottom:0;left:0;right:0;width:auto;max-height:45%;border-radius:2px 6px 0 0;
+    padding-bottom:env(safe-area-inset-bottom,0px)}
+  aside.closed{transform:translateY(110%)}
+  #card{left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));width:auto}
+  .hint{display:none}
+  .tools{margin-left:0}
+}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font:12px var(--f-body);color:var(--muted);margin:12px 14px 0;padding-top:10px;border-top:1px solid var(--line)}
+.legend span{display:flex;align-items:center;gap:5px}
+.legend i{width:14px;height:5px;border-radius:2px;background:var(--sw)}
+
+.navpad{position:absolute;left:50%;bottom:max(14px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:4;display:flex;align-items:center;gap:4px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 8px;box-shadow:0 4px 18px rgba(0,0,0,.25)}
+.navpad button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--fg);font:700 16px/1 Arial,sans-serif;cursor:pointer;display:grid;place-items:center;padding:0}
+.navpad button:hover{border-color:var(--accent);color:var(--accent)}
+.navpad span{width:1px;height:22px;background:var(--line);margin:0 4px}
+.hint{display:none!important}
+#card{bottom:74px!important}
+#bNext{display:none!important}
+.navpad .np-et{width:auto;min-width:52px;border-radius:999px;padding:0 12px;font:700 13px var(--f-body);white-space:nowrap}
+#card{max-height:calc(100% - 160px)!important}
+.navpad .np-next{width:auto;border-radius:999px;padding:0 16px;font:700 13px var(--f-body);background:var(--accent);border-color:var(--accent);color:#fff;white-space:nowrap}
+.navpad .np-next:hover{filter:brightness(1.1);color:#fff}
+@media (max-width:760px){.navpad{flex-wrap:wrap;justify-content:center;max-width:calc(100% - 24px);border-radius:16px}}
+
+</style>
+
+<style>
+.tela-viva,.tela-grande{display:block;position:relative;overflow:hidden;aspect-ratio:16/9;background:#071421}
+.tela-viva iframe,.tela-grande iframe{position:absolute;left:0;top:0;width:1920px;height:1080px;border:0;transform-origin:0 0}
+.tela-viva iframe{pointer-events:none}
+.tela-grande{width:min(96vw,calc((100vh - 130px)*16/9));max-width:1600px}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="scene"></div>
+  <div class="labels" id="labels"></div>
+  <header>
+    
+    <div class="tools">
+      <button class="t" id="bList" aria-pressed="true" aria-controls="list">Infraestruturas</button>
+      <button class="t" id="bCams" aria-pressed="false">Câmeras</button>
+      <button class="t" id="bLabels" aria-pressed="true">Rótulos</button>
+      <button class="t" id="bTop">Vista de topo</button>
+      <button class="t" id="bPersp">Perspectiva</button>
+      <button class="t primary" id="bNext">Próxima etapa ›</button>
+    </div>
+  </header>
+  <aside id="list"></aside>
+  <button class="t" id="panelOpen" hidden aria-label="Abrir painel">› Painel</button>
+  <div id="card" hidden></div>
+  <div id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Tela do COE"></div>
+  <div class="hint">Arrastar: girar · Botão direito ou Shift + arrastar: mover para os lados · Setas do teclado: mover · Roda: zoom</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js" integrity="sha384-wagZhIFgY4hD+7awjQjR4e2E294y6J2HSnd8eTNc15ZubTeQeVRZwhQJ+W6hnBsf" crossorigin="anonymous"></script>
+<script>
+// Referência: vista aérea original, 1 px ≈ 1 m (estimado). Close-ups usados para refinar formas.
+const W = 1275, H = 297;
+const P = (x, y) => [x - W/2, y - H/2];
+const V = (x, y, h=0) => { const [a,b]=P(x,y); return new THREE.Vector3(a,h,b); };
+
+const CATS = {
+  ent: {name:"Entrada e controle",           v:"--c-ent"},
+  rec: {name:"Recebimento e beneficiamento", v:"--c-rec"},
+  arm: {name:"Armazenagem",                  v:"--c-arm"},
+  exp: {name:"Expedição",                    v:"--c-exp"},
+};
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+// ---------- renderer / câmera ----------
+const host = document.getElementById("scene");
+const renderer = new THREE.WebGLRenderer({antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setClearColor(0x000000,0);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+host.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(40, 1, 1, 9000);
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.maxPolarAngle = Math.PI/2.08;
+controls.minDistance = 15; controls.maxDistance = 2600;
+controls.screenSpacePanning = false;
+controls.panSpeed = 1.2; controls.keyPanSpeed = 25;
+controls.listenToKeyEvents(window);
+addEventListener("keydown",e=>{ if(e.key==="Shift") controls.mouseButtons.LEFT = THREE.MOUSE.PAN; });
+addEventListener("keyup",e=>{ if(e.key==="Shift") controls.mouseButtons.LEFT = THREE.MOUSE.ROTATE; });
+const BOUND = {x:1300, z:700};
+controls.addEventListener("change",()=>{
+  const t=controls.target, cx=THREE.MathUtils.clamp(t.x,-BOUND.x,BOUND.x), cz=THREE.MathUtils.clamp(t.z,-BOUND.z,BOUND.z);
+  if(cx!==t.x||cz!==t.z){ camera.position.x+=cx-t.x; camera.position.z+=cz-t.z; t.x=cx; t.z=cz; }
+});
+
+scene.add(new THREE.HemisphereLight(0xffffff, 0xaeb7c2, .9));
+const sun = new THREE.DirectionalLight(0xfff6e8, .78);
+sun.position.set(-320, 520, 260); sun.castShadow = true;
+sun.shadow.mapSize.set(2048,2048); sun.shadow.bias = -0.0004;
+Object.assign(sun.shadow.camera, {left:-760,right:760,top:330,bottom:-330,far:1700});
+scene.add(sun);
+function setSky(){ const dark=matchMedia("(prefers-color-scheme: dark)").matches&&document.documentElement.dataset.theme!=="light"||document.documentElement.dataset.theme==="dark";
+  scene.background=null; scene.fog=null; }
+setSky();
+
+// ---------- texturas procedurais ----------
+function canvasTex(w,h,draw){
+  const c=document.createElement("canvas"); c.width=w; c.height=h; draw(c.getContext("2d"),w,h);
+  const t=new THREE.CanvasTexture(c); t.wrapS=t.wrapT=THREE.RepeatWrapping; t.anisotropy=8; return t;
+}
+const TX = {
+  corr: canvasTex(64,8,(g,w,h)=>{ for(let x=0;x<w;x++){const v=200+40*Math.cos(x/w*Math.PI*2*4);g.fillStyle=`rgb(${v},${v},${v})`;g.fillRect(x,0,1,h);} }),
+  corrH: canvasTex(8,64,(g,w,h)=>{ for(let y=0;y<h;y++){const v=200+40*Math.cos(y/h*Math.PI*2*4);g.fillStyle=`rgb(${v},${v},${v})`;g.fillRect(0,y,w,1);} }),
+  silo: canvasTex(64,64,(g,w,h)=>{ g.fillStyle="#e6e6e6";g.fillRect(0,0,w,h);
+    g.fillStyle="#cfcfcf"; for(let y=0;y<h;y+=4)g.fillRect(0,y,w,1);
+    g.fillStyle="#9a9a9a"; g.fillRect(0,0,3,h); }),
+  windows: canvasTex(64,64,(g,w,h)=>{ g.fillStyle="#ececec";g.fillRect(0,0,w,h);
+    g.fillStyle="#3c4a55"; g.fillRect(14,22,36,20); g.fillStyle="#d4d4d4"; g.fillRect(0,56,w,8); }),
+  louver: canvasTex(64,64,(g,w,h)=>{ g.fillStyle="#d8d8d8";g.fillRect(0,0,w,h);
+    g.fillStyle="#5a5f62"; for(let y=4;y<h;y+=8)g.fillRect(8,y,48,4); }),
+  asphalt: canvasTex(128,128,(g,w,h)=>{ g.fillStyle="#5d6266";g.fillRect(0,0,w,h);
+    for(let i=0;i<1400;i++){const v=80+Math.random()*40;g.fillStyle=`rgb(${v},${v+3},${v+6})`;g.fillRect(Math.random()*w,Math.random()*h,1,1);} }),
+  gravel: canvasTex(128,128,(g,w,h)=>{ g.fillStyle="#b9ab92";g.fillRect(0,0,w,h);
+    for(let i=0;i<1600;i++){const v=150+Math.random()*60;g.fillStyle=`rgb(${v},${v-10},${v-28})`;g.fillRect(Math.random()*w,Math.random()*h,1.5,1.5);} }),
+  dirt: canvasTex(256,256,(g,w,h)=>{ g.fillStyle="#cdb995";g.fillRect(0,0,w,h);
+    for(let i=0;i<220;i++){g.fillStyle=`rgba(${160+Math.random()*40},${130+Math.random()*30},${95+Math.random()*25},.12)`;
+      g.beginPath();g.arc(Math.random()*w,Math.random()*h,4+Math.random()*16,0,7);g.fill();} }),
+  grass: canvasTex(256,256,(g,w,h)=>{ g.fillStyle="#97ad80";g.fillRect(0,0,w,h);
+    for(let i=0;i<300;i++){g.fillStyle=`rgba(${90+Math.random()*50},${120+Math.random()*50},${70+Math.random()*30},.2)`;
+      g.beginPath();g.arc(Math.random()*w,Math.random()*h,3+Math.random()*14,0,7);g.fill();} }),
+};
+function boxUV(geo,w,h,d,period=3){
+  const uv=geo.attributes.uv, dims=[[d,h],[d,h],[w,d],[w,d],[w,h],[w,h]];
+  for(let f=0;f<6;f++)for(let i=0;i<4;i++){const k=f*4+i;uv.setXY(k,uv.getX(k)*dims[f][0]/period,uv.getY(k)*dims[f][1]/period);}
+  uv.needsUpdate=true; return geo;
+}
+function planeUV(geo,w,h,pu=3,pv=3){ const uv=geo.attributes.uv; for(let k=0;k<uv.count;k++)uv.setXY(k,uv.getX(k)*w/pu,uv.getY(k)*h/pv); uv.needsUpdate=true; return geo; }
+
+// conjunto de materiais (tingidos pela cor da categoria ou neutros)
+function matSet(hex){
+  const c=new THREE.Color(hex), roof=c.clone().lerp(new THREE.Color(0xffffff),.35), dark=c.clone().multiplyScalar(.55);
+  const L=(o)=>{ delete o.map; return new THREE.MeshLambertMaterial(o); };
+  return {
+    wall:  L({color:c, map:TX.corr}),
+    wallH: L({color:c, map:TX.corrH}),
+    win:   L({color:c.clone().lerp(new THREE.Color(0xffffff),.25), map:TX.windows}),
+    louv:  L({color:c, map:TX.louver}),
+    silo:  L({color:c.clone().lerp(new THREE.Color(0xffffff),.2), map:TX.silo}),
+    roof:  L({color:roof, map:TX.corr, side:THREE.DoubleSide}),
+    roofH: L({color:roof, map:TX.corrH, side:THREE.DoubleSide}),
+    flat:  L({color:roof}),
+    solid: L({color:c}),
+    metal: L({color:dark}),
+  };
+}
+const SHARED = {
+  door: new THREE.MeshLambertMaterial({color:0x2c3237}),
+  glass:new THREE.MeshLambertMaterial({color:0x3d5566}),
+  steel:new THREE.MeshLambertMaterial({color:0x8b9196}),
+  conc: new THREE.MeshLambertMaterial({color:0xc9c6bf}),
+  white:new THREE.MeshLambertMaterial({color:0xf2f2ef}),
+  black:new THREE.MeshLambertMaterial({color:0x222222}),
+  yellow:new THREE.MeshLambertMaterial({color:0xE8B92E}),
+};
+const CTX = matSet(0xf3f4f6);
+
+// ---------- primitivas ----------
+function add(g,mesh,shadow=true){ mesh.castShadow=shadow; mesh.receiveShadow=true; g.add(mesh); return mesh; }
+function box(g,m,cx,cy,cz,w,h,d,period=3){ const geo=boxUV(new THREE.BoxGeometry(w,h,d),w,h,d,period);
+  const mesh=new THREE.Mesh(geo,m); mesh.position.set(cx,cy,cz); return add(g,mesh); }
+function rectBox(g,m,x1,y1,x2,y2,h,yb=0,period=3){ const [a,b]=P(x1,y1),[c,d]=P(x2,y2);
+  return box(g,m,(a+c)/2,yb+h/2,(b+d)/2,c-a,h,d-b,period); }
+function beam(g,m,p1,p2,w,h){ const len=p1.distanceTo(p2);
+  const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,len),m); mesh.position.copy(p1).add(p2).multiplyScalar(.5); mesh.lookAt(p2); return add(g,mesh); }
+// porta/abertura numa face: face = "n","s","e","w"
+function door(g,x1,y1,x2,y2,face,pos,w,h,m=SHARED.door){
+  const [a,b]=P(x1,y1),[c,d]=P(x2,y2); let mesh;
+  if(face==="n"||face==="s"){ const z=face==="n"?b-.06:d+.06; mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),m);
+    mesh.position.set(a+(c-a)*pos,h/2,z); if(face==="n")mesh.rotation.y=Math.PI; }
+  else { const x=face==="w"?a-.06:c+.06; mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),m);
+    mesh.position.set(x,h/2,b+(d-b)*pos); mesh.rotation.y=face==="w"?-Math.PI/2:Math.PI/2; }
+  g.add(mesh); return mesh;
+}
+// galpão com telhado de duas águas, cumeeira no eixo mais longo
+function gable(g,ms,x1,y1,x2,y2,wallH,roofH,opt={}){
+  const [a,b]=P(x1,y1),[c,d]=P(x2,y2), cx=(a+c)/2, cz=(b+d)/2, alongX=(c-a)>=(d-b);
+  const L=alongX?c-a:d-b, S=alongX?d-b:c-a, ov=opt.overhang??1;
+  const sub=new THREE.Group(); sub.position.set(cx,0,cz); if(alongX) sub.rotation.y=Math.PI/2; g.add(sub);
+  box(sub,opt.wallMat||ms.wall,0,wallH/2,0,S,wallH,L);
+  const hw=S/2+ov, sl=Math.hypot(hw,roofH+ov*roofH/(S/2)), ang=Math.atan2(roofH,S/2);
+  [-1,1].forEach(sd=>{
+    const geo=planeUV(new THREE.PlaneGeometry(sl,L+ov*2),sl,L+ov*2,1.2,40);
+    const p=new THREE.Mesh(geo,ms.roof); p.rotation.set(-Math.PI/2,sd*ang,0);
+    p.position.set(sd*hw/2,wallH+roofH/2-ov*roofH/S,0); add(sub,p);
+  });
+  // empenas triangulares
+  const sh=new THREE.Shape(); sh.moveTo(-S/2,0); sh.lineTo(S/2,0); sh.lineTo(0,roofH); sh.lineTo(-S/2,0);
+  [-1,1].forEach(e=>{ const m=new THREE.Mesh(new THREE.ShapeGeometry(sh),ms.solid); m.position.set(0,wallH,e*L/2);
+    if(e<0)m.rotation.y=Math.PI; sub.add(m); });
+  return sub;
+}
+function flatRoof(g,ms,x1,y1,x2,y2,h,opt={}){
+  const wm=opt.wallMat||ms.win;
+  rectBox(g,wm,x1,y1,x2,y2,h,0,opt.period||3.5);
+  rectBox(g,ms.flat,x1-.4,y1-.4,x2+.4,y2+.4,.6,h);                       // laje
+  rectBox(g,ms.solid,x1-.4,y1-.4,x2+.4,y1+.1,1,h+.6); rectBox(g,ms.solid,x1-.4,y2-.1,x2+.4,y2+.4,1,h+.6); // platibanda
+  rectBox(g,ms.solid,x1-.4,y1,x1+.1,y2,1,h+.6); rectBox(g,ms.solid,x2-.1,y1,x2+.4,y2,1,h+.6);
+  (opt.units||[]).forEach(([ux,uy])=>rectBox(g,SHARED.steel,ux,uy,ux+2.5,uy+2,1.6,h+.6));
+}
+// torre metálica com plataformas
+function tower(g,ms,x1,y1,x2,y2,h,opt={}){
+  rectBox(g,opt.wallMat||ms.wall,x1,y1,x2,y2,h);
+  for(let y=8;y<h;y+=8) rectBox(g,ms.metal,x1-.8,y1-.8,x2+.8,y2+.8,.35,y);
+  rectBox(g,ms.metal,x1-.6,y1-.6,x2+.6,y2+.6,2.5,h);                    // cabeça
+  const [a,b]=P(x2,y1); box(g,SHARED.steel,a+.9,h/2,b+1.5,.3,h,1.2);   // escada
+}
+// escada externa em zigue-zague (lance a cada 4 m) na face leste de uma torre
+function stair(g,x,y1,x2,y2,h){ const w=1.2;
+  for(let z=0,k=0;z<h-1;z+=4,k++){ const ya=k%2?y2:y1, yb=k%2?y1:y2; const [a,b]=P(x+.2+w/2,ya),[c,d]=P(x+.2+w/2,yb);
+    const p1=new THREE.Vector3(a,z+.2,b), p2=new THREE.Vector3(c,z+4,d); beam(g,SHARED.yellow,p1,p2,w,.25);
+    box(g,SHARED.yellow,c,z+4,d,w,.15,1.6); }
+  rectBox(g,SHARED.yellow,x+.2,y1-.8,x+.2+w,y2+.8,.1,h); }
+// silo com anéis, telhado cônico, escada e mureta
+function silo(g,ms,x,y,r,h){
+  const [cx,cz]=P(x,y);
+  const geo=new THREE.CylinderGeometry(r,r,h,40,1,true); const uv=geo.attributes.uv;
+  for(let k=0;k<uv.count;k++)uv.setXY(k,uv.getX(k)*2*Math.PI*r/2.2,uv.getY(k)*h/2.4); uv.needsUpdate=true;
+  const body=new THREE.Mesh(geo,ms.silo); body.position.set(cx,h/2+1,cz); add(g,body);
+  const base=new THREE.Mesh(new THREE.CylinderGeometry(r+.6,r+.8,1,40),SHARED.conc); base.position.set(cx,.5,cz); add(g,base);
+  [h*.35,h*.7].forEach(y=>{const ring=new THREE.Mesh(new THREE.CylinderGeometry(r+.15,r+.15,.5,40,1,true),ms.metal);ring.position.set(cx,y+1,cz);g.add(ring);});
+  const cg=new THREE.ConeGeometry(r+.4,r*.32,40,1,true); const cu=cg.attributes.uv;
+  for(let k=0;k<cu.count;k++)cu.setX(k,cu.getX(k)*24); cu.needsUpdate=true;
+  const cone=new THREE.Mesh(cg,ms.roof); cone.position.set(cx,h+1+r*.16,cz); add(g,cone);
+  const cap=new THREE.Mesh(new THREE.CylinderGeometry(1.4,1.4,1.2,16),ms.metal); cap.position.set(cx,h+1+r*.32+.4,cz); add(g,cap);
+  box(g,SHARED.steel,cx,h/2+1,cz+r+.35,.9,h,.3);                         // escada externa (sul)
+}
+// transportador elevado (galeria) com pilares
+function conveyor(g,p1,p2,opt={}){
+  const w=opt.w||2.4, hh=opt.h||2.2, m=opt.mat||SHARED.steel;
+  beam(g,m,p1,p2,w,hh);
+  const n=Math.max(1,Math.floor(p1.distanceTo(p2)/14));
+  for(let i=opt.skipEnds?1:0;i<=n-(opt.skipEnds?1:0);i++){ const p=p1.clone().lerp(p2,i/n); if(p.y<4)continue;
+    box(g,m,p.x,(p.y-hh/2)/2,p.z,.6,p.y-hh/2,.6); }
+}
+// caminhão graneleiro (cavalo + carreta)
+const truckMats=[0xe8e5df,0xc9483d,0x2f5d8a,0xe0b23a,0x5a7d4a].map(c=>new THREE.MeshLambertMaterial({color:c}));
+function truck(x,y,dirDeg,color=0,len=19){
+  const g=new THREE.Group(); const [cx,cz]=P(x,y); g.position.set(cx,0,cz); g.rotation.y=-dirDeg*Math.PI/180;
+  box(g,SHARED.black,0,.9,0,len,.6,2.4);
+  box(g,truckMats[color],len/2-1.4,2.2,0,2.6,2.9,2.5);                  // cabine
+  box(g,SHARED.glass,len/2-.05,2.8,0,.1,1,2.2);
+  box(g,truckMats[(color+2)%5],-1.4,2.3,0,len-3.6,2.2,2.5);             // caçamba
+  box(g,SHARED.black,-1.4,3.42,0,len-4,.05,2.2);
+  [len/2-2,-len/2+2,-len/2+3.3,-2].forEach(wx=>[-1.1,1.1].forEach(wz=>{
+    const wh=new THREE.Mesh(new THREE.CylinderGeometry(.55,.55,.4,12),SHARED.black); wh.rotation.x=Math.PI/2; wh.position.set(wx,.55,wz); g.add(wh);}));
+  scene.add(g);
+}
+function pole(x,y,h=10){ const [cx,cz]=P(x,y); const g=scene;
+  box(g,SHARED.steel,cx,h/2,cz,.3,h,.3); box(g,SHARED.white,cx+.7,h,cz,1.6,.3,.5); }
+
+// ---------- terreno ----------
+const groundMat=(tex,c,period)=>{const m=new THREE.MeshLambertMaterial({color:c,map:tex});m.userData.period=period;return m;};
+function plane(m,x1,y1,x2,y2,y=0,rep){
+  const [a,b]=P(x1,y1),[c,d]=P(x2,y2);
+  const geo=new THREE.PlaneGeometry(c-a,d-b); if(m.userData.period) planeUV(geo,c-a,d-b,m.userData.period,m.userData.period);
+  const p=new THREE.Mesh(geo,m); p.rotation.x=-Math.PI/2;
+  p.position.set((a+c)/2,y,(b+d)/2); p.receiveShadow=true; scene.add(p); return p;
+}
+const _T0=scene.children.length;
+plane(groundMat(TX.grass,0xffffff,70),-1500,-900,W+1500,H+900,-.2);
+const fieldMat=new THREE.MeshLambertMaterial({map:canvasTex(512,512,(g,w,h)=>{ g.fillStyle="#b39478";g.fillRect(0,0,w,h);
+  for(let i=0;i<40;i++){ g.strokeStyle=i%2?"rgba(130,100,78,.45)":"rgba(205,182,150,.45)"; g.lineWidth=3+Math.random()*3; g.beginPath();
+    for(let x=0;x<=w;x+=8){ const y=i*13+18*Math.sin(x/90+i*.3)+10*Math.sin(x/37); x?g.lineTo(x,y):g.moveTo(x,y);} g.stroke(); } })});
+fieldMat.userData.period=420;
+plane(fieldMat,200,-520,1100,-40,-.1);                                              // lavoura em curvas de nível
+plane(fieldMat,-500,-520,200,-160,-.1);
+plane(groundMat(TX.dirt,0xffffff,80),40,92,1200,250,.02);                             // área operacional
+const lawnMat=groundMat(TX.grass,0xb5d29a,40);
+const LAWNS=[[633,124,697,193],[686,197,804,219],[640,197,672,219],[733,190,812,198],[700,233,830,250]];
+LAWNS.forEach(r=>{ plane(lawnMat,...r,.06);
+  const [a,b]=P(r[0],r[1]),[c,d]=P(r[2],r[3]);
+  const pts=[[a,b],[c,b],[c,d],[a,d],[a,b]].map(([x,z])=>new THREE.Vector3(x,.35,z));
+  scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0xf5f5f0})));
+});
+
+const _T1=scene.children.length;
+// faixas (vias) suaves a partir de pontos de controle
+function ribbon(pts,w,mat,y,opt={}){
+  const curve=new THREE.CatmullRomCurve3(pts.map(([x,yy])=>V(x,yy,y)),false,"catmullrom",.3);
+  const n=Math.max(2,Math.ceil(curve.getLength()/2)); const pos=[],uv=[],idx=[];
+  let acc=0, prev=null;
+  for(let i=0;i<=n;i++){
+    const p=curve.getPointAt(i/n), t=curve.getTangentAt(i/n); const nx=-t.z, nz=t.x;
+    if(prev)acc+=p.distanceTo(prev); prev=p;
+    const ww=typeof w==="function"?w(i/n):w, per=opt.period||(typeof w==="function"?10:w);
+    pos.push(p.x+nx*ww/2,y,p.z+nz*ww/2, p.x-nx*ww/2,y,p.z-nz*ww/2); uv.push(0,acc/per, 1,acc/per);
+    if(i<n){const k=i*2; idx.push(k,k+1,k+2, k+1,k+3,k+2);}
+  }
+  const geo=new THREE.BufferGeometry(); geo.setAttribute("position",new THREE.Float32BufferAttribute(pos,3));
+  geo.setAttribute("uv",new THREE.Float32BufferAttribute(uv,2)); geo.setIndex(idx); geo.computeVertexNormals();
+  const mesh=new THREE.Mesh(geo,mat); mesh.receiveShadow=true; scene.add(mesh); return {mesh,curve};
+}
+const RM = {
+  asph: new THREE.MeshLambertMaterial({map:TX.asphalt, side:THREE.DoubleSide}),
+  grav: new THREE.MeshLambertMaterial({map:TX.gravel, side:THREE.DoubleSide}),
+  dash: new THREE.MeshBasicMaterial({color:0xf3f0e2, side:THREE.DoubleSide}),
+  lane: new THREE.MeshLambertMaterial({color:0x8d8a84, side:THREE.DoubleSide}),
+  bed:  new THREE.MeshLambertMaterial({color:0x8a7d6c, side:THREE.DoubleSide}),
+  rail: new THREE.MeshLambertMaterial({color:0x3b3633, side:THREE.DoubleSide}),
+};
+function dashes(curve,y,len=3,gap=4,w=.25){
+  const L=curve.getLength();
+  for(let s=0;s<L-len;s+=len+gap){
+    const p=curve.getPointAt(s/L), q=curve.getPointAt((s+len)/L);
+    const m=new THREE.Mesh(new THREE.PlaneGeometry(w,len),RM.dash); m.rotation.x=-Math.PI/2;
+    m.rotation.z=Math.atan2(q.x-p.x,q.z-p.z); m.position.set((p.x+q.x)/2,y,(p.z+q.z)/2); scene.add(m);
+  }
+}
+function arrows(curve,y,every=14,size=2.2){
+  const L=curve.getLength(), sh=new THREE.Shape(); sh.moveTo(0,size); sh.lineTo(size*.7,-size*.4); sh.lineTo(0,0); sh.lineTo(-size*.7,-size*.4); sh.lineTo(0,size);
+  for(let s=every/2;s<L;s+=every){ const p=curve.getPointAt(s/L), t=curve.getTangentAt(s/L);
+    const m=new THREE.Mesh(new THREE.ShapeGeometry(sh),RM.dash); m.rotation.set(-Math.PI/2,0,Math.atan2(-t.x,-t.z)); m.position.set(p.x,y,p.z); scene.add(m); }
+}
+const _R0=scene.children.length;
+// ---------- Rodovia, marginal e praça de pedágio ----------
+const HW=[[-900,140],[-500,106],[-19,79],[200,70],[400,64],[496,62],[600,55],[700,44],[800,28],[880,12],[1000,-12],[1150,-36],[1300,-56],[1800,-130]];
+const SHOULDER=new THREE.MeshLambertMaterial({color:0x9a9d9c, side:THREE.DoubleSide});
+ribbon(HW,17,SHOULDER,.12);                                   // acostamentos
+const hw=ribbon(HW,8.4,RM.asph,.15,{period:10});              // pista: 2 faixas
+dashes(hw.curve,.21,4,8,.2);
+// linhas de bordo (contínuas) deslocadas da pista
+function offsetPts(pts,off){ const c=new THREE.CatmullRomCurve3(pts.map(([x,y])=>V(x,y)),false,"catmullrom",.3); const out=[]; const n=120;
+  for(let i=0;i<=n;i++){const p=c.getPointAt(i/n),t=c.getTangentAt(i/n); out.push([p.x-t.z*off+W/2,p.z+t.x*off+H/2]);} return out; }
+[4.3,-4.3].forEach(o=>ribbon(offsetPts(HW,o),.22,RM.dash,.2));
+// Praça de pedágio: alargamento da pista até ~52 m sob a cobertura
+const PLAZA=[[330,66.5],[400,64],[450,63],[496,62],[545,59],[600,55],[670,48]];
+const peak=(496-330)/(670-330);
+ribbon(PLAZA,u=>14+38*Math.pow(Math.max(0,1-Math.abs(u-peak)/peak),.8),RM.asph,.17,{period:10});
+// pista marginal ao norte (passa atrás do prédio administrativo do pedágio e converge a leste)
+const MARG=[[-900,120],[-500,88],[-19,62],[230,34],[380,12],[480,4],[580,6],[680,10],[760,14],[830,16]];
+ribbon(MARG,11,SHOULDER,.11); const mg=ribbon(MARG,7,RM.asph,.14,{period:10}); dashes(mg.curve,.2,3,6,.18);
+// pátio e prédio administrativo do pedágio
+plane(new THREE.MeshLambertMaterial({map:TX.asphalt}),372,19,426,38,.16);
+for(let x=375;x<424;x+=3){ const [a,b]=P(x,19); const m=new THREE.Mesh(new THREE.PlaneGeometry(.15,5),RM.dash); m.rotation.x=-Math.PI/2; m.position.set(a,.22,b+2.5); scene.add(m); }
+flatRoof(scene,CTX,476,17,496,31,4.5,{units:[[480,22]]}); flatRoof(scene,CTX,498,19,510,30,3.8);
+// ilhas e cabines
+const tollRoof=new THREE.MeshLambertMaterial({color:0xf0efe9}), booth=new THREE.MeshLambertMaterial({color:0xe9e4d8});
+const ISL=[]; for(let k=0;k<=8;k++) ISL.push(37+k*6.4);
+ISL.forEach((y,k)=>{ rectBox(scene,SHARED.conc,478,y-.9,514,y+.9,.35); rectBox(scene,booth,492,y-.8,500,y+.8,2.7,.35);
+  rectBox(scene,SHARED.glass,491.9,y-.6,500.1,y+.6,1,1.4);
+  const [a,b]=P(476.5,y); box(scene,new THREE.MeshLambertMaterial({color:k%2?0xe0b23a:0x3a3a3a}),a,.6,b,1,1.2,1.8); });
+// faixas entre as cabines (tracejadas, seguem a pista)
+for(let k=0;k<8;k++){ const yc=(ISL[k]+ISL[k+1])/2;
+  const c=new THREE.CatmullRomCurve3([V(440,yc+1),V(478,yc),V(514,yc),V(552,yc-3)]); dashes(c,.23,3,4,.18); }
+// cobertura da praça
+rectBox(scene,tollRoof,483,32,509,92,1.1,6.6);
+rectBox(scene,SHARED.steel,483,61.4,509,62.6,.5,7.7);
+ISL.forEach(y=>rectBox(scene,SHARED.steel,495.6,y-.3,496.4,y+.3,6.6,.35));
+// marcas de canalização (zebrado) nas aproximações
+const zeb=(x1,x2,y1,y2)=>{ for(let x=x1;x<x2;x+=3){ const [a,b]=P(x,(y1+y2)/2); const m=new THREE.Mesh(new THREE.PlaneGeometry(.6,y2-y1),RM.dash); m.rotation.x=-Math.PI/2; m.position.set(a,.22,b); scene.add(m);} };
+zeb(520,575,38,48); zeb(420,470,77,86);
+// veículos na rodovia
+const hwc=hw.curve;
+function onRoad(u,side,kind,color){ const p=hwc.getPointAt(u), t=hwc.getTangentAt(u), dx=t.x*side, dz=t.z*side;
+  const wx=p.x-dz*1.9, wz=p.z+dx*1.9, deg=Math.atan2(dz,dx)*180/Math.PI;
+  if(kind==="truck") truck(wx+W/2,wz+H/2,deg,color);
+  else { const g=new THREE.Group(); g.position.set(wx,0,wz); g.rotation.y=-deg*Math.PI/180;
+    box(g,truckMats[color],0,.8,0,4.4,.9,1.8); box(g,SHARED.glass,-.2,1.5,0,2.2,.6,1.6); scene.add(g); } }
+[[.16,1,"car",0],[.22,-1,"truck",3],[.3,1,"car",2],[.52,-1,"car",4],[.6,1,"truck",1],[.68,-1,"car",0],[.74,1,"car",1],[.82,-1,"truck",2]].forEach(a=>onRoad(...a));
+const _R1=scene.children.length;
+// Via norte asfaltada (acesso administrativo)
+const north=ribbon([[330,121],[400,121],[560,121],[700,118],[760,112],[815,106],[850,98]],9,RM.asph,.14);
+dashes(north.curve,.2);
+plane(new THREE.MeshLambertMaterial({map:TX.asphalt}),531,133,590,151,.15);          // estacionamento
+for(let x=534;x<588;x+=3.2){ const [a,b]=P(x,133); const m=new THREE.Mesh(new THREE.PlaneGeometry(.15,5),RM.dash); m.rotation.x=-Math.PI/2; m.position.set(a,.2,b+2.5); scene.add(m); }
+// Acesso oeste até a portaria
+const west=ribbon([[150,212],[184,211],[205,212]],9,RM.grav,.13);
+// Via de contorno (circulação de caminhões): sul → leste → norte do armazém → oeste das moegas
+ribbon([[205,212],[300,226],[420,240],[560,243],[650,241],[700,234],[800,229],[900,227],[1000,229],[1100,229],[1160,222],[1172,185],[1170,120],[1152,92],[1100,84],[960,85],[880,88],[838,104],[818,140],[820,190],[836,224]],9,RM.grav,.14);
+// Ligação norte–sul central
+ribbon([[700,118],[686,150],[681,190],[681,234]],7,RM.grav,.15);
+// Balança de entrada (norte, sentido leste → classificação) e balança de saída (sul, sentido oeste → portaria)
+const laneA=ribbon([[425,204],[472,204],[523,204],[560,206],[585,210],[596,210]],4.6,RM.lane,.17);
+const laneB=ribbon([[660,238],[620,238],[575,230],[540,221],[523,220.5],[472,220.5],[440,222],[418,230],[400,238]],4.6,RM.lane,.17);
+arrows(laneA.curve,.22); arrows(laneB.curve,.22);
+// Saída da classificação para a via de contorno
+const exitC=ribbon([[642,218],[660,224],[684,232]],6,RM.grav,.16); arrows(exitC.curve,.22,10);
+// Acesso às moegas e à expedição
+const toMoega=ribbon([[836,226],[856,218],[870,211]],6,RM.grav,.16); arrows(toMoega.curve,.22,9);
+const toExp=ribbon([[1120,229],[1143,224],[1155,212],[1156,190]],6,RM.grav,.16); arrows(toExp.curve,.22,10);
+
+// pátio de materiais a oeste: lotes empilhados (paletes/tijolos)
+(()=>{ const geo=new THREE.BoxGeometry(2.4,1.6,2.4); const list=[];
+  for(let y=154;y<220;y+=3.4) for(let x=324;x<402;x+=3.4){ const dx=(x-363)/39, dy=(y-187)/33; if(dx*dx+dy*dy<1&&Math.random()>.12) list.push([x,y]); }
+  const im=new THREE.InstancedMesh(geo,new THREE.MeshLambertMaterial({color:0xcfc6bb}),list.length); const o=new THREE.Object3D();
+  list.forEach(([x,y],k)=>{const [a,b]=P(x,y); o.position.set(a,.8,b); o.scale.set(1,.7+Math.random()*.7,1); o.updateMatrix(); im.setMatrixAt(k,o.matrix);});
+  im.castShadow=im.receiveShadow=true; scene.add(im); })();
+
+const _V0=scene.children.length;
+// ---------- vegetação ----------
+function trees(list,geo,mat,yOff){
+  const im=new THREE.InstancedMesh(geo,mat,list.length); const o=new THREE.Object3D();
+  list.forEach(([x,y,s=1],i)=>{const [a,b]=P(x,y);o.position.set(a,yOff*s,b);o.scale.setScalar(s);o.rotation.y=Math.random()*6;o.updateMatrix();im.setMatrixAt(i,o.matrix);});
+  im.castShadow=true; scene.add(im);
+}
+const jit=()=>Math.random()*1.6-.8;
+const orchard=[]; for(let y=258;y<440;y+=8) for(let x=0;x<1100;x+=6) orchard.push([x+jit(),y+jit(),.8+Math.random()*.35]);
+trees(orchard,new THREE.IcosahedronGeometry(2.3,0),new THREE.MeshLambertMaterial({color:0x5f8d4c}),2.2);
+const euc=[]; for(let y=-40;y<118;y+=6) for(let x=1180;x<1470;x+=6) euc.push([x+jit(),y+jit(),.85+Math.random()*.4]);
+for(let y=238;y<440;y+=6) for(let x=1112;x<1470;x+=6) euc.push([x+jit(),y+jit(),.85+Math.random()*.4]);
+for(let x=0;x<1110;x+=9) euc.push([x+jit(),252+jit(),.45+Math.random()*.2]);
+trees(euc,new THREE.ConeGeometry(2.8,15,7),new THREE.MeshLambertMaterial({color:0x3f6b3a,flatShading:true}),7.5);
+const garden=[[650,140],[662,158],[676,138],[688,172],[652,182],[668,186],[700,205],[720,214],[742,210],[765,214],[790,208],[810,212],[645,210],[660,214],[720,242],[690,246],[480,145],[540,154],[548,228],[560,236],[512,232],[455,236]].map(([x,y])=>[x,y,1+Math.random()*.4]);
+trees(garden,new THREE.IcosahedronGeometry(3.2,1),new THREE.MeshLambertMaterial({color:0x4f7d43,flatShading:true}),4.2);
+const trunks=garden.map(([x,y])=>[x,y,1]); trees(trunks,new THREE.CylinderGeometry(.35,.4,2.6,6),new THREE.MeshLambertMaterial({color:0x6b5440}),1.3);
+
+// mata nativa a nordeste (norte da rodovia) e cinturão de eucalipto a oeste
+const mata=[]; for(let y=-420;y<-40;y+=7) for(let x=1060;x<1700;x+=7){ const edge=-30-(x-1000)*.14; if(y<edge-14&&Math.random()>.08) mata.push([x+jit()*2,y+jit()*2,.9+Math.random()*.7]); }
+trees(mata,new THREE.IcosahedronGeometry(4.2,0),new THREE.MeshLambertMaterial({color:0x3e6436,flatShading:true}),4.5);
+const westBelt=[]; for(let y=100;y<250;y+=6) for(let x=-40;x<40;x+=6){ if(y>200&&y<224)continue; westBelt.push([x+jit(),y+jit(),.85+Math.random()*.4]); }
+trees(westBelt,new THREE.ConeGeometry(2.8,15,7),new THREE.MeshLambertMaterial({color:0x3f6b3a,flatShading:true}),7.5);
+// vila residencial a noroeste
+plane(lawnMat,40,-140,205,24,.04);
+const HOUSE={...matSet(0xeee7da)}; HOUSE.roof=new THREE.MeshLambertMaterial({color:0x6f6a72,map:TX.corr,side:THREE.DoubleSide});
+[[-128,-104,-80],[-40,-14,10]].forEach(rowsY=>rowsY.forEach(y0=>{ for(let x=56;x<192;x+=13.5){ if(Math.random()<.08)continue; gable(scene,HOUSE,x,y0,x+9,y0+7,3,1.6,{overhang:.6}); } }));
+ribbon([[48,-62],[200,-62]],5,RM.grav,.1); ribbon([[48,-26],[200,-26]],5,RM.grav,.1); ribbon([[48,-140],[48,30],[20,58]],5,RM.grav,.1);
+const villaTrees=[]; for(let i=0;i<40;i++) villaTrees.push([50+Math.random()*150,-135+Math.random()*155,.8+Math.random()*.5]);
+trees(villaTrees,new THREE.IcosahedronGeometry(3.2,1),new THREE.MeshLambertMaterial({color:0x4f7d43,flatShading:true}),4.2);
+
+const _V1=scene.children.length;
+// ---------- estruturas de contexto (neutras) ----------
+const ctx=scene;
+{ const g1=gable(ctx,CTX,719,97,784,140,8,3.5); }
+{ gable(ctx,CTX,710,141,782,188,8,3.5); door(ctx,710,141,782,188,"s",.3,8,6); door(ctx,710,141,782,188,"s",.7,8,6);
+  gable(ctx,CTX,783,163,795,177,4,1.2); }
+door(ctx,719,97,784,140,"s",.5,8,6);
+gable(ctx,CTX,596,158,613,197,5.5,2); door(ctx,596,158,613,197,"e",.5,4,3);
+gable(ctx,CTX,507,135,527,148,4,1.6); flatRoof(ctx,CTX,475,136,487,145,3.6);
+// calador / amostrador sobre a pista norte da classificação
+{ const p1=V(575,156,0),p2=V(575,200,0); [156,170,185,200].forEach(y=>{const v=V(575,y);box(ctx,SHARED.steel,v.x,3.5,v.z,.4,7,.4);const w=V(581,y);box(ctx,SHARED.steel,w.x,3.5,w.z,.4,7,.4);});
+  rectBox(ctx,SHARED.steel,574.5,156,581.5,200,.5,7); }
+// estação de água: tanque e anexos
+{ const [x,z]=P(730,242); const t=new THREE.Mesh(new THREE.CylinderGeometry(9.6,9.6,10,32),SHARED.white); t.position.set(x,5,z); add(ctx,t);
+  const top=new THREE.Mesh(new THREE.ConeGeometry(9.8,1.6,32),SHARED.white); top.position.set(x,10.8,z); add(ctx,top);
+  flatRoof(ctx,CTX,748,240,760,249,3); flatRoof(ctx,CTX,762,250,769,256,3);
+  const [hx,hz]=P(780,242); const ht=new THREE.Mesh(new THREE.CylinderGeometry(2.2,2.2,9,16),SHARED.white); ht.rotation.z=Math.PI/2; ht.position.set(hx,2.6,hz); add(ctx,ht); }
+gable(ctx,CTX,975,193,988,205,3.5,1.2); gable(ctx,CTX,993,238,1027,250,4,1.5); gable(ctx,CTX,922,236,937,249,3.5,1.2);
+gable(ctx,CTX,839,184,846,193,3,1); gable(ctx,CTX,66,160,80,182,3.5,1.4); gable(ctx,CTX,90,180,104,193,3.5,1.2);
+// transportadores entre recebimento, armazém, silos e expedição
+const BELT=new THREE.MeshLambertMaterial({color:0x9aa0a5});
+conveyor(ctx,V(872,158,24),V(898,146,26),{mat:BELT});
+conveyor(ctx,V(924,142,27),V(931,140,30),{mat:BELT});
+conveyor(ctx,V(935,128,43),V(980,128,25.5),{mat:BELT,skipEnds:true});          // alimentação do armazém (lanternim)
+conveyor(ctx,V(980,128,25.5),V(1126,128,25.5),{mat:BELT,skipEnds:true,w:1.8,h:1.6});
+conveyor(ctx,V(935,150,40),V(933,171,31),{mat:BELT});
+conveyor(ctx,V(933,171,31),V(1132,171,31),{mat:BELT,skipEnds:true});            // galeria sobre os silos
+conveyor(ctx,V(1120,171,31),V(1127,166,31),{mat:BELT});
+// postes
+[[400,115],[500,116],[440,180],[520,196],[540,212],[600,200],[660,226],[760,224],[860,222],[960,222],[1060,224],[1160,208]].forEach(([x,y])=>pole(x,y));
+// caminhões
+truck(497,204,0,0); truck(500,220.5,180,1); truck(430,170,0,3); truck(430,180,0,2); truck(460,170,0,4);
+truck(866,217,-55,1); truck(1155,165,90,0); truck(760,229,0,2); truck(610,121,180,4); truck(1060,229,180,3);
+
+// ---------- infraestruturas em destaque ----------
+const ITEMS = [
+  {id:"portaria", cat:"ent", name:"Portaria",
+   desc:"Controle de acesso de caminhões e pessoas na entrada oeste, com cobertura sobre a pista.",
+   build:(g,ms)=>{ flatRoof(g,ms,186,202,196,207,3.4,{period:3});
+     rectBox(g,ms.flat,182,206,206,219,.5,5.2);
+     [[183,207],[205,207],[183,218],[205,218]].forEach(([x,y])=>rectBox(g,ms.metal,x-.3,y-.3,x+.3,y+.3,5.2));
+     rectBox(g,SHARED.white,197,211.6,203,212.0,.25,1.1); }},
+  {id:"patio", cat:"ent", name:"Pátio",
+   desc:"Pátio de terra onde os caminhões aguardam e manobram antes da pesagem e da classificação.",
+   build:(g,ms)=>{ const m=ms.solid.clone(); m.transparent=true; m.opacity=.35; ms.solid2=m; rectBox(g,m,408,150,470,243,.4,0); rectBox(g,m,470,150,575,197,.4,0); }},
+  {id:"balancas", cat:"ent", name:"Balanças",
+   desc:"Duas balanças rodoviárias: a do norte pesa o caminhão na entrada e a do sul pesa na saída, depois da descarga.",
+   build:(g,ms)=>{ [[201.7,206.3],[217.9,223.1]].forEach(([y1,y2])=>{
+       rectBox(g,SHARED.conc,470,y1-.6,525,y2+.6,.5,0); rectBox(g,ms.metal,472,y1,523,y2,.35,.5);
+       for(let x=476;x<523;x+=6) rectBox(g,ms.solid,x,y1-.2,x+.3,y2+.2,.1,.85); });
+     flatRoof(g,ms,469,208.5,482,215.5,3.6,{period:3}); }},
+  {id:"adm", cat:"ent", name:"Adm", noLabel:true,
+   desc:"Prédio administrativo da unidade, de frente para a via norte e o estacionamento.",
+   build:(g,ms)=>{ flatRoof(g,ms,598,129,632,149,7,{units:[[602,140],[620,140]]});
+     rectBox(g,ms.flat,607,124.5,623,129,.4,4.2); [[608,125],[622,125]].forEach(([x,y])=>rectBox(g,ms.metal,x-.2,y-.2,x+.2,y+.2,4.2));
+     door(g,598,129,632,149,"n",.5,3,2.6,SHARED.glass); }},
+  {id:"classif", cat:"ent", name:"Classificação",
+   desc:"Amostragem e análise da carga (umidade, impurezas, avariados).",
+   build:(g,ms)=>{ gable(g,ms,594,205,633,234,6,2.6);
+     rectBox(g,ms.flat,584,205,594,234,.5,5.6);                              // marquise sobre as duas entradas
+     [[584.5,205.5],[584.5,218.5],[584.5,233.5]].forEach(([x,y])=>rectBox(g,ms.metal,x,y-.3,x+.6,y+.3,5.6));
+     door(g,594,205,633,234,"w",.19,4.6,4.6);
+     flatRoof(g,ms,633,212,642,234,3.8,{period:3}); }},
+  {id:"moegas", cat:"rec", name:"Moegas",
+   desc:"Seis moegas de recebimento, com as bocas de descarga no lado sul. Dali o grão sobe por elevador para pré-limpeza e secagem.",
+   build:(g,ms)=>{ rectBox(g,ms.wall,849,139,872,177,24); gable(g,ms,849,139,872,177,24,2,{overhang:.5});
+     gable(g,ms,849,177,893,207,13,2.4);
+     [1,2,3,4,5,6].forEach(k=>door(g,849,177,893,207,"s",(k-.5)/6,5.4,6.2)); }},
+  {id:"secador", cat:"rec", name:"Secador",
+   desc:"Secador de grãos (corpo com venezianas) e a torre de elevação ao lado, que alimenta o armazém e os silos.",
+   build:(g,ms)=>{ tower(g,ms,898,132,924,160,30,{wallMat:ms.louv}); tower(g,ms,931,112,939,150,44);
+     const [x,z]=P(918,128); const ch=new THREE.Mesh(new THREE.CylinderGeometry(1.1,1.1,36,12),ms.metal); ch.position.set(x,18,z); add(g,ch); }},
+  {id:"cavaco", cat:"rec", name:"Armazém de cavaco",
+   desc:"Galpão aberto com o estoque de cavaco de madeira, combustível da fornalha do secador.",
+   build:(g,ms)=>{ gable(g,ms,902,103,925,120,6,2.4); door(g,902,103,925,120,"s",.5,14,5);
+     const [a,b]=P(913.5,115); const pile=new THREE.Mesh(new THREE.ConeGeometry(5,3.5,16),new THREE.MeshLambertMaterial({color:0x9c7650})); pile.position.set(a,1.75,b+8); add(g,pile); }},
+  {id:"cco", cat:"rec", name:"CCO",
+   desc:"Centro de Controle Operacional: comando dos transportadores, do secador e dos silos.",
+   build:(g,ms)=>{ gable(g,ms,895,164,931,215,9,2.4); flatRoof(g,ms,895,206,908,215,4.2,{period:3}); }},
+  {id:"armazem", cat:"arm", name:"Armazém",
+   desc:"Armazém graneleiro de grande capacidade, cobertura em arco com lanternim por onde corre o transportador de carga.",
+   build:(g,ms)=>{ const x1=946,y1=97,x2=1126,y2=160, wall=8, top=24;
+     const [a,b]=P(x1,y1),[c,d]=P(x2,y2), L=c-a, D=d-b, cx=(a+c)/2, cz=(b+d)/2, R=D/2, k=(top-wall)/R;
+     box(g,ms.wall,cx,wall/2,cz,L,wall,D);
+     const geo=new THREE.CylinderGeometry(R,R,L,48,1,true,0,Math.PI); const uv=geo.attributes.uv;
+     for(let i=0;i<uv.count;i++)uv.setXY(i,uv.getX(i)*Math.PI*R/1.2,uv.getY(i)*L/40); uv.needsUpdate=true;
+     const roof=new THREE.Mesh(geo,ms.roof); roof.rotation.z=Math.PI/2; roof.scale.x=k; roof.position.set(cx,wall,cz); add(g,roof);
+     [-1,1].forEach(e=>{ const end=new THREE.Mesh(new THREE.CircleGeometry(R,40,0,Math.PI),ms.solid); end.scale.y=k;
+       end.position.set(cx+e*L/2,wall,cz); end.rotation.y=e*Math.PI/2; g.add(end); });
+     box(g,ms.metal,cx,top+1,cz,L-6,2,4);
+     door(g,x1,y1,x2,y2,"w",.5,8,7); door(g,x1,y1,x2,y2,"e",.5,8,7); }},
+  {id:"silos", cat:"arm", name:"Silos",
+   desc:"Bateria de oito silos metálicos em linha, encostada no armazém, com galeria transportadora sobre os telhados.",
+   build:(g,ms)=>{ const x0=933,x1=1126,n=8,step=(x1-x0)/n; for(let i=0;i<n;i++) silo(g,ms,x0+step*(i+.5),171.5,step*.46,24); }},
+  {id:"expedicao", cat:"exp", name:"Expedição",
+   desc:"Conjunto de expedição na extremidade leste do armazém, conforme imagem de satélite: torre com plataforma na saída do armazém, transportador ao longo da parede leste até a torre de distribuição no encontro com os silos, e três dosadores que descarregam direto nos caminhões. Ao longo do bosque, a estrutura de carregamento.",
+   build:(g,ms)=>{
+     // 1. torre de saída do armazém com plataforma (gradil) avançando para leste
+     tower(g,ms,1129,121,1135,127,26); stair(g,1135,121.5,1135,126.5,26);
+     rectBox(g,ms.metal,1128,119,1143,129,.6,27.5);                                   // plataforma
+     [[1128,119,1143,119.25],[1128,128.75,1143,129],[1142.75,119,1143,129]].forEach(([x1,y1,x2,y2])=>rectBox(g,SHARED.yellow,x1,y1,x2,y2,1.1,28.1));
+     [[1142.5,119.5],[1142.5,128.5]].forEach(([x,y])=>rectBox(g,ms.metal,x-.3,y-.3,x+.3,y+.3,27.5));
+     // 2. transportador ao longo da parede leste do armazém até a torre de distribuição
+     conveyor(g,V(1133,127,25),V(1133,161,30),{mat:SHARED.steel,w:1.6,h:1.4});
+     // 3. torre de distribuição no canto armazém/silos
+     tower(g,ms,1127,161,1133,167,34); stair(g,1133,161.5,1133,166.5,34);
+     // 4. galpões de carregamento (cobertura sobre as baias)
+     gable(g,ms,1131,176,1153,196,7,1.6); gable(g,ms,1140,198,1155,211,7,1.6);   // galpão de carregamento (dosadores 2 e 3 sobre o telhado)
+     // 5. estrutura ao longo do bosque
+     const X1=1157, X2=1164, Y1=135, Y2=203, H=10;
+     for(let y=Y1;y<=Y2;y+=8.5){ [X1,X2].forEach(x=>rectBox(g,ms.metal,x-.25,y-.25,x+.25,y+.25,H)); rectBox(g,ms.metal,X1,y-.2,X2,y+.2,.5,H-.5); }
+     [X1,X2].forEach(x=>rectBox(g,ms.metal,x-.3,Y1,x+.3,Y2,.6,H));
+     rectBox(g,ms.flat,X1-.6,Y1-.6,X2+.6,Y2+.6,.35,H+.6);
+     // 6. dosadores (círculos da imagem): torre fina, caixa dosadora e bica sobre o caminhão
+     const DOS=[[1155,165,"Dosador 1"],[1147,191,"Dosador 2"],[1136,190,"Dosador 3"]];
+     DOS.forEach(([x,y],k)=>{
+       const [a,b]=P(x,y), onRoof=k>0, HD=onRoof?11.2:13;
+       if(onRoof){ [[-1.2,-1.2],[1.2,-1.2],[-1.2,1.2],[1.2,1.2]].forEach(([dx,dy])=>box(g,ms.metal,a+dx,8.4+(HD-8.4)/2,b+dy,.3,HD-8.4,.3));
+         box(g,ms.metal,a,8.3,b,3.4,.3,3.4); }                                         // base sobre o telhado
+       else { [[-1.2,-1.2],[1.2,-1.2],[-1.2,1.2],[1.2,1.2]].forEach(([dx,dy])=>box(g,ms.metal,a+dx,HD/2,b+dy,.3,HD,.3));
+         const sp=new THREE.Mesh(new THREE.CylinderGeometry(.3,.55,4.5,10),ms.metal); sp.position.set(a,HD-4.4,b); add(g,sp); }
+       const bin=new THREE.Mesh(new THREE.CylinderGeometry(2,2,4,20),ms.wall); bin.position.set(a,HD+2,b); add(g,bin);
+       const cone=new THREE.Mesh(new THREE.ConeGeometry(2,2.2,20),ms.solid); cone.rotation.x=Math.PI; cone.position.set(a,HD-1.1,b); add(g,cone);
+       const top=new THREE.Mesh(new THREE.ConeGeometry(2.1,.9,20),ms.flat); top.position.set(a,HD+4.45,b); add(g,top);
+       // 7. transportadores da torre de distribuição até cada dosador
+       conveyor(g,V(1130,164,32-k*1.2),V(x,y,HD+4.6),{mat:SHARED.steel,w:1.2,h:1,skipEnds:true});
+     });
+   }},
+];
+
+const groups={};
+ITEMS.forEach(it=>{
+  const g=new THREE.Group(); g.userData.id=it.id; const ms=matSet(css(CATS[it.cat].v)); it.ms=ms;
+  it.build(g,ms); scene.add(g); groups[it.id]=g;
+  const bb=new THREE.Box3().setFromObject(g);
+  it.anchor=new THREE.Vector3((bb.min.x+bb.max.x)/2,bb.max.y+3,(bb.min.z+bb.max.z)/2);
+  it.size=bb.getSize(new THREE.Vector3());
+});
+
+// ---------- rótulos, lista, seleção ----------
+const labelsEl=document.getElementById("labels");
+ITEMS.forEach(it=>{ const d=document.createElement("div"); d.className="lbl"; d.textContent=it.name;
+  d.style.setProperty("--cc",`var(${CATS[it.cat].v})`); labelsEl.appendChild(d); it.lbl=d; if(it.noLabel) d.hidden=true; });
+const CTX_LABELS=[].concat([]).map(([t,p])=>{
+  const d=document.createElement("div"); d.className="lbl ctx"; d.textContent=t; labelsEl.appendChild(d); return {lbl:d,anchor:p}; });
+
+// ---------- câmeras (mapa de câmeras da unidade, 32 no total) ----------
+const CAM_AREAS=[
+ {id:"rec",name:"Recepção"},{id:"cla",name:"Classificação"},{id:"moe",name:"Moegas, Tombadores e Caçamba"},
+ {id:"for",name:"Fornalha e Elevador"},{id:"sil",name:"Silos e Armazém"},{id:"exp",name:"Expedição"}];
+// p = posição [x,y,altura], t = ponto observado [x,y,altura], pole = câmera em poste
+// posições revisadas pelo time em 03/11/2026 (cameras-avare-2026-11-03.csv)
+const CAMS=[
+ {a:"rec",d:"Entrada do pátio",p:[383.5, 231.8, 7],t:[339.9, 234.3, 0],pole:1,obs:"Avaliar todos os caminhões que ainda não fizeram o cadastro e que não estão no pátio interno da cooperativa. Câmera 360°."},
+ {a:"rec",d:"Visão geral do pátio",p:[565, 152, 25],t:[455, 198, 0],pole:1,obs:"Câmera existente."},
+ {a:"rec",d:"Balanças de pesagem",p:[540.1, 211.9, 7],t:[500.1, 210.9, 0],pole:1,obs:"Pegar a balança por completo."},
+ {a:"cla",d:"Sala de amostragem",p:[600.4, 206.5, 5],t:[608.4, 225.6, 1]},
+ {a:"cla",d:"Laboratório de amostragem",p:[629.9, 231.7, 4],t:[617.8, 212.6, 1]},
+ {a:"cla",d:"Coleta de amostra do caminhão, lado direito",p:[587.3, 209, 5.5],t:[610.6, 216.7, 1.5]},
+ {a:"cla",d:"Coleta de amostra do caminhão, lado esquerdo",p:[586.4, 228.3, 5.5],t:[611.8, 230.9, 1.5]},
+ {a:"cla",d:"Fila de caminhões para as moegas",p:[638.2, 225.9, 9],t:[693.2, 221.9, 0]},
+ {a:"moe",d:"Moegas 1–2",p:[855.7, 202.9, 7],t:[859.9, 187.3, 1]},
+ {a:"moe",d:"Moegas 3–4",p:[870.8, 201.8, 7],t:[875, 186.2, 1]},
+ {a:"moe",d:"Moegas 5–6",p:[885.7, 202.3, 7],t:[885.7, 186.3, 1]},
+ {a:"moe",d:"Corrente do tombador 1–2",p:[862.6, 141.6, 8],t:[861.2, 165.7, 2]},
+ {a:"moe",d:"Redler 1",p:[885.9, 184.8, -1],t:[904.4, 188.6, 25]},
+ {a:"moe",d:"Redler 2",p:[887.6, 191.4, -1],t:[902.6, 177.4, 12]},
+ {a:"moe",d:"Redler 3",p:[886.5, 199.8, -1],t:[892.5, 183.8, 20]},
+ {a:"moe",d:"Caçamba de resíduos",p:[931.2, 212.6, 6],t:[922.4, 196.1, 0]},
+ {a:"for",d:"Depósito de cavaco",p:[916, 126, 6],t:[913, 112, 1]},
+ {a:"for",d:"Alimentação de cavaco da fornalha 1",p:[922.9, 123.8, 9],t:[914.9, 136.3, 4]},
+ {a:"for",d:"Alimentação de cavaco da fornalha 2",p:[897, 127.6, 9],t:[905.5, 138.2, 4]},
+ {a:"for",d:"Topo do elevador, para ver a fumaça dos secadores",p:[930.6, 149, 46],t:[903, 142.6, 32]},
+ {a:"sil",d:"Redler 1 dos silos",p:[938, 164, 30],t:[947, 172, 27]},
+ {a:"sil",d:"Redler 2 dos silos",p:[932.9, 175.8, 33],t:[948.6, 171.7, 27]},
+ {a:"sil",d:"Início da esteira dos silos",p:[935, 177, -3],t:[965, 171, 31]},
+ {a:"sil",d:"Meio da esteira dos silos",p:[1030, 177, -3],t:[1060, 171, 31],obs:"360°"},
+ {a:"sil",d:"Fim da esteira dos silos",p:[1128, 177, -3],t:[1098, 171, 31]},
+ {a:"sil",d:"Início do armazém",p:[950, 128, 25],t:[985, 128, 20]},
+ {a:"sil",d:"Meio do armazém",p:[1036, 128, 26],t:[1066, 128, 19],obs:"360°"},
+ {a:"sil",d:"Fim do armazém",p:[1122, 128, 25],t:[1090, 128, 20]},
+ {a:"exp",d:"Sala de resíduos",p:[1137.5, 212.9, 3],t:[1148.5, 202.9, 0]},
+ {a:"exp",d:"Redler do armazém",p:[1154.1, 163.1, 16.5],t:[1172, 175, 8]},
+ {a:"exp",d:"Balança de carregamento",p:[1163, 189, 8],t:[1174.2, 174.4, 0],pole:1},
+ {a:"exp",d:"Operação de carregamento",p:[1168, 218, 9],t:[1150, 200, 2]},
+];
+const camLayer=new THREE.Group(), coneLayer=new THREE.Group(); camLayer.visible=coneLayer.visible=false; scene.add(camLayer,coneLayer);
+const CAM_MARKERS=[]; let camOn=false;
+const camColor=()=>new THREE.Color(css("--c-cam"));
+const camMat=new THREE.MeshBasicMaterial({color:camColor()}), camBody=new THREE.MeshLambertMaterial({color:0xf2f2f2});
+const camLabels=document.createElement("div"); camLabels.className="labels camlayer"; camLabels.hidden=true; document.getElementById("app").insertBefore(camLabels,labelsEl.nextSibling);
+function makeCam(c){
+  const p=V(c.p[0],c.p[1],c.p[2]), t=V(c.t[0],c.t[1],c.t[2]); c.pos=p; c.tgt=t;
+  const g=new THREE.Group(); g.userData.id="cam:"+CAMS.indexOf(c);
+  if(c.pole&&p.y>0){ const pl=new THREE.Mesh(new THREE.CylinderGeometry(.15,.2,Math.max(p.y,.2),6),SHARED.steel); pl.position.set(p.x,p.y/2,p.z); g.add(pl); }
+  if(p.y<0){ const gd=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(p.x,0.05,p.z),p.clone()]);
+    const ln=new THREE.Line(gd,new THREE.LineDashedMaterial({color:camColor(),dashSize:.6,gapSize:.4})); ln.computeLineDistances(); g.add(ln);
+    const ring=new THREE.Mesh(new THREE.RingGeometry(1.6,2.1,32),new THREE.MeshBasicMaterial({color:camColor(),transparent:true,opacity:.7,side:THREE.DoubleSide,depthWrite:false})); ring.rotation.x=-Math.PI/2; ring.position.set(p.x,.06,p.z); g.add(ring); }
+  const body=new THREE.Mesh(new THREE.BoxGeometry(.7,.7,1.4),camBody); body.position.copy(p); if(t.distanceTo(p)>.01) body.lookAt(t); g.add(body);
+  const dot=new THREE.Mesh(new THREE.SphereGeometry(1.3,16,12),camMat.clone()); dot.position.copy(p); dot.position.y+=1.1; g.add(dot); c.dot=dot;
+  camLayer.add(g); c.g=g;
+  // campo de visão: pirâmide de ~65°
+  const dir=t.clone().sub(p); if(dir.lengthSq()<1e-4) dir.set(0,-1,0); const range=Math.max(4,Math.min(dir.length()*1.2,60)); dir.normalize();
+  const geo=new THREE.ConeGeometry(range*Math.tan(32*Math.PI/180),range,4,1,true); geo.rotateY(Math.PI/4); geo.translate(0,-range/2,0);
+  const mat=new THREE.MeshBasicMaterial({color:camColor(),transparent:true,opacity:.13,depthWrite:false,side:THREE.DoubleSide});
+  const cone=new THREE.Mesh(geo,mat); cone.position.copy(p); cone.quaternion.setFromUnitVectors(new THREE.Vector3(0,-1,0),dir);
+  const edges=new THREE.LineSegments(new THREE.EdgesGeometry(geo),new THREE.LineBasicMaterial({color:camColor(),transparent:true,opacity:.45}));
+  cone.add(edges); coneLayer.add(cone); c.cone=cone;
+  c.anchor=p.clone().add(new THREE.Vector3(0,2.6,0));
+  g.visible=cone.visible=!c.deleted;
+}
+function dropCam(c){ [c.g,c.cone].forEach(o=>{ if(!o)return; o.parent&&o.parent.remove(o); o.traverse(x=>{ x.geometry&&x.geometry!==undefined&&x.geometry.dispose(); }); }); }
+function rebuildMarkers(){ CAM_MARKERS.length=0; CAMS.forEach((c,i)=>{ if(c.g){ c.g.userData.id="cam:"+i; if(!c.deleted) CAM_MARKERS.push(c.g); } }); }
+CAMS.forEach((c,i)=>{
+  c.n=i+1; c.code="CAM "+String(i+1).padStart(2,"0"); c.id="c"+String(i+1).padStart(2,"0");
+  c.orig={a:c.a,d:c.d,p:c.p.slice(),t:c.t.slice(),pole:!!c.pole,obs:c.obs||""};
+  makeCam(c);
+  const d=document.createElement("div"); d.className="lbl cam"; d.textContent=String(i+1).padStart(2,"0"); camLabels.appendChild(d); c.lbl=d;
+});
+rebuildMarkers();
+const bCams=document.getElementById("bCams");
+function setCams(on){ camOn=on; camLayer.visible=coneLayer.visible=on; camLabels.hidden=!on; bCams.setAttribute("aria-pressed",on);
+  const cb=document.getElementById("camShow"); if(cb) cb.checked=on; if(!on&&selCam!==null) selectCam(null); }
+bCams.onclick=()=>{ const on=!camOn; setCams(on); if(on){ showTab("cam"); setList(true);} };
+let selCam=null;
+const escRO=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function selectCam(i,fly){
+  CAMS.forEach((c,k)=>{ const on=k===i; c.cone.material.opacity=i===null?.13:(on?.32:.06); c.dot.scale.setScalar(on?1.6:1);
+    c.lbl.classList.toggle("on",on); c.btn&&c.btn.classList.toggle("on",on); });
+  selCam=i; if(i===null){ card.hidden=true; return; }
+  if(!camOn) setCams(true);
+  ITEMS.forEach(it=>{ Object.values(it.ms).forEach(m=>m.emissive&&m.emissive.setHex(0)); it.lbl.classList.remove("dim"); it.btn.classList.remove("on"); });
+  const c=CAMS[i], area=CAM_AREAS.find(a=>a.id===c.a);
+  card.style.setProperty("--cc","var(--c-cam)");
+  card.innerHTML=`<button class="x" aria-label="Fechar">×</button><div class="cat">Câmera · ${area.name}</div><h2>${c.code}</h2><p>${c.d}</p>
+    <dl><dt>Instalação</dt><dd>${c.p[2]<0?"subterrânea":c.pole?"poste":"estrutura"}, ${c.p[2]<0?Math.abs(Math.round(c.p[2]))+" m abaixo do solo":"~"+Math.round(c.p[2])+" m"}</dd><dt>Área</dt><dd>${area.name}</dd></dl>
+    <span class="tag">Posição revisada pelo time em 03/11/2026</span>${c.obs?`<div class="ce-ro"><span class="ce-st" style="--d:#8A97A6">A validar</span><p>${escRO(c.obs)}</p></div>`:""}`;
+  card.classList.remove("wide");
+  card.querySelector(".x").onclick=()=>selectCam(null); card.hidden=false;
+  if(innerWidth<=760) setList(false);
+  if(fly){ const dir=c.tgt.clone().sub(c.pos).setY(0).normalize(); const mid=c.pos.clone().lerp(c.tgt,.5); mid.y=Math.min(mid.y,c.pos.y);
+    flyTo(mid, c.pos.clone().sub(dir.multiplyScalar(75)).add(new THREE.Vector3(0,55,0))); }
+}
+const list=document.getElementById("list");
+Object.entries(CATS).forEach(([k,c])=>{
+  const h=document.createElement("h3"); h.innerHTML=`<i></i>${c.name}`; h.style.setProperty("--cc",`var(${c.v})`); list.appendChild(h);
+  ITEMS.filter(i=>i.cat===k).forEach(it=>{ const b=document.createElement("button"); b.className="item"; b.id="it-"+it.id; b.textContent=it.name;
+    b.onclick=()=>select(it.id,true); list.appendChild(b); it.btn=b; });
+});
+const lg=document.createElement("div"); lg.className="legend";
+lg.innerHTML=`<span style="--sw:#97a1ac"><i></i>Asfalto</span><span style="--sw:#c9cfd6"><i></i>Cascalho</span><span style="--sw:#b3bac3"><i></i>Pista de balança</span>`;
+list.appendChild(lg);
+// abas do painel: infraestruturas | câmeras
+const infraPane=document.createElement("div"); while(list.firstChild) infraPane.appendChild(list.firstChild);
+const camPane=document.createElement("div"); camPane.hidden=true;
+camPane.innerHTML=`<div class="camsum"><b>${CAMS.length}</b><span>câmeras no total</span></div>
+  <label class="camtog"><input type="checkbox" id="camShow"> Mostrar câmeras no modelo</label>`;
+CAM_AREAS.forEach(a=>{ const cs=CAMS.filter(c=>c.a===a.id);
+  const h=document.createElement("h3"); h.style.setProperty("--cc","var(--c-cam)"); h.innerHTML=`<i></i>${a.name}<span class="ct">${cs.length}</span>`; camPane.appendChild(h);
+  cs.forEach(c=>{ const b=document.createElement("button"); b.className="item cam"; b.id="cam-"+c.n;
+    b.innerHTML=`<span class="n">${c.code}</span>${c.d}`; b.onclick=()=>selectCam(c.n-1,true); camPane.appendChild(b); c.btn=b; }); });
+// ---------- Telas do COE por etapa ----------
+const COE_URL="https://felipeab8.github.io/videowall-coe/";
+const ETAPAS=[
+ {n:"01",name:"Recepção",items:["portaria","patio","balancas"],
+  ve:["Fila de caminhões no pátio e em que etapa cada um está: pesagem, classificação, moega, liberação","Tempo médio de ciclo por etapa","Volume recebido no mês, por cultura"],
+  ganho:"Enxergar o gargalo da fila na hora em que ele se forma e reduzir o tempo de permanência do caminhão na unidade.",telas:[["0","Tela da recepção"],["fluxo","Fluxo de caminhões"]]},
+ {n:"02",name:"Classificação",items:["classif"],
+  ve:["Cada carga classificada: umidade, impureza e avariados","Conciliação da pré-limpeza","Histórico de classificação por cultura"],
+  ganho:"Decidir o destino da carga pela qualidade real e ter rastreabilidade de cada desconto aplicado ao cooperado.",telas:[["1","Tela da classificação"]]},
+ {n:"03",name:"Moegas",items:["moegas"],
+  ve:["O que está em cada uma das 6 moegas: carga, cultura e qualidade","Silos pulmão e o grão em trânsito para a secagem"],
+  ganho:"Segregar por cultura e qualidade sem misturar lotes, e distribuir a descarga para não deixar moega parada ou fila acumulada.",telas:[["2","Tela das moegas"]]},
+ {n:"04",name:"Secagem",items:["secador","cavaco"],
+  ve:["Temperatura da fornalha, do ar e da saída, e umidade do grão em cada secador ao longo do turno","Produtividade por hora, paradas e disponibilidade física","Pressão (depressão) por ponto dos secadores e ciclo de limpeza"],
+  ganho:"Secar dentro da faixa certa, evitar grão queimado ou úmido, e antecipar limpezas e paradas antes que derrubem a produção.",telas:[["3","Tela da secagem"],["4","Produtividade da secagem"],["pressao","Pressão dos secadores"]]},
+ {n:"05",name:"Silos",items:["silos"],
+  ve:["Ocupação, temperatura e aeração de cada silo","Entradas, saídas e saldo silo a silo"],
+  ganho:"Detectar aquecimento cedo para conservar o grão e planejar o espaço de armazenagem com o saldo real.",telas:[["5","Silos e aeração"]]},
+ {n:"06",name:"Armazém",items:["armazem"],
+  ve:["Temperatura e aeração do graneleiro, canaleta por canaleta"],
+  ganho:"Achar pontos quentes dentro do armazém e ligar a aeração só onde precisa, protegendo o grão e economizando energia.",telas:[["6","Tela do armazém"]]},
+ {n:"07",name:"Expedição · Dosagem",items:["expedicao"],
+  ve:["Ritmo de carregamento por contrato","Qualidade e dosagem por cultura e por carga","Fluxo dos caminhões da expedição, do pátio à saída, com tempo por etapa"],
+  ganho:"Cumprir os contratos no prazo e na especificação de qualidade, com carregamento mais rápido.",telas:[["7","Tela da expedição"],["exp-fluxo","Fluxo de caminhões"],["exp-contrato","Contratos"]]},
+ {n:"08",name:"Previsão do tempo",items:[],
+  ve:["Temperatura e umidade medidas na estação da unidade","Previsão de 24 horas e 6 dias, e chuva acumulada","Previsão para Avaré e os cooperados da região"],
+  ganho:"Planejar recebimento, secagem e expedição de acordo com a chuva prevista na unidade e nas lavouras.",telas:[["8","Previsão do tempo"]]},
+];
+const etapaDe=id=>ETAPAS.find(e=>e.items.includes(id));
+// Telas ao vivo: cada iframe desenha a TV em 1920x1080 e escala para o quadro
+const escalaTelas=new ResizeObserver(es=>es.forEach(({target:q})=>{const f=q.querySelector("iframe"); if(f) f.style.transform=`scale(${q.clientWidth/1920})`;}));
+function ligarTelas(raiz){ raiz.querySelectorAll("iframe[data-tela]").forEach(f=>{ if(!f.src) f.src=COE_URL+"?telas="+encodeURIComponent(f.dataset.tela)+"&tema=escuro"; escalaTelas.observe(f.parentElement); }); }
+function telasHTML(e){
+  return `<div class="telas-h">Telas do COE · ${e.n} ${e.name}</div><div class="telas${e.telas.length===1?" one":""}">${
+    e.telas.map(([id,t],k)=>`<button class="tela" data-e="${e.n}" data-k="${k}"><span class="tela-viva"><iframe data-tela="${id}" title="${t}" tabindex="-1"></iframe></span>${t}</button>`).join("")}</div>`;
+}
+function ganhoHTML(e){
+  return `<div class="telas-h">O que o COE mostra</div><ul class="ve">${e.ve.map(v=>`<li>${v}</li>`).join("")}</ul>
+    <div class="ganho"><b>Ganho</b>${e.ganho}</div>`;
+}
+let curEtapa=-1;
+function navHTML(){ return ''; }
+function wireNav(){ const p=document.getElementById("ePrev"), n=document.getElementById("eNext");
+  if(p) p.onclick=()=>stepEtapa(-1); if(n) n.onclick=()=>stepEtapa(1); }
+function stepEtapa(d){ showTab("coe"); selectEtapa(ETAPAS[(curEtapa+d+ETAPAS.length)%ETAPAS.length]); }
+function wireTelas(){ wireNav(); ligarTelas(card); card.querySelectorAll(".tela").forEach(b=>b.onclick=()=>openTela(ETAPAS.find(e=>e.n===b.dataset.e),+b.dataset.k)); }
+const lb=document.getElementById("lightbox"); let lbE=null,lbK=0;
+function openTela(e,k){ lbE=e; lbK=(k+e.telas.length)%e.telas.length; const [id,t]=e.telas[lbK];
+  lb.innerHTML=`<div class="bar"><b>${e.n} · ${e.name}</b><span>${t}</span><span class="c">${lbK+1}/${e.telas.length}</span></div>
+    <div class="tela-grande"><iframe data-tela="${id}" title="${t}"></iframe></div>
+    <div class="bar">${e.telas.length>1?'<button id="lbPrev">← Anterior</button><button id="lbNext">Próxima →</button>':""}
+    <a href="${COE_URL}?telas=${encodeURIComponent(id)}" target="_blank" rel="noopener">Abrir ao vivo no COE ↗</a><button id="lbClose">Fechar</button></div>
+    `;
+  ligarTelas(lb);
+  lb.hidden=false; document.getElementById("lbClose").onclick=closeTela; lb.querySelector("#lbClose").focus();
+  const p=document.getElementById("lbPrev"); if(p){ p.onclick=()=>openTela(e,lbK-1); document.getElementById("lbNext").onclick=()=>openTela(e,lbK+1); } }
+function closeTela(){ lb.hidden=true; lbE=null; }
+lb.addEventListener("click",ev=>{ if(ev.target===lb) closeTela(); });
+addEventListener("keydown",ev=>{ if(lb.hidden)return; if(ev.key==="Escape")closeTela(); if(ev.key==="ArrowRight")openTela(lbE,lbK+1); if(ev.key==="ArrowLeft")openTela(lbE,lbK-1); ev.stopPropagation(); },true);
+const coePane=document.createElement("div"); coePane.hidden=true;
+ETAPAS.forEach(e=>{
+  const b=document.createElement("button"); b.className="etapa"; b.innerHTML=`<span class="n">${e.n}</span>${e.name}<span class="k">${e.telas.length} tela${e.telas.length>1?"s":""}</span>`;
+  b.onclick=()=>selectEtapa(e); coePane.appendChild(b); e.btn=b;
+  e.telas.forEach(([id,t],k)=>{ const s=document.createElement("button"); s.className="subtela"; s.textContent=t; s.onclick=()=>{selectEtapa(e,false);openTela(e,k);}; coePane.appendChild(s); });
+});
+function selectEtapa(e,fly=true){
+  select(null);
+  ETAPAS.forEach(x=>x.btn.classList.toggle("on",x===e));
+  ITEMS.forEach(it=>{ const on=e.items.includes(it.id); Object.values(it.ms).forEach(m=>m.emissive&&m.emissive.setHex(on?0x2a2a2a:0));
+    it.lbl.classList.toggle("dim",e.items.length>0&&!on); });
+  card.style.setProperty("--cc","var(--accent)"); card.classList.add("wide");
+  const nomes=e.items.map(id=>ITEMS.find(i=>i.id===id).name).join(", ");
+  curEtapa=ETAPAS.indexOf(e);
+  card.innerHTML=`<button class="x" aria-label="Fechar">×</button><div class="cat">Etapa ${e.n} de ${ETAPAS.length}</div><h2>${e.name}</h2>
+    ${nomes?`<p class="nomes">No modelo: ${nomes}</p>`:""}${ganhoHTML(e)}${telasHTML(e)}${navHTML()}`;
+  card.querySelector(".x").onclick=()=>{select(null);ETAPAS.forEach(x=>x.btn.classList.remove("on"));}; card.hidden=false; wireTelas();
+  if(innerWidth<=760) setList(false);
+  if(fly){ if(!e.items.length){ flyTo(HOME_T.clone(),HOME_P.clone()); return; }
+    const bb=new THREE.Box3(); e.items.forEach(id=>bb.expandByObject(groups[id])); const c=bb.getCenter(new THREE.Vector3()), sz=bb.getSize(new THREE.Vector3());
+    c.y=0; const dist=Math.max(200,Math.max(sz.x,sz.z)*2.2); flyTo(c,new THREE.Vector3(c.x+dist*.55,dist*.7,c.z+dist*.95)); }
+}
+const tabs=document.createElement("div"); tabs.className="tabs"; tabs.setAttribute("role","tablist");
+tabs.innerHTML=`<button role="tab" id="tabInfra" aria-selected="true">Infraestruturas</button><button role="tab" id="tabCam" aria-selected="false">Câmeras (${CAMS.length})</button><button role="tab" id="tabCoe" aria-selected="false">Telas COE</button><button class="min" id="tabMin" aria-label="Minimizar painel" title="Minimizar painel">‹</button>`;
+list.append(tabs,infraPane,camPane,coePane);
+function showTab(t){ infraPane.hidden=t!=="infra"; camPane.hidden=t!=="cam"; coePane.hidden=t!=="coe"; document.getElementById("tabCoe").setAttribute("aria-selected",t==="coe");
+  document.getElementById("tabInfra").setAttribute("aria-selected",t==="infra"); document.getElementById("tabCam").setAttribute("aria-selected",t==="cam"); }
+
+document.getElementById("bNext").onclick=()=>{ setList(true); stepEtapa(1); };
+document.getElementById("tabMin").onclick=()=>setList(false);
+document.getElementById("panelOpen").onclick=()=>setList(true);
+document.getElementById("tabCoe").onclick=()=>showTab("coe");
+document.getElementById("tabInfra").onclick=()=>showTab("infra");
+document.getElementById("tabCam").onclick=()=>{ showTab("cam"); if(!camOn) setCams(true); };
+document.getElementById("camShow").onchange=e=>setCams(e.target.checked);
+const bList=document.getElementById("bList");
+function setList(open){ list.classList.toggle("closed",!open); bList.setAttribute("aria-pressed",open); const po=document.getElementById("panelOpen"); if(po) po.hidden=open;
+  try{localStorage.setItem("listOpen",open?"1":"0");}catch(e){} }
+let startOpen=innerWidth>760; try{const v=localStorage.getItem("listOpen"); if(v!==null&&innerWidth>760)startOpen=v==="1";}catch(e){}
+setList(startOpen); bList.onclick=()=>setList(list.classList.contains("closed"));
+
+const card=document.getElementById("card");
+function select(id,fly){
+  if(id&&id.startsWith("cam:")) return selectCam(+id.slice(4),fly);
+  if(selCam!==null){ CAMS.forEach(c=>{c.cone.material.opacity=.13;c.dot.scale.setScalar(1);c.lbl.classList.remove("on");c.btn.classList.remove("on");}); selCam=null; }
+  ITEMS.forEach(it=>{ Object.values(it.ms).forEach(m=>m.emissive&&m.emissive.setHex(it.id===id?0x2a2a2a:0));
+    it.lbl.classList.toggle("dim",!!id&&it.id!==id); it.btn.classList.toggle("on",it.id===id); });
+  if(!id){card.hidden=true;return;}
+  const it=ITEMS.find(i=>i.id===id), s=it.size, flat=it.id==="patio"||it.id==="balancas";
+  card.style.setProperty("--cc",`var(${CATS[it.cat].v})`);
+  card.innerHTML=`<button class="x" aria-label="Fechar">×</button><div class="cat">${CATS[it.cat].name}</div><h2>${it.name}</h2><p>${it.desc}</p>
+`;
+  { const e=etapaDe(id); card.classList.toggle("wide",!!e); if(e){ curEtapa=ETAPAS.indexOf(e); card.insertAdjacentHTML("beforeend",`<div class="cat" style="margin-top:12px">Etapa ${e.n} · ${e.name}</div>`+ganhoHTML(e)+telasHTML(e)+navHTML()); } }
+  card.querySelector(".x").onclick=()=>select(null); card.hidden=false; wireTelas(); ETAPAS.forEach(x=>x.btn&&x.btn.classList.remove("on"));
+  if(innerWidth<=760) setList(false);
+  if(fly){ const t=it.anchor.clone(); t.y=0; const dist=Math.max(90,Math.max(s.x,s.z)*2.1);
+    flyTo(t,new THREE.Vector3(t.x+dist*.55,dist*.7,t.z+dist*.95)); }
+}
+let anim=null;
+function flyTo(target,pos){ anim={t0:performance.now(),dur:matchMedia("(prefers-reduced-motion: reduce)").matches?1:900,
+  fT:controls.target.clone(),tT:target,fP:camera.position.clone(),tP:pos}; }
+
+const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); let down=null;
+renderer.domElement.addEventListener("pointerdown",e=>down=[e.clientX,e.clientY]);
+renderer.domElement.addEventListener("pointerup",e=>{ if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5)return; const hit=pick(e); select(hit,!!hit); });
+renderer.domElement.addEventListener("pointermove",e=>{ if(e.buttons)return; renderer.domElement.style.cursor=pick(e)?"pointer":"grab"; });
+function pick(e){ const r=renderer.domElement.getBoundingClientRect();
+  mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1); ray.setFromCamera(mouse,camera);
+  const hits=ray.intersectObjects((camOn?CAM_MARKERS:[]).concat(Object.values(groups)),true);
+  for(const h of hits){let o=h.object;while(o&&!o.userData.id)o=o.parent;if(o)return o.userData.id;} return null; }
+
+const bLabels=document.getElementById("bLabels");
+bLabels.onclick=()=>{const on=bLabels.getAttribute("aria-pressed")!=="true";bLabels.setAttribute("aria-pressed",on);labelsEl.hidden=!on;};
+const HOME_T=new THREE.Vector3(90,0,0), HOME_P=new THREE.Vector3(-90,430,560);
+document.getElementById("bTop").onclick=()=>flyTo(HOME_T.clone(),new THREE.Vector3(90,1150,1));
+document.getElementById("bPersp").onclick=()=>{select(null);flyTo(HOME_T.clone(),HOME_P.clone());};
+camera.position.copy(HOME_P); controls.target.copy(HOME_T);
+
+function resize(){ const w=host.clientWidth,h=host.clientHeight; renderer.setSize(w,h); camera.aspect=w/h; camera.fov=w<700?60:40; camera.updateProjectionMatrix(); }
+addEventListener("resize",resize); resize();
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2; const v=new THREE.Vector3();
+function loop(now){
+  if (!window.COE_MODELO_ATIVO || document.hidden) { setTimeout(() => requestAnimationFrame(loop), 250); return; }
+  if(anim){ const k=Math.max(0,Math.min(1,(now-anim.t0)/anim.dur)), e=ease(k);
+    controls.target.lerpVectors(anim.fT,anim.tT,e); camera.position.lerpVectors(anim.fP,anim.tP,e); if(k===1)anim=null; }
+  controls.update(); renderer.render(scene,camera);
+  if(!labelsEl.hidden||camOn){ const w=host.clientWidth,h=host.clientHeight;
+    ITEMS.concat(CTX_LABELS,camOn?CAMS.filter(c=>!c.deleted):[]).forEach(it=>{ v.copy(it.anchor).project(camera); const vis=v.z<1&&Math.abs(v.x)<1.1&&Math.abs(v.y)<1.1;
+      it.lbl.style.display=vis?"":"none"; if(vis){it.lbl.style.left=((v.x+1)/2*w)+"px"; it.lbl.style.top=((1-v.y)/2*h)+"px";} }); }
+  requestAnimationFrame(loop);
+}
+
+// ---------- estilo maquete: sem fundo, apenas estruturas e vias ----------
+(function clean(){
+  const kids=scene.children.slice();
+  kids.slice(_T0,_T1).concat(kids.slice(_V0,_V1),kids.slice(_R0,_R1)).forEach(o=>o.visible=false);
+  const ROAD={asph:0x97a1ac, grav:0xc9cfd6, lane:0xb3bac3, shoulder:0xc6cdd4, bed:0xb3b9c0, rail:0x6b737c};
+  RM.asph.color.setHex(ROAD.asph); RM.grav.color.setHex(ROAD.grav); RM.lane.color.setHex(ROAD.lane); SHOULDER.color.setHex(ROAD.shoulder);
+  RM.bed.color.setHex(ROAD.bed); RM.rail.color.setHex(ROAD.rail); RM.dash.color.setHex(0xffffff);
+  SHARED.conc.color.setHex(0xe4e7ea); SHARED.steel.color.setHex(0xa7afb8); SHARED.white.color.setHex(0xf7f8f9);
+  SHARED.black.color.setHex(0x4a525b); SHARED.glass.color.setHex(0x8fa3b5); SHARED.door.color.setHex(0x7d8893);
+  const edgeMat=new THREE.LineBasicMaterial({color:0x2b3a4a,transparent:true,opacity:.22});
+  const seen=new Set();
+  scene.traverse(o=>{
+    if(!o.isMesh||!o.visible) return;
+    const ms=Array.isArray(o.material)?o.material:[o.material];
+    ms.forEach(m=>{ if(m&&m.map&&!seen.has(m)){ seen.add(m); if(m.map===TX.asphalt){m.color.setHex(ROAD.asph);} m.map=null; m.needsUpdate=true; } });
+    if(o.isInstancedMesh||o.material.isMeshBasicMaterial||o.geometry.type==="PlaneGeometry"&&o.rotation.x!==0) return;
+    if(!o.geometry.boundingSphere) o.geometry.computeBoundingSphere();
+    if(o.geometry.boundingSphere.radius<2.2) return;
+    o.add(new THREE.LineSegments(new THREE.EdgesGeometry(o.geometry,30),edgeMat));
+  });
+  // sombra suave sobre fundo transparente
+  const sc=new THREE.Mesh(new THREE.PlaneGeometry(5000,3000),new THREE.ShadowMaterial({opacity:.13}));
+  sc.rotation.x=-Math.PI/2; sc.position.y=.01; sc.receiveShadow=true; scene.add(sc);
+})();
+requestAnimationFrame(loop);
+const recolor=()=>{ setSky(); const cc=camColor(); CAMS.forEach(c=>{c.dot.material.color.copy(cc);c.cone.material.color.copy(cc);c.cone.children[0].material.color.copy(cc);}); ITEMS.forEach(it=>{ const fresh=matSet(css(CATS[it.cat].v));
+  Object.keys(fresh).forEach(k=>it.ms[k]&&it.ms[k].color.copy(fresh[k].color)); if(it.ms.solid2)it.ms.solid2.color.copy(fresh.solid.color); }); };
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",recolor);
+new MutationObserver(recolor).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+
+// proteção: se a câmera ficar inválida, volta à vista inicial; se o WebGL for perdido, recarrega
+(function(){
+  const bad=v=>!isFinite(v.x)||!isFinite(v.y)||!isFinite(v.z);
+  const chk=()=>{ if(bad(camera.position)||bad(controls.target)){ anim=null; camera.position.copy(HOME_P); controls.target.copy(HOME_T); controls.update(); } requestAnimationFrame(chk); };
+  requestAnimationFrame(chk);
+  renderer.domElement.addEventListener('webglcontextlost',e=>{ e.preventDefault(); },false);
+  renderer.domElement.addEventListener('webglcontextrestored',()=>{ location.reload(); },false);
+})();
+
+(function(){
+  const pad=document.createElement('div'); pad.className='navpad'; pad.setAttribute('role','toolbar'); pad.setAttribute('aria-label','Navegação do modelo');
+  pad.title='Também é possível arrastar para girar, usar Shift ou o botão direito para mover e a roda para aproximar';
+  pad.innerHTML='<button type="button" data-a="l" aria-label="Mover para a esquerda">←</button><button type="button" data-a="u" aria-label="Mover para frente">↑</button><button type="button" data-a="d" aria-label="Mover para trás">↓</button><button type="button" data-a="r" aria-label="Mover para a direita">→</button><span></span><button type="button" data-a="rl" aria-label="Girar para a esquerda">⟲</button><button type="button" data-a="rr" aria-label="Girar para a direita">⟳</button><span></span><button type="button" data-a="in" aria-label="Aproximar">+</button><button type="button" data-a="out" aria-label="Afastar">−</button><button type="button" data-a="home" aria-label="Voltar à vista inicial">⌂</button>';
+  document.getElementById('app').appendChild(pad);
+  function act(a){
+    if(a==='home'){ const h=document.getElementById('bPersp'); if(h) h.click(); return; }
+    const t=controls.target.clone(), off=camera.position.clone().sub(t), dist=off.length();
+    const fh=new THREE.Vector3(-off.x,0,-off.z); if(fh.lengthSq()<1e-6){ camera.getWorldDirection(fh); fh.y=0; if(fh.lengthSq()<1e-6) fh.set(0,0,-1); } const fwd=fh.normalize(), right=new THREE.Vector3().crossVectors(fwd,new THREE.Vector3(0,1,0)).normalize(), step=dist*0.18;
+    let mv=null; if(a==='l') mv=right.multiplyScalar(-step); if(a==='r') mv=right.multiplyScalar(step); if(a==='u') mv=fwd.multiplyScalar(step); if(a==='d') mv=fwd.multiplyScalar(-step);
+    if(mv){ flyTo(t.clone().add(mv),camera.position.clone().add(mv)); return; }
+    if(a==='in'||a==='out'){ off.multiplyScalar(a==='in'?0.75:1.33); flyTo(t,t.clone().add(off)); return; }
+    if(a==='rl'||a==='rr'){ off.applyAxisAngle(new THREE.Vector3(0,1,0),(a==='rl'?1:-1)*Math.PI/10); flyTo(t,t.clone().add(off)); }
+  }
+  pad.addEventListener('click',e=>{ const b=e.target.closest('button'); if(b) act(b.dataset.a); });
+})();
+
+// próxima etapa no menu de navegação inferior
+(function(){
+  const pad=document.querySelector('.navpad'); if(!pad) return;
+  const sep=document.createElement('span'); pad.appendChild(sep);
+  const bp=document.createElement('button'); bp.type='button'; bp.className='np-et'; bp.setAttribute('aria-label','Etapa anterior'); pad.appendChild(bp);
+  const bn=document.createElement('button'); bn.type='button'; bn.className='np-next'; pad.appendChild(bn);
+  bp.addEventListener('click',()=>{ setList(true); stepEtapa(-1); });
+  bn.addEventListener('click',()=>{ setList(true); stepEtapa(1); });
+  let last=null;
+  function upd(){ if(curEtapa!==last){ last=curEtapa; const k=curEtapa, prev=ETAPAS[(k-1+ETAPAS.length)%ETAPAS.length], next=ETAPAS[(k+1)%ETAPAS.length];
+      bp.textContent='‹ '+prev.n; bn.textContent=(k<0?'Primeira etapa: ':'Próxima etapa: ')+next.n+' '+next.name+' ›'; }
+    requestAnimationFrame(upd); }
+  upd();
+})();
+
+
+</script>
+
+</body>
+</html>
