@@ -1,0 +1,47 @@
+{
+  "url": "https://felipeab8.github.io/videowall-coe/",
+  "telas": {
+    "00": "geral",
+    "01A": "0",
+    "01B": "fluxo",
+    "02": "1",
+    "03": "2",
+    "04A": "3",
+    "04B": "4",
+    "04C": "pressao",
+    "05": "5",
+    "06": "6",
+    "07A": "7",
+    "07B": "exp-fluxo",
+    "07C": "exp-contrato",
+    "08": "8",
+    "E0": "est-geral",
+    "E1": "est-recepcao",
+    "E2": "est-classificacao",
+    "E3": "est-moegas",
+    "E4": "est-secagem",
+    "E5": "est-armazenagem",
+    "E6": "est-expedicao",
+    "E7": "est-clima"
+  },
+  "tatica": [
+    { "n": "01", "nome": "Recepção", "telas": ["01A", "01B"] },
+    { "n": "02", "nome": "Classificação", "telas": ["02"] },
+    { "n": "03", "nome": "Moegas", "telas": ["03"] },
+    { "n": "04", "nome": "Secagem", "telas": ["04A", "04B", "04C"] },
+    { "n": "05", "nome": "Silos", "telas": ["05"] },
+    { "n": "06", "nome": "Armazém", "telas": ["06"] },
+    { "n": "07", "nome": "Expedição e dosagem", "telas": ["07A", "07B", "07C"] },
+    { "n": "08", "nome": "Previsão do tempo", "telas": ["08"] }
+  ],
+  "estrategica": [
+    { "n": "E0", "nome": "Visão da unidade", "telas": ["E0"] },
+    { "n": "E1", "nome": "Recepção", "telas": ["E1"] },
+    { "n": "E2", "nome": "Classificação", "telas": ["E2"] },
+    { "n": "E3", "nome": "Moegas", "telas": ["E3"] },
+    { "n": "E4", "nome": "Secagem", "telas": ["E4"] },
+    { "n": "E5", "nome": "Silos e armazém", "telas": ["E5"] },
+    { "n": "E6", "nome": "Expedição", "telas": ["E6"] },
+    { "n": "E7", "nome": "Clima", "telas": ["E7"] }
+  ]
+}
