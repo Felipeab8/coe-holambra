@@ -1,0 +1,37 @@
+<div class="wrap wide">
+<div class="abas">
+<section class="aba" data-aba="cenarios" data-rotulo="Cenários">
+<div><h2>Três cenários, de {{total_min}} a {{total_max}} em 3 anos, e a recomendação fica no meio</h2></div>
+  <p class="intro" data-v="recomendacao"></p>
+  <div data-v="cenarios-cards"></div>
+  <section class="sec"><h3>Composição do total em 3 anos</h3><div data-v="cenarios-barras"></div></section>
+<details class="sec dobra"><summary><h3>Custo por grupo, em R$ mil</h3></summary>
+<div class="dobra-c">
+<div data-v="cenarios-grupos"></div>
+</div></details>
+<details class="sec dobra"><summary><h3>Desembolso por trimestre</h3></summary>
+<div class="dobra-c">
+<div data-v="desembolso"></div>
+</div></details>
+  <section class="vb-alerta"><b data-v="catalogo"></b> Os valores servem para priorizar cotações e não são orçamento aprovado: devem ser revistos após o projeto executivo, o site survey de rede, a contagem de tags e as propostas formais.</section>
+  <p class="note">Fonte: <a href="Viabilidade/{{planilha}}" download>planilha do estudo de viabilidade</a> (aba 04_Business_Case), item a item no <a href="#viabilidade/investimento-e-retorno/catalogo">Catálogo de custos</a>. Valores em R$ de out/2026, sem impostos detalhados, sujeitos a cotação. Contingência de 20% no Mínimo e no Recomendado e de 25% no Completo, sobre o investimento.</p>
+</section>
+<section class="aba" data-aba="retorno" data-rotulo="Retorno" hidden>
+<div><h2>O retorno depende de uma medição que ainda não foi feita</h2></div>
+  <p class="intro">O estudo define como calcular cada ganho, mas ainda não estima valores: sem a linha de base da safra, o payback não pode ser demonstrado. O que já dá para responder é quanto o COE precisa gerar por ano para se pagar.</p>
+  <div data-v="retorno-metas"></div>
+  <section class="sec"><h3>Simule o retorno</h3><p class="vb-apoio">Mova o benefício anual e veja o efeito em 5 anos. Este valor é um teste, não uma estimativa do estudo.</p><div data-v="simulador"></div></section>
+<details class="sec dobra"><summary><h3>Ganhos a medir na linha de base</h3></summary>
+<div class="dobra-c">
+<div data-v="beneficios"></div>
+</div></details>
+  <p class="note" data-v="premissas-fluxo"></p>
+</section>
+<section class="aba" data-aba="catalogo" data-rotulo="Catálogo de custos" hidden>
+<div><h2>{{custos_itens}} itens somam {{custos_total}} em 3 anos, e cada um aponta para onde é tratado no material</h2></div>
+  <p class="intro">O catálogo da planilha do estudo de viabilidade, com quantidade, preço unitário, faixa e cenário de cada item. {{custos_infra}} correspondem à infraestrutura descrita no capítulo 04; o restante é projeto, equipe e gestão. Os valores são custo direto, sem a contingência dos cenários.</p>
+  <div class="cx-acoes"><a class="cx-dl" href="Viabilidade/{{planilha}}" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14"/></svg>Baixar a planilha do estudo (.xlsx)</a><a class="cv-ir" href="#dados/diagnostico/custos">Ver o resumo por página da infraestrutura</a></div>
+  <div data-custo-catalogo></div>
+</section>
+</div>
+</div>

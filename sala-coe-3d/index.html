@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sala do COE · Modelo 3D</title>
+<script src="../js/modelo-host.js"></script>
+<style>
+:root{--bg:#edf2f7;--panel:#fffffff5;--ink:#153550;--muted:#4d6278;--line:#ccd9e5;--blue:#003a70;--red:#b82030;--wash:#e7eff7;color-scheme:light}
+:root[data-theme=dark]{--bg:#071424;--panel:#102339f5;--ink:#eff5fc;--muted:#b8c9db;--line:#37516d;--blue:#aad6ff;--red:#ff8b94;--wash:#19334f;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden}body{font:14px/1.5 "Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--bg)}button{font:inherit;color:inherit;cursor:pointer}button:focus-visible{outline:3px solid var(--red);outline-offset:3px}button:disabled{opacity:.45;cursor:wait}button[aria-pressed=true]{background:var(--blue);color:var(--bg);border-color:var(--blue)}[hidden]{display:none!important}
+header{position:absolute;z-index:3;top:16px;left:20px;right:20px;display:flex;align-items:center;gap:18px;padding:13px 18px;border:1px solid var(--line);background:var(--panel);border-radius:14px;box-shadow:0 4px 24px #00274d0c;backdrop-filter:blur(12px)}header .title{display:flex;align-items:center;gap:18px}header b{font-size:17px;font-weight:650}header small{display:block;color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}header img{width:110px;max-height:40px;object-fit:contain}nav{margin-left:auto;display:flex;flex-wrap:wrap;gap:6px}button{border:1px solid var(--line);border-radius:7px;background:var(--panel);padding:9px 12px;font-weight:600}button:hover{border-color:var(--blue)}#scene{position:absolute;inset:0}canvas{display:block;width:100%;height:100%;touch-action:none}#scene canvas:focus-visible{outline:3px solid var(--red);outline-offset:-4px}
+aside{position:absolute;z-index:2;left:20px;top:108px;width:250px;max-height:calc(100% - 200px);overflow-y:auto;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;backdrop-filter:blur(10px)}aside h2{font-size:11px;text-transform:uppercase;letter-spacing:.12em;margin:0 0 12px;color:var(--muted)}#zones{display:grid;gap:6px}#zones button{text-align:left;display:flex;align-items:center;gap:10px;background:transparent;border-color:transparent;padding:10px 8px}#zones button[aria-pressed=true]{background:var(--wash);color:var(--blue);border-color:var(--line)}#zones img{width:28px;height:28px;object-fit:contain}#details{border-top:1px solid var(--line);margin-top:16px;padding-top:14px}#details h3{font-size:16px;margin:0 0 8px}#details p{font-size:13px;color:var(--muted);margin:0}#details ul{padding-left:17px;margin:12px 0 0;font-size:12px;color:var(--muted);display:grid;gap:7px}
+.utilities{position:absolute;z-index:3;right:20px;bottom:60px;display:flex;gap:6px;flex-wrap:wrap;max-width:calc(100% - 40px);justify-content:flex-end}.utilities button{box-shadow:0 3px 15px #00274d10}.disclaimer{position:absolute;z-index:2;bottom:0;left:0;right:0;background:var(--panel);padding:10px 20px;font-size:11px;color:var(--muted);border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px}.disclaimer strong{color:var(--ink)}#status{position:absolute;inset:0;z-index:5;display:grid;place-content:center;gap:12px;background:var(--bg);text-align:center;color:var(--ink)}#status p{margin:0}.help{position:absolute;z-index:2;top:108px;right:20px;border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:8px 12px;font-size:11px;color:var(--muted);pointer-events:none}#labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}.zone-label{position:absolute;transform:translate(-50%,-100%);padding:5px 9px;border:1px solid var(--line);border-left:3px solid var(--red);border-radius:5px;background:var(--panel);font-size:11px;white-space:nowrap;box-shadow:0 2px 10px #00274d15}
+@media(max-width:760px){header{top:10px;left:10px;right:10px;padding:10px;display:block}header .title{display:flex;align-items:center;gap:12px}header img{width:88px}header b{font-size:15px}header small{font-size:9px}nav{margin-top:9px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:3px}nav button{white-space:nowrap;font-size:12px;padding:8px 10px}aside{top:130px;left:10px;width:225px;max-height:calc(100% - 240px)}aside.closed{display:none}.help{display:none}.utilities{right:10px;bottom:72px;left:10px;gap:5px}.utilities button{font-size:11px;padding:8px 9px}.disclaimer{padding:8px 10px;font-size:10px;display:block}.disclaimer span{display:block}.zone-label{font-size:10px}#details{margin-top:12px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+/* Navegação: painel de áreas recolhido, barra compacta, legenda da vista, apresentação e modo caminhar */
+.icon-btn{display:inline-grid;place-items:center;width:30px;height:30px;padding:0;border-color:transparent;background:transparent;border-radius:7px}
+.icon-btn svg,.utilities svg,.side-toggle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.icon-btn:hover{background:var(--wash)}
+.side-toggle{position:absolute;z-index:3;top:108px;left:20px;display:inline-flex;align-items:center;gap:8px;padding:8px 12px 8px 10px;border-radius:999px;background:var(--panel);box-shadow:0 3px 15px #00274d14;font-size:12.5px;backdrop-filter:blur(10px)}
+.side-toggle[aria-expanded=true]{visibility:hidden}
+aside{transition:opacity .2s,transform .2s}aside.closed{display:none}
+.areas-head{display:flex;justify-content:space-between;align-items:center;margin:-6px -8px 10px 0}.areas-head h2{margin:0!important}
+.help{transition:opacity .6s}.help.gone{opacity:0}
+.utilities{right:20px;bottom:56px;gap:2px;padding:5px;border:1px solid var(--line);border-radius:12px;background:var(--panel);box-shadow:0 6px 22px #00274d18;backdrop-filter:blur(10px);flex-wrap:nowrap}
+.utilities button{display:inline-grid;place-items:center;width:36px;height:36px;padding:0;border-color:transparent;background:transparent;box-shadow:none;border-radius:8px}
+.utilities button.txt{display:inline-flex;gap:7px;width:auto;padding:0 12px;font-size:12.5px}
+.utilities button:hover{background:var(--wash);border-color:transparent}
+.utilities button[aria-pressed=true]{background:var(--wash);color:var(--blue);border-color:var(--line)}
+.utilities button.txt[aria-pressed=true]{background:var(--blue);color:var(--bg);border-color:var(--blue)}
+.utilities .sep,.room-toolbar .sep{width:1px;align-self:stretch;margin:4px 3px;background:var(--line)}
+.room-tools{bottom:110px}
+.caption{position:absolute;z-index:3;left:20px;bottom:56px;max-width:min(380px,calc(100% - 460px));padding:12px 16px;border:1px solid var(--line);border-left:3px solid var(--red);border-radius:10px;background:var(--panel);box-shadow:0 6px 22px #00274d14;backdrop-filter:blur(10px)}
+.caption b{display:block;font-size:14px}.caption p{margin:3px 0 0;font-size:12px;line-height:1.45;color:var(--muted)}
+.areas-open .caption:not(.touring){display:none}
+.cap-tour{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:-4px -8px 6px 0;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+.cap-ctrls{display:flex;gap:2px}.cap-ctrls .icon-btn{width:26px;height:26px;font-size:15px;color:var(--ink)}
+.cap-ctrls svg{width:14px;height:14px}
+.walk-hint{position:absolute;z-index:4;left:20px;right:20px;margin-inline:auto;width:fit-content;max-width:calc(100% - 40px);top:108px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;padding:8px 10px 8px 16px;border:1px solid var(--line);border-radius:999px;background:var(--panel);box-shadow:0 6px 22px #00274d18;font-size:12px;color:var(--muted)}
+.walk-hint kbd{display:inline-block;min-width:18px;margin:0 1px;padding:1px 5px;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;background:var(--bg);font:600 10.5px/1.4 inherit;color:var(--ink);text-align:center}
+.walk-pad{display:flex;gap:3px}.walk-pad button{width:30px;height:30px;padding:0;font-size:14px;touch-action:none}
+.walk-exit{padding:6px 12px;font-size:12px;border-radius:999px;background:var(--blue);color:var(--bg);border-color:var(--blue)}
+.walking .help,.walking .side-toggle,.walking #areas,.walking .room-tools{display:none}
+.room-editing .side-toggle,.room-editing .caption,.room-editing .walk-hint{display:none!important}
+#room-tag{pointer-events:auto;display:flex;align-items:center;gap:6px;padding:3px 3px 3px 9px}
+#room-tag[hidden]{display:none}
+#room-tag .rt-acts{display:flex;gap:1px}
+#room-tag button{width:24px;height:24px;padding:0;border:0;border-radius:5px;background:transparent;color:#fff;font-size:13px;line-height:1}
+#room-tag button:hover{background:#ffffff33}
+.room-magnet{white-space:nowrap}.room-magnet input{accent-color:var(--red)}
+@media(max-width:1100px){.caption{max-width:300px}}
+@media(max-width:760px){.side-toggle{top:132px;left:10px}.utilities{left:10px;right:10px;bottom:46px;overflow-x:auto;justify-content:flex-start}.utilities button.txt span{display:none}.utilities button.txt{width:36px;padding:0}
+  .caption{left:10px;right:10px;bottom:100px;max-width:none;padding:9px 12px}.caption p{display:none}body .room-tools{top:132px;bottom:auto;right:10px}body #room-mode{padding:8px 12px}.walk-hint{top:132px;left:10px;right:10px;border-radius:12px}.walk-hint>span:first-child{display:none}}
+
+/* Configurador da sala: ferramentas visíveis somente no modo configuração. */
+.room-tools{position:absolute;z-index:4;right:20px;bottom:108px;display:flex;gap:6px}
+#room-mode{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 6px 18px #b8203033;display:inline-flex;align-items:center;gap:8px}
+#room-mode svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#room-mode:hover{filter:brightness(1.06)}
+.room-draft-badge{position:absolute;z-index:3;left:20px;right:20px;margin:0 auto;width:fit-content;top:96px;padding:5px 12px;border-radius:999px;background:var(--panel);border:1px solid var(--line);font-size:11px;color:var(--muted);white-space:nowrap}
+.room-editing .utilities,.room-editing .help,.room-editing #areas,.room-editing .room-draft-badge{display:none!important}
+.room-editing .room-tools{display:none}
+.room-panel{position:absolute;z-index:4;top:100px;bottom:112px;overflow:auto;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--panel);box-shadow:0 8px 25px #00274d18;backdrop-filter:blur(10px)}
+.room-panel h2{margin:0;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.room-panel h3{margin:14px 0 6px;font-size:11px;font-weight:700;color:var(--ink);letter-spacing:.04em}
+#room-catalog{left:20px;width:236px}
+#room-catalog input[type=search]{width:100%;margin:10px 0 2px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);padding:8px 10px;font:inherit;font-size:12px}
+.room-cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.room-cat-grid button{display:grid;justify-items:center;gap:4px;padding:9px 4px 8px;font-size:11px;font-weight:600;line-height:1.25;text-align:center;background:var(--bg);min-height:66px}
+.room-cat-grid button svg{width:24px;height:24px;fill:none;stroke:var(--blue);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.room-cat-grid button:hover{border-color:var(--red)}
+.room-cat-tip{margin:12px 0 0;font-size:11px;color:var(--muted);line-height:1.5}
+#room-editor{right:20px;width:304px}
+#room-editor .room-count{margin:4px 0 10px;font-size:11px;color:var(--muted)}
+#room-editor label{display:block;font-size:11.5px;font-weight:600;margin:9px 0 4px;color:var(--ink)}
+#room-editor :is(input,select,textarea){width:100%;min-width:0;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);padding:7px 8px;font:inherit;font-size:12.5px}
+#room-editor textarea{resize:vertical;min-height:54px}
+#room-editor :is(input,select,textarea):focus-visible{outline:3px solid var(--red);outline-offset:1px}
+#room-editor input[type=color]{height:34px;padding:3px}
+#room-editor input[type=range]{padding:0;border:0;background:none;accent-color:var(--red)}
+.room-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.room-grid label{margin-top:4px!important}
+.room-row{display:flex;gap:6px;align-items:center}
+.room-row input[type=number]{flex:0 0 74px}
+.room-buttons{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.room-panel button,.room-toolbar button,.room-toolbar select{font-size:12px;padding:7px 9px}
+.room-rot button{padding:6px 7px;min-width:42px}
+.room-danger{color:var(--red)!important}
+.room-empty{margin:14px 0 4px;padding:14px;border:1px dashed var(--line);border-radius:8px;font-size:12px;color:var(--muted);line-height:1.5}
+.room-dims{margin:10px 0 0;padding:8px 10px;border-radius:7px;background:var(--wash);font-size:11.5px;color:var(--ink)}
+#room-editor fieldset{min-width:0;margin:0;padding:0;border:0}
+#room-editor details{border-top:1px solid var(--line);padding-top:10px;margin-top:12px}
+#room-editor summary{font-weight:650;font-size:12px;cursor:pointer}
+.room-removed{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
+.room-removed li{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px}
+.room-removed button{flex:0 0 auto;padding:5px 8px;font-size:11px}
+.room-toolbar{position:absolute;z-index:5;left:20px;right:20px;margin-inline:auto;width:fit-content;bottom:50px;display:flex;align-items:center;gap:6px;padding:7px;border:1px solid var(--line);border-radius:12px;background:var(--panel);box-shadow:0 8px 25px #00274d22;backdrop-filter:blur(10px);max-width:calc(100% - 40px);flex-wrap:wrap;justify-content:center}
+.room-toolbar .sep{width:1px;align-self:stretch;background:var(--line);margin:0 2px}
+.room-toolbar label{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:5px}
+.room-toolbar select{border:1px solid var(--line);border-radius:7px;background:var(--panel);color:var(--ink);font:inherit;font-size:12px}
+.room-toolbar .room-done{background:var(--blue);color:var(--bg);border-color:var(--blue)}
+.room-menu{position:relative}
+.room-menu > div{position:absolute;bottom:calc(100% + 8px);right:0;min-width:230px;display:grid;gap:4px;padding:8px;border:1px solid var(--line);border-radius:10px;background:var(--panel);box-shadow:0 10px 30px #00274d30}
+.room-menu > div button{text-align:left;width:100%}
+.room-menu > div small{display:block;padding:2px 4px 4px;color:var(--muted);font-size:10.5px;line-height:1.4}
+#room-save-status{position:absolute;z-index:6;left:20px;right:20px;margin-inline:auto;width:fit-content;top:96px;max-width:560px;padding:8px 14px;border-radius:999px;background:var(--blue);color:var(--bg);font-size:12px;font-weight:600;box-shadow:0 6px 20px #00274d33;text-align:center}
+#room-tag{position:absolute;z-index:3;transform:translate(-50%,calc(-100% - 6px));padding:4px 9px;border-radius:6px;background:#ef3340;color:#fff;font-size:11px;font-weight:600;white-space:nowrap;box-shadow:0 3px 12px #00000030}#room-tag .rt-name{pointer-events:none}
+.room-hint{position:absolute;z-index:3;left:20px;right:20px;margin-inline:auto;width:fit-content;top:96px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--panel);font-size:11px;color:var(--muted);white-space:nowrap;pointer-events:none}
+.room-editing #room-save-status:not([hidden])~.room-hint{visibility:hidden}
+.room-zone-label{border-left-color:var(--blue)}
+@media(max-width:1100px){#room-catalog{width:200px}#room-editor{width:270px}.room-hint{display:none}}
+@media(max-width:760px){.room-tools{right:10px;bottom:119px}.room-tools button{font-size:12px;padding:8px 10px}
+  .room-panel{left:10px!important;right:10px!important;width:auto!important;border-radius:12px}
+  #room-catalog{top:128px;bottom:auto;max-height:38%}#room-catalog.closed .room-cat-body{display:none}
+  #room-editor{top:auto;bottom:104px;height:40%}
+  .room-toolbar{bottom:44px;left:10px;right:10px;width:auto;max-width:none;flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start}
+  .room-toolbar .sep{display:none}#room-save-status{top:128px;border-radius:12px}
+  .room-editing .zone-label{display:none}.room-editing .disclaimer{z-index:5}}
+.room-cat-toggle{display:none}@media(max-width:760px){.room-cat-toggle{display:inline-block;margin-left:8px}}
+</style></head><body>
+<div id="scene"></div><div id="labels" aria-hidden="true"></div>
+<header><div class="title"><img src="../img/marca/holambra.svg" alt="Cooperativa Holambra"><b>Sala do COE <small>Modelagem arquitetônica conceitual</small></b></div><nav aria-label="Vistas da sala"><button data-view="exterior" aria-pressed="true">Exterior</button><button data-view="interior" aria-pressed="false">Interior</button><button data-view="planta" aria-pressed="false">Planta</button><button data-view="videowall" aria-pressed="false">Videowall</button><button data-view="reuniao" aria-pressed="false">Coordenação</button><button data-view="tecnica" aria-pressed="false">Sala técnica</button></nav></header>
+<button type="button" id="areas-toggle" class="side-toggle" aria-expanded="false" aria-controls="areas" title="Áreas operacionais"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Áreas</span></button>
+<aside id="areas" class="closed" aria-label="Áreas operacionais"><div class="areas-head"><h2>Áreas operacionais</h2><button type="button" id="areas-close" class="icon-btn" aria-label="Recolher áreas" title="Recolher"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div><div id="zones"></div><div id="details" aria-live="polite"><h3>Visão externa</h3><p>Explore a fachada, os acessos e o paisagismo. Selecione uma vista para conhecer a distribuição interna.</p></div></aside>
+<div class="help" id="help">Arraste para girar · roda aproxima · botão direito desloca · duplo clique centraliza</div>
+<section id="caption" class="caption" aria-live="polite"><div id="cap-tour" class="cap-tour" hidden><span id="cap-step"></span><span class="cap-ctrls"><button type="button" id="tour-prev" class="icon-btn" aria-label="Vista anterior">‹</button><button type="button" id="tour-play" class="icon-btn" aria-label="Pausar apresentação">❚❚</button><button type="button" id="tour-next" class="icon-btn" aria-label="Próxima vista">›</button><button type="button" id="tour-stop" class="icon-btn" aria-label="Encerrar apresentação"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></span></div><b id="cap-t">Visão externa</b><p id="cap-x">Fachada institucional, acesso coberto, totem, jardim e estacionamento operacional.</p></section>
+<div id="walk-hint" class="walk-hint" hidden><span>Modo caminhar · <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> ou setas para andar · arraste para olhar · <kbd>Esc</kbd> encerra</span><span class="walk-pad" aria-label="Andar"><button type="button" data-k="l" aria-label="Para a esquerda">←</button><button type="button" data-k="f" aria-label="Para frente">↑</button><button type="button" data-k="b" aria-label="Para trás">↓</button><button type="button" data-k="r" aria-label="Para a direita">→</button></span><button type="button" id="walk-exit" class="walk-exit">Sair</button></div>
+<div class="utilities" role="toolbar" aria-label="Navegação da sala"><button type="button" id="tour-toggle" class="txt" aria-pressed="false" title="Apresentação guiada pelas vistas (P)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z"/></svg><span>Apresentar</span></button><button type="button" id="walk-toggle" class="txt" aria-pressed="false" title="Caminhar pela sala em primeira pessoa (C)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="13" cy="4.5" r="1.8"/><path d="M10.5 21l2-6 2.5 2.5V21M8 12l2.5-4.5 3 1.5 2.5 3M9.5 8.5 7 13"/></svg><span>Caminhar</span></button><i class="sep"></i><button type="button" id="labels-toggle" aria-pressed="true" aria-label="Rótulos" title="Rótulos (L)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V5a2 2 0 0 1 2-2h7l9 9-9 9z"/><circle cx="8" cy="8" r="1.4"/></svg></button><button type="button" id="roof-toggle" aria-pressed="true" aria-label="Cobertura" title="Cobertura"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7"/><path d="M5.5 10v9h13v-9"/></svg></button><i class="sep"></i><button type="button" id="zoom-out" aria-label="Afastar" title="Afastar (−)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button><button type="button" id="zoom-in" aria-label="Aproximar" title="Aproximar (+)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button><button type="button" id="reset" aria-label="Redefinir vista" title="Redefinir vista (Home)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4h4"/></svg></button><i class="sep"></i><button type="button" id="theme" aria-label="Dia / noite" title="Dia / noite"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg></button><button type="button" id="capture" aria-label="Salvar imagem" title="Salvar imagem da vista"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button></div>
+<div class="room-tools"><button id="room-mode" type="button" aria-pressed="false" aria-controls="room-editor" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4Z"/><path d="m13.5 6.5 4 4"/></svg><span>Configurar sala</span></button></div>
+<p class="room-draft-badge" id="room-draft-badge" hidden>Layout em rascunho neste navegador</p>
+<div id="room-tag" hidden><span class="rt-name" id="room-tag-name"></span><span class="rt-acts"><button type="button" data-q="rotl" aria-label="Girar 15 graus à esquerda" title="Girar −15° (Q)">⟲</button><button type="button" data-q="rotr" aria-label="Girar 15 graus à direita" title="Girar +15° (E)">⟳</button><button type="button" data-q="dup" aria-label="Duplicar" title="Duplicar (Ctrl+D)">⧉</button><button type="button" data-q="del" aria-label="Remover" title="Remover (Delete)">✕</button></span></div>
+<p id="room-save-status" role="status" hidden></p>
+<p class="room-hint" id="room-hint" hidden>Clique para selecionar · arraste para mover · Q/E gira · R gira 90° · Shift+clique inclui vários · Ctrl+Z desfaz</p>
+<aside id="room-catalog" class="room-panel" aria-labelledby="room-catalog-title" hidden>
+  <h2 id="room-catalog-title">Adicionar à sala <button type="button" class="room-cat-toggle" id="room-cat-toggle" aria-expanded="true">Recolher</button></h2>
+  <div class="room-cat-body"><input type="search" id="room-cat-search" placeholder="Buscar: TV, mesa, parede…" aria-label="Buscar no catálogo"><div id="room-cat-list"></div>
+  <p class="room-cat-tip">Clique em um item: ele acompanha o cursor até você clicar no piso para posicioná-lo.</p></div>
+</aside>
+<section id="room-editor" class="room-panel" aria-labelledby="room-editor-title" hidden>
+  <h2 id="room-editor-title">Item selecionado</h2>
+  <p class="room-count" id="room-count"></p>
+  <label for="room-objects">Elemento da sala</label><select id="room-objects"></select>
+  <p class="room-empty" id="room-empty">Clique em um elemento na maquete, escolha na lista acima ou adicione um item do catálogo.</p>
+  <fieldset id="room-fields">
+    <label for="room-name">Nome</label><input id="room-name" maxlength="200">
+    <div class="room-grid"><div><label for="room-x">X (m)</label><input id="room-x" type="number" min="-50" max="50" step="0.05"></div><div><label for="room-z">Z (m)</label><input id="room-z" type="number" min="-50" max="50" step="0.05"></div><div><label for="room-y">Elevação (m)</label><input id="room-y" type="number" min="-20" max="20" step="0.05"></div></div>
+    <label for="room-rotation">Rotação (°)</label>
+    <div class="room-row room-rot"><input id="room-rotation" type="number" min="-360" max="360" step="1"><button type="button" data-rot="-90" aria-label="Girar 90 graus à esquerda">⟲90</button><button type="button" data-rot="-15" aria-label="Girar 15 graus à esquerda">−15</button><button type="button" data-rot="15" aria-label="Girar 15 graus à direita">+15</button><button type="button" data-rot="90" aria-label="Girar 90 graus à direita">⟳90</button></div>
+    <label for="room-scale-range">Escala</label>
+    <div class="room-row"><input id="room-scale-range" type="range" min="0.2" max="3" step="0.05" aria-label="Escala (controle deslizante)"><input id="room-scale" type="number" min="0.2" max="3" step="0.05" aria-label="Escala"></div>
+    <details id="room-proportions"><summary>Proporções (largura, altura, profundidade)</summary>
+      <div class="room-grid"><div><label for="room-sx">Largura ×</label><input id="room-sx" type="number" min="0.2" max="5" step="0.1"></div><div><label for="room-sy">Altura ×</label><input id="room-sy" type="number" min="0.2" max="5" step="0.1"></div><div><label for="room-sz">Profund. ×</label><input id="room-sz" type="number" min="0.2" max="5" step="0.1"></div></div>
+    </details>
+    <div id="room-screen-wrap"><label for="room-screen">Conteúdo da tela</label><select id="room-screen"></select></div>
+    <div id="room-color-wrap"><label for="room-color">Cor</label><input id="room-color" type="color"></div>
+    <p class="room-dims" id="room-dims"></p>
+    <div class="room-buttons"><button type="button" id="room-focus">Enquadrar</button><button type="button" id="room-duplicate">Duplicar</button><button type="button" id="room-reset-object" title="Volta o elemento à posição, escala e nome da proposta">Desfazer ajustes</button><button type="button" id="room-remove" class="room-danger">Remover</button></div>
+    <details><summary>Descrição para a apresentação</summary>
+      <label for="room-description">Descrição</label><textarea id="room-description" maxlength="5000" rows="2"></textarea>
+      <label for="room-items">Itens — um por linha</label><textarea id="room-items" rows="3" maxlength="50049"></textarea>
+    </details>
+  </fieldset>
+  <details id="room-removed-wrap"><summary id="room-removed-title">Elementos removidos</summary><ul class="room-removed" id="room-removed"></ul></details>
+  <details><summary>Cores da sala</summary>
+    <label for="room-wall-color">Paredes</label><input id="room-wall-color" type="color" value="#dce2e5">
+    <label for="room-floor-color">Tonalidade do piso</label><input id="room-floor-color" type="color" value="#ffffff">
+    <label for="room-accent-color">Detalhes institucionais</label><input id="room-accent-color" type="color" value="#003a70">
+    <div class="room-buttons"><button type="button" id="room-reset-colors">Cores originais</button></div>
+  </details>
+</section>
+<div class="room-toolbar" id="room-toolbar" role="toolbar" aria-label="Configuração da sala" hidden>
+  <button type="button" id="room-undo" disabled title="Desfazer (Ctrl+Z)">↶ Desfazer</button><button type="button" id="room-redo" disabled title="Refazer (Ctrl+Y)">↷ Refazer</button>
+  <span class="sep"></span>
+  <label for="room-snap">Grade<select id="room-snap"><option value="0">livre</option><option value="0.1">0,10 m</option><option value="0.25" selected>0,25 m</option><option value="0.5">0,50 m</option><option value="1">1,00 m</option></select></label>
+  <label class="room-magnet" title="TVs, painéis, quadros e climatização se fixam na parede mais próxima (Alt solta)"><input type="checkbox" id="room-wallsnap" checked> Fixar na parede</label><span class="sep"></span><button type="button" id="room-zoom-in" aria-label="Aproximar">＋</button><button type="button" id="room-zoom-out" aria-label="Afastar">−</button>
+  <span class="sep"></span>
+  <div class="room-menu"><button type="button" id="room-file" aria-expanded="false" aria-controls="room-file-menu">Arquivo ▾</button>
+    <div id="room-file-menu" hidden>
+      <button type="button" id="room-export">Exportar layout (.json)</button>
+      <button type="button" id="room-import">Importar layout…</button><input type="file" id="room-import-file" accept="application/json,.json" hidden>
+      <button type="button" id="room-image">Salvar imagem da vista</button>
+      <button type="button" id="room-publish">Publicar layout</button><small id="room-publish-help"></small>
+      <button type="button" id="room-revert">Voltar à versão publicada</button>
+      <button type="button" id="room-blank">Começar do zero (manter paredes)</button>
+    </div>
+  </div>
+  <button type="button" id="room-reset-all" title="Volta à maquete original da proposta">Restaurar original</button>
+  <span class="sep"></span>
+  <button type="button" id="room-done" class="room-done">Concluir</button>
+</div>
+<footer class="disclaimer"><span><strong>Concepção ilustrativa.</strong> Layout e equipamentos propostos; sem dimensionamento executivo validado.</span><span>Telas demonstrativas · sem conexão com sistemas ao vivo</span></footer>
+<div id="status" role="status"><p>Preparando a sala 3D…</p><p>Carregando materiais, ambientes e equipamentos.</p></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js" integrity="sha384-wagZhIFgY4hD+7awjQjR4e2E294y6J2HSnd8eTNc15ZubTeQeVRZwhQJ+W6hnBsf" crossorigin="anonymous"></script>
+<script src="modelo.js"></script><script src="editor.js"></script></body></html>

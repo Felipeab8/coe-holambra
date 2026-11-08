@@ -1,0 +1,22 @@
+{
+  "name": "coe-holambra-validation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ferramentas opcionais para validar o material e o editor COE Holambra",
+  "scripts": {
+    "build": "python atualizar.py",
+    "test": "python -m unittest discover -s tests -v",
+    "test:browser": "node --test tests/browser.cjs",
+    "test:editor": "node --test tests/editor-browser.cjs",
+    "audit:ui": "node tests/audit-ui.cjs",
+    "check:js": "node scripts/check-javascript.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.56.1",
+    "axe-core": "4.11.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@11.25.0"
+}

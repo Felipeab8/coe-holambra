@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Dados e credenciais de ambiente
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Ferramentas de desenvolvimento e resultados locais
+node_modules/
+.pnpm-store/
+playwright-report/
+test-results/
+coverage/
+.cache/
+.superpowers/
+work/
+dist/
+build/
+*.log
+*.tmp
+*.zip
+*.sqlite*
+*.db
+uploads/
+coe-holambra-data/
+
+# Word do estudo: restrito e não usado por nenhum script
+Viabilidade/*.docx
+
+# Arquivos temporários de editores, Office, macOS e Windows
+~$*
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+.idea/

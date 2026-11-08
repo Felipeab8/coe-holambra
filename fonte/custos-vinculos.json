@@ -1,0 +1,65 @@
+{
+  "_leia": "Vincula cada item do catálogo de custos da planilha de viabilidade (aba 04_Business_Case) ao ponto do material em que ele é tratado. Cada ID aparece em um único bloco; atualizar.py interrompe a geração se um ID sumir, se repetir ou ficar sem bloco. Valores, quantidades e cenários vêm sempre da planilha.",
+  "camadas": [
+    {"n": 1, "rota": "dados/diagnostico-de-campo/custos"},
+    {"n": 2, "rota": "dados/fichas-dos-equipamentos/custos"},
+    {"n": 3, "rota": "dados/arquitetura-as-is-e-to-be/custos"},
+    {"n": 4, "rota": "dados/arquitetura-as-is-e-to-be/custos"},
+    {"n": 5, "rota": "dados/arquitetura-as-is-e-to-be/custos"},
+    {"n": 6, "rota": "dados/arquitetura-as-is-e-to-be/custos"},
+    {"n": 7, "rota": "dados/sistemas-e-historicos/custos"},
+    {"n": 8, "rota": "dados/sala-do-coe/custos"},
+    {"n": 9, "nome": "Projeto, equipe e gestão", "rota": "viabilidade/investimento-e-retorno/catalogo/9"}
+  ],
+  "blocos": [
+    {"id": "campo-moegas", "titulo": "Nível contínuo nas moegas", "camada": 1, "rota": "dados/diagnostico-de-campo/recepcao-e-moegas", "ids": ["C052"]},
+    {"id": "campo-fluxo", "titulo": "Ritmo e condição do transporte", "camada": 1, "rota": "dados/diagnostico-de-campo/fluxo-do-grao", "ids": ["C058", "C060"]},
+    {"id": "campo-secadores", "titulo": "Vazão dos secadores e calibração", "camada": 1, "rota": "dados/diagnostico-de-campo/secadores", "ids": ["C057", "C051"]},
+    {"id": "campo-paineis", "titulo": "Painéis de campo e medidores de energia", "camada": 2, "rota": "dados/diagnostico-de-campo/paineis-e-energia", "ids": ["C019", "C061"]},
+    {"id": "campo-clima", "titulo": "Estação meteorológica para a aeração", "camada": 1, "rota": "dados/diagnostico-de-campo/termometria", "ids": ["C059"]},
+    {"id": "campo-silos", "titulo": "Nível dos silos pulmão", "camada": 1, "rota": "dados/diagnostico-de-campo/silos-e-armazem", "ids": ["C053"]},
+    {"id": "campo-fornalha", "titulo": "Depressão das fornalhas", "camada": 1, "rota": "dados/diagnostico-de-campo/depressao", "ids": ["C056"]},
+    {"id": "campo-scanner", "titulo": "Scanner 3D de estoque", "camada": 1, "rota": "dados/diagnostico-de-campo/scanner-3d", "ids": ["C054", "C055"]},
+    {"id": "campo-montagem", "titulo": "Montagem, cabos e comissionamento", "camada": 1, "rota": "dados/diagnostico-de-campo/custos", "ids": ["C062"]},
+
+    {"id": "automacao-p1", "titulo": "Integração dos fornecedores de prioridade 1", "camada": 2, "rota": "dados/fichas-dos-equipamentos/custos", "ids": ["C046"]},
+    {"id": "automacao-p2", "titulo": "Integração dos fornecedores de prioridade 2", "camada": 2, "rota": "dados/fichas-dos-equipamentos/custos", "ids": ["C047"]},
+    {"id": "automacao-hw", "titulo": "Gateways e remotas de I/O", "camada": 2, "rota": "dados/fichas-dos-equipamentos/custos", "ids": ["C048", "C049"]},
+
+    {"id": "sala-obra", "titulo": "Obra, acabamento e acesso", "camada": 8, "rota": "dados/sala-do-coe/custos", "ids": ["C004", "C026", "C027", "C032", "C031", "C028", "C029"]},
+    {"id": "sala-videowall", "titulo": "Videowall e CFTV", "camada": 8, "rota": "dados/sala-do-coe/custos", "ids": ["C005", "C006", "C007", "C034", "C035", "C020", "C018"]},
+    {"id": "sala-postos", "titulo": "Postos de operação e comunicação", "camada": 8, "rota": "dados/sala-do-coe/custos", "ids": ["C008", "C009", "C010", "C033", "C011", "C012", "C021", "C022", "C017", "C081"]},
+    {"id": "sala-crise", "titulo": "Sala de crise", "camada": 8, "rota": "dados/sala-do-coe/custos", "ids": ["C023", "C024", "C025"]},
+    {"id": "sala-energia", "titulo": "Energia, climatização e segurança", "camada": 8, "rota": "dados/sala-do-coe/custos", "ids": ["C013", "C014", "C080", "C015", "C016", "C030"]},
+
+    {"id": "arq-rede", "titulo": "Rede de campo (OT)", "camada": 3, "rota": "dados/arquitetura-as-is-e-to-be/custos", "ids": ["C063", "C064"]},
+    {"id": "arq-scada", "titulo": "SCADA e alarmes", "camada": 4, "rota": "dados/arquitetura-as-is-e-to-be/custos", "ids": ["C044", "C050", "C036"]},
+    {"id": "arq-historiador", "titulo": "Historiador de processo", "camada": 5, "rota": "dados/arquitetura-as-is-e-to-be/custos", "ids": ["C045"]},
+    {"id": "arq-ti", "titulo": "Servidores, rede corporativa e cibersegurança", "camada": 6, "rota": "dados/arquitetura-as-is-e-to-be/custos", "ids": ["C043", "C065", "C066", "C067", "C068", "C076", "C077"]},
+
+    {"id": "dados-integracoes", "titulo": "Integrações de negócio", "camada": 7, "rota": "dados/sistemas-e-historicos/custos", "ids": ["C037", "C038"]},
+    {"id": "dados-plataforma", "titulo": "Banco operacional e governança de dados", "camada": 7, "rota": "dados/sistemas-e-historicos/custos", "ids": ["C039", "C042"]},
+    {"id": "dados-bi", "titulo": "BI do videowall e licenças", "camada": 7, "rota": "dados/sistemas-e-historicos/custos", "ids": ["C040", "C041"]},
+    {"id": "dados-alertas", "titulo": "Alertas para o campo", "camada": 7, "rota": "dados/sistemas-e-historicos/custos", "ids": ["C078", "C079"]},
+
+    {"id": "gestao-projeto", "titulo": "Projeto executivo, PMO e engenharia", "camada": 9, "rota": "roadmap/plano-e-gates", "ids": ["C001", "C002", "C003"]},
+    {"id": "gestao-equipe", "titulo": "Equipe do COE", "camada": 9, "rota": "governanca/modelo-de-governanca/equipe", "ids": ["C069", "C070", "C071", "C072"]},
+    {"id": "gestao-mudanca", "titulo": "Treinamento, operação assistida e continuidade", "camada": 9, "rota": "governanca/modelo-de-governanca/equipe", "ids": ["C073", "C074", "C082"]},
+    {"id": "gestao-beneficios", "titulo": "Linha de base dos benefícios", "camada": 9, "rota": "viabilidade/investimento-e-retorno/retorno", "ids": ["C075"]},
+    {"id": "gestao-expansao", "titulo": "Modelo replicável para as outras unidades", "camada": 9, "rota": "roadmap/expansao-e-jornada", "ids": ["C083"]}
+  ],
+  "fornecedores": {
+    "FACH": ["C046"],
+    "SanTec": ["C049", "C056"],
+    "Condutiva": ["C046", "C051"],
+    "NBR Tec – transporte": ["C046"],
+    "NBR Tec – termometria": ["C046"],
+    "Fockink": ["C046", "C048"],
+    "Omega Engenharia": ["C046"],
+    "RM Engenharia": ["C047", "C049"],
+    "SAUR / NBR Tec – tombadores": ["C047", "C049"],
+    "Autokraft": ["C047"],
+    "Atlas Copco": ["C047", "C048"],
+    "Kepler Weber": ["C047"]
+  }
+}
