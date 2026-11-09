@@ -642,7 +642,7 @@ td.rc.AR,td.rc.A{color:#fff;background:var(--deep)} td.rc.R{color:var(--accent);
 @media (max-width:860px){.prow .bar{clip-path:none!important;padding:8px 12px!important;min-height:64px!important}}
 
 </style>
-<style data-source="css/painel.css?v=b2891d70ef49">
+<style data-source="css/painel.css?v=af5089e0ea14">
 /* Layout e identidade do painel. Os componentes das páginas estão em componentes.css. */
 :root,:root[data-theme="light"]{
   --bg:#FFFFFF; --surface:#FFFFFF; --soft:#E7EFF7; --line:#CDD9E6;
@@ -1698,6 +1698,26 @@ tbody td{line-height:1.6}
   .cx-busca{margin-left:0;width:100%}
 }
 @media (max-width:480px){.cc{grid-template-columns:minmax(0,1fr)}.cc-c b{min-height:0}}
+
+/* ---------- Ficha de KPI: miniatura do card no videowall ---------- */
+.kf-cab{display:grid;gap:14px}
+.kf-cab.com-mini{grid-template-columns:minmax(0,1fr) minmax(220px,min(40%,420px));gap:16px 28px;align-items:start}
+.kf-cab-t{display:grid;gap:10px;min-width:0}
+.kf-mini{display:grid;gap:7px;margin:0}
+.kf-mini-bt{position:relative;display:grid;place-items:center;width:100%;min-height:96px;padding:14px 14px 50px;border:1px solid var(--line);border-radius:10px;background:var(--soft);overflow:hidden;cursor:pointer;box-shadow:0 1px 2px rgba(0,30,60,.06);transition:transform .25s var(--curva),box-shadow .25s var(--curva),border-color .2s}
+.kf-mini-bt img{display:block;max-width:100%;height:auto;max-height:280px;object-fit:contain;border-radius:6px;box-shadow:0 1px 3px rgba(0,30,60,.12)}
+[data-theme="light"] .kf-mini-bt .so-escuro,[data-theme="dark"] .kf-mini-bt .so-claro{display:none}
+.kf-mini-ir{position:absolute;right:10px;bottom:10px;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--accent);color:var(--sobre-accent);font-size:13px;font-weight:650;box-shadow:0 6px 16px -6px rgba(0,20,50,.5);opacity:.94;transition:opacity .2s,transform .25s var(--curva)}
+.kf-mini-ir::after{content:"↗";font-size:12px}
+.kf-mini-bt:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 14px 28px -18px rgba(0,30,60,.55)}
+.kf-mini-bt:hover .kf-mini-ir{opacity:1;transform:translateY(-1px)}
+.kf-mini-bt:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.kf-mini figcaption{display:grid;gap:2px;color:var(--dim);font-size:12.5px;line-height:1.4}
+.kf-mini figcaption b{color:var(--fg);font-weight:650}
+.kf-mini-o{color:var(--fg);font-size:13.5px;font-weight:650}
+.kf-mini-nota{margin-top:2px;padding-left:8px;border-left:2px solid var(--accent);font-style:italic}
+@media (max-width:900px){.kf-cab.com-mini{grid-template-columns:minmax(0,1fr)}.kf-mini{max-width:460px}}
+@media (prefers-reduced-motion:reduce){.kf-mini-bt,.kf-mini-ir{transition:none}.kf-mini-bt:hover{transform:none}}
 
 </style>
 <style data-source="css/home.css?v=16c76501e37b">
@@ -3538,12 +3558,12 @@ html[data-theme="dark"] .hm-root .hm-card a:hover { background: #1D4264; border-
 </dialog>
 
 <script id="estrutura" type="application/json">[{"id": "inicio", "nome": "Início", "palavra": "Início", "paginas": [{"id": "objetivo-do-coe", "titulo": "Apresentação do material", "grupo": ""}]}, {"id": "objetivos", "nome": "Objetivos", "palavra": "Objetivos", "paginas": [{"id": "ponto-de-partida-e-objetivos", "titulo": "Objetivos Estratégicos do COE", "grupo": ""}]}, {"id": "desafios", "nome": "Desafios operacionais", "palavra": "Desafios", "paginas": [{"id": "dores-operacionais", "titulo": "Desafios operacionais", "grupo": ""}]}, {"id": "indicadores", "nome": "Indicadores do COE", "palavra": "Indicadores", "paginas": [{"id": "telas-do-video-wall-avare", "titulo": "Telas do video wall · Avaré", "grupo": ""}, {"id": "ficha-de-kpi", "titulo": "Ficha de KPI", "grupo": ""}]}, {"id": "dados", "nome": "Infraestrutura e dados", "palavra": "Infraestrutura", "paginas": [{"id": "diagnostico", "titulo": "Diagnóstico da unidade", "grupo": "Visão geral"}, {"id": "diagnostico-de-campo", "titulo": "Diagnóstico de campo", "grupo": "Física"}, {"id": "fichas-dos-equipamentos", "titulo": "Fichas dos equipamentos", "grupo": "Física"}, {"id": "piloto-avare-modelo-3d", "titulo": "Piloto Avaré · Modelo 3D", "grupo": "Física"}, {"id": "sala-do-coe", "titulo": "Sala do COE", "grupo": "Física"}, {"id": "arquitetura-as-is-e-to-be", "titulo": "Arquitetura As-Is e To-Be", "grupo": "Software"}, {"id": "sistemas-e-historicos", "titulo": "Sistemas e históricos", "grupo": "Software"}]}, {"id": "viabilidade", "nome": "Estudo de viabilidade", "palavra": "Viabilidade", "paginas": [{"id": "situacao-atual", "titulo": "Situação atual", "grupo": ""}, {"id": "investimento-e-retorno", "titulo": "Investimento e retorno", "grupo": ""}, {"id": "solucao-e-contratacao", "titulo": "Solução e contratação", "grupo": ""}]}, {"id": "governanca", "nome": "Governança", "palavra": "Governança", "paginas": [{"id": "modelo-de-governanca", "titulo": "Modelo de governança", "grupo": ""}]}, {"id": "roadmap", "nome": "Roadmap de implementação", "palavra": "Roadmap", "paginas": [{"id": "plano-e-gates", "titulo": "Plano e gates", "grupo": ""}, {"id": "expansao-e-jornada", "titulo": "Expansão e jornada de automação", "grupo": ""}]}]</script>
-<script src="js/indicadores.js?v=840dbcf387aa"></script>
+<script src="js/indicadores.js?v=a3e8f7d883d4"></script>
 <script src="js/viabilidade-dados.js?v=015b9cbff674"></script>
 <script src="js/arquitetura.js?v=592f46930a2a"></script>
 <script src="js/viabilidade.js?v=8fb795c8a243"></script>
 <script src="js/custos.js?v=b7aa65705730"></script>
-<script src="js/painel.js?v=c6ddffad4e4a"></script>
+<script src="js/painel.js?v=8b8ae42b2fb1"></script>
 <script src="js/home.js?v=e94574811d85"></script>
 </body>
 </html>

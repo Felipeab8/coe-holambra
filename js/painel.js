@@ -399,17 +399,74 @@
 
   /* telão: tela ampliada e funcional */
   const telao = $('#telao'), telaoTela = $('#telaoTela');
-  let listaTelao = [], posTelao = 0;
+  let listaTelao = [], posTelao = 0, destaqueTelao = null;
   function telaDoTelao() {
     const t = listaTelao[posTelao];
     $('#telaoNome').textContent = t.tv || t.titulo;
-    $('#telaoSub').textContent = t.tv ? t.titulo : '';
+    $('#telaoSub').textContent = (t.tv ? t.titulo : '') + (destaqueTelao ? (t.tv ? ' · ' : '') + destaqueTelao.nome + ' (' + destaqueTelao.codigo + ')' : '');
     $('#telaoConta').textContent = listaTelao.length > 1 ? (posTelao + 1) + ' de ' + listaTelao.length : '';
     $('#telaoLink').href = C.url + '?telas=' + encodeURIComponent(t.id);
     $$('[data-a="anterior"],[data-a="proxima"]', telao).forEach(b => { b.hidden = listaTelao.length < 2; });
-    ligarIframe(telaNoQuadro(telaoTela, [t.id], t.titulo));
+    const f = telaNoQuadro(telaoTela, [t.id], t.titulo), alvo = destaqueTelao;
+    ligarIframe(f, () => { if (alvo) destacarIndicador(f, alvo); });
   }
-  function abrirTelao(lista, i) {
+  /* Leva o olhar ao indicador dentro da tela: a mesma parte do card mostrada na miniatura (fonte/miniaturas-kpi.json)
+     ou, sem recorte, o card inteiro. Só é possível com o videowall no mesmo domínio do material (os dois no GitHub
+     Pages da mesma conta); em outro domínio a tela abre sem destaque. */
+  function partesDoIndicador(doc, codigo, spec) {
+    const norm = x => String(x || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+    const vis = e => e && e.getClientRects().length > 0;
+    const todos = (raiz, sel) => [...raiz.querySelectorAll(sel)].filter(vis);
+    const cards = todos(doc, '[data-codigo="' + CSS.escape(codigo) + '"]');
+    if (!cards.length) return [];
+    const card = cards[spec.elem_n || 0] || cards[0];
+    if (spec.doc) return spec.todos ? todos(doc, spec.doc) : todos(doc, spec.doc).slice(0, 1);
+    const raiz = (spec.raiz && todos(card, spec.raiz)[spec.raiz_n || 0]) || card;
+    if (spec.coluna) {
+      const tabela = todos(raiz, 'table')[0], cab = tabela ? [...tabela.querySelectorAll('thead th')] : [];
+      const i = cab.findIndex(th => norm(th.textContent).startsWith(norm(spec.coluna)));
+      if (i < 0) return [card];
+      const linhas = [...tabela.querySelectorAll(spec.rodape ? 'tfoot tr' : 'tbody tr')].filter(vis)
+        .filter(tr => !spec.linhas_tem || norm(tr.textContent).includes(norm(spec.linhas_tem)));
+      return [cab[i], ...linhas.map(tr => tr.cells[i]).filter(Boolean)];
+    }
+    if (!spec.alvo) return [raiz];
+    let els = spec.todos === 'primeiros' ? spec.alvo.split(',').map(x => todos(raiz, x.trim())[0]).filter(Boolean) : todos(raiz, spec.alvo);
+    if (spec.tem) els = els.filter(e => norm(e.textContent).includes(norm(spec.tem)));
+    if (!spec.todos) els = els.slice(0, 1);
+    if (spec.sub) els = els.flatMap(e => todos(e, spec.sub));
+    return els.length ? els : [card];
+  }
+  function destacarIndicador(f, alvo) {
+    let doc = null;
+    try { doc = f.contentDocument; } catch (e) { doc = null; }
+    if (!doc) return;
+    const sel = '[data-codigo="' + CSS.escape(alvo.codigo) + '"]';
+    let tentativas = 0;
+    (function procurar() {
+      if (![...doc.querySelectorAll(sel)].some(e => e.getClientRects().length)) {
+        // card de outro período da tela (ex.: Hoje, 7 dias): escolhe esse período no seletor da própria tela
+        const per = doc.querySelector(sel) && doc.querySelector(sel).closest('[data-periodo]');
+        const bt = per && doc.querySelector('button[data-prod-periodo="' + per.dataset.periodo + '"], button[data-periodo="' + per.dataset.periodo + '"]');
+        if (bt) bt.click();
+      }
+      const alvos = partesDoIndicador(doc, alvo.codigo, alvo.recorte || {});
+      if (!alvos.length) { if (++tentativas < 24) setTimeout(procurar, 250); return; }
+      if (!doc.getElementById('coe-destaque')) {
+        const st = doc.createElement('style');
+        st.id = 'coe-destaque';
+        st.textContent = '@keyframes coeDestaque{0%,100%{outline-offset:3px;outline-color:#2f8cff}50%{outline-offset:8px;outline-color:rgba(47,140,255,.35)}}' +
+          '.coe-destaque{outline:4px solid #2f8cff !important;outline-offset:3px;border-radius:4px;animation:coeDestaque 1.1s ease-in-out 4;scroll-margin:120px}';
+        doc.head.append(st);
+      }
+      doc.querySelectorAll('.coe-destaque').forEach(e => e.classList.remove('coe-destaque'));
+      alvos.forEach(e => e.classList.add('coe-destaque'));
+      alvos[0].scrollIntoView({ block: 'center', inline: 'nearest' });
+      setTimeout(() => alvos.forEach(e => e.classList.remove('coe-destaque')), 9000);
+    })();
+  }
+  function abrirTelao(lista, i, destaque) {
+    destaqueTelao = destaque || null;
     listaTelao = lista; posTelao = Math.max(0, i);
     telaDoTelao();
     telao.showModal();
@@ -423,6 +480,7 @@
     if (!a) return;
     if (a.dataset.a === 'fechar') return fecharTelao();
     posTelao = (posTelao + (a.dataset.a === 'proxima' ? 1 : -1) + listaTelao.length) % listaTelao.length;
+    destaqueTelao = null;
     telaDoTelao();
   });
 
@@ -483,11 +541,22 @@
     if (!Object.hasOwn(POR_ID, id)) return;
     idAtual = id;
     const al = /^sim/i.test(r.alerta), t = C.telas[r.cod];
+    // miniatura só da parte do card de que o indicador trata (scripts/miniaturas-kpi.cjs)
+    const mini = (C.mini || {})[r.id], geral = t && t.id === 'geral', nota = (C.miniNota || {})[r.id];
+    // a imagem foi gravada em 2x: até 720 px ela aparece no tamanho real do card; maior que isso, ocupa a largura disponível
+    const larg = mini && (Math.max(mini[0], mini[1]) >= 719 ? 9999 : Math.round(mini[0] / 2));
+    const img = tema => '<img class="so-' + tema + '" src="img/kpi/' + esc(r.id) + '-' + tema + '.webp" width="' + mini[0] + '" height="' + mini[1] + '" alt="" decoding="async" style="width:clamp(min(100%,220px),' + larg + 'px,100%)">';
+    const figura = mini ? '<figure class="kf-mini"><button type="button" class="kf-mini-bt" data-cod="' + esc(r.cod) + '" data-vw="' + esc(r.vw) + '" ' +
+      'aria-label="' + esc(geral ? 'Abrir o mural do videowall' : 'Abrir ' + r.ind + ' (' + r.id + ') em ' + t.titulo) + '">' +
+      img('claro') + img('escuro') + '<span class="kf-mini-ir">' + (geral ? 'Abrir o mural' : 'Ver na tela') + '</span></button>' +
+      '<figcaption><span class="kf-mini-o">' + esc(r.ind) + '</span><span>no card <b>' + esc(r.card) + '</b> (' + esc(r.vw) + ') · ' + esc(t ? t.titulo : r.tela) + '</span>' +
+      (nota ? '<span class="kf-mini-nota">' + esc(nota) + '</span>' : '') + '</figcaption></figure>' : '';
     el.card.innerHTML =
       '<div class="kf-top"><span class="kf-id">' + esc(r.id) + '</span><span>' + esc(r.tela) + '</span>' +
       (r.sit ? '<span class="kf-sit ' + r.sit.toLowerCase() + '">' + r.sit + '</span>' : '') +
-      '<button type="button" class="kf-ver" data-cod="' + esc(r.cod) + '">Ver na tela</button></div>' +
-      '<h3><small>' + esc(r.card) + '</small>' + esc(r.ind) + '</h3><p class="kf-desc">' + esc(r.desc) + '</p>' +
+      // com miniatura, ela é o atalho para a tela; sem miniatura, fica o botão
+      (mini ? '' : '<button type="button" class="kf-ver" data-cod="' + esc(r.cod) + '">' + (geral ? 'Ver o mural' : 'Ver na tela') + '</button>') + '</div>' +
+      '<div class="kf-cab' + (mini ? ' com-mini' : '') + '"><div class="kf-cab-t"><h3><small>' + esc(r.card) + '</small>' + esc(r.ind) + '</h3><p class="kf-desc">' + esc(r.desc) + '</p></div>' + figura + '</div>' +
       '<div class="kf-sec"><b>Exibição</b><div class="kf-grid">' +
       item('Unidade de medida', r.um) + item('Representação visual', r.rep) + item('Frequência de atualização', r.freq) +
       item('Menu lateral', r.menu) + item('Código no videowall', r.vw) + item('Unidade', r.unidade) + '</div></div>' +
@@ -504,7 +573,6 @@
       const selecionado = b.dataset.id === id;
       b.setAttribute('aria-selected', selecionado); b.tabIndex = selecionado ? 0 : -1;
     });
-    if (t && t.id === 'geral') $('.kf-ver', el.card).textContent = 'Ver o mural';
   }
 
   function listar() {
@@ -549,13 +617,14 @@
   });
   [el.tela, el.forn, el.sit, el.onda, el.alerta].forEach(x => x.addEventListener('change', listar));
   el.busca.addEventListener('input', listar);
+  /* "Ver na tela" e a miniatura abrem a tela do indicador; a miniatura também destaca o card do código */
   el.card.addEventListener('click', e => {
-    const b = e.target.closest('.kf-ver');
+    const b = e.target.closest('.kf-ver, .kf-mini-bt');
     if (!b) return;
-    const t = C.telas[b.dataset.cod];
+    const t = C.telas[b.dataset.cod], r = POR_ID[idAtual];
     if (t.id === 'geral') { location.hash = MURAL.hash; return; }
     const lista = [...C.tatica, ...C.estrategica].flatMap(x => x.telas.map(y => Object.assign({ tv: x.nome }, y)));
-    abrirTelao(lista, lista.findIndex(x => x.cod === t.cod));
+    abrirTelao(lista, lista.findIndex(x => x.cod === t.cod), r && r.vw ? { codigo: r.vw, nome: r.ind, recorte: (C.recorte || {})[r.id] } : null);
   });
   listar();
 

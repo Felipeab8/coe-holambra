@@ -1053,3 +1053,23 @@ tbody td{line-height:1.6}
   .cx-busca{margin-left:0;width:100%}
 }
 @media (max-width:480px){.cc{grid-template-columns:minmax(0,1fr)}.cc-c b{min-height:0}}
+
+/* ---------- Ficha de KPI: miniatura do card no videowall ---------- */
+.kf-cab{display:grid;gap:14px}
+.kf-cab.com-mini{grid-template-columns:minmax(0,1fr) minmax(220px,min(40%,420px));gap:16px 28px;align-items:start}
+.kf-cab-t{display:grid;gap:10px;min-width:0}
+.kf-mini{display:grid;gap:7px;margin:0}
+.kf-mini-bt{position:relative;display:grid;place-items:center;width:100%;min-height:96px;padding:14px 14px 50px;border:1px solid var(--line);border-radius:10px;background:var(--soft);overflow:hidden;cursor:pointer;box-shadow:0 1px 2px rgba(0,30,60,.06);transition:transform .25s var(--curva),box-shadow .25s var(--curva),border-color .2s}
+.kf-mini-bt img{display:block;max-width:100%;height:auto;max-height:280px;object-fit:contain;border-radius:6px;box-shadow:0 1px 3px rgba(0,30,60,.12)}
+[data-theme="light"] .kf-mini-bt .so-escuro,[data-theme="dark"] .kf-mini-bt .so-claro{display:none}
+.kf-mini-ir{position:absolute;right:10px;bottom:10px;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:var(--accent);color:var(--sobre-accent);font-size:13px;font-weight:650;box-shadow:0 6px 16px -6px rgba(0,20,50,.5);opacity:.94;transition:opacity .2s,transform .25s var(--curva)}
+.kf-mini-ir::after{content:"↗";font-size:12px}
+.kf-mini-bt:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 14px 28px -18px rgba(0,30,60,.55)}
+.kf-mini-bt:hover .kf-mini-ir{opacity:1;transform:translateY(-1px)}
+.kf-mini-bt:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.kf-mini figcaption{display:grid;gap:2px;color:var(--dim);font-size:12.5px;line-height:1.4}
+.kf-mini figcaption b{color:var(--fg);font-weight:650}
+.kf-mini-o{color:var(--fg);font-size:13.5px;font-weight:650}
+.kf-mini-nota{margin-top:2px;padding-left:8px;border-left:2px solid var(--accent);font-style:italic}
+@media (max-width:900px){.kf-cab.com-mini{grid-template-columns:minmax(0,1fr)}.kf-mini{max-width:460px}}
+@media (prefers-reduced-motion:reduce){.kf-mini-bt,.kf-mini-ir{transition:none}.kf-mini-bt:hover{transform:none}}

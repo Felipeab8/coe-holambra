@@ -6378,5 +6378,31 @@
       "docs/MANUAL.md",
       "docs/validacao.json"
     ]
+  },
+  "miniaturas_kpi_2026_11_08": {
+    "data": "2026-11-08",
+    "escopo": "Ficha de KPI: uma miniatura por indicador (416), só com a parte do card do videowall de que ele trata e o título do card, nada ao redor; temas claro e escuro; legenda com indicador, card, código e tela; clicar abre a tela e, com o videowall no mesmo domínio, contorna a mesma parte; a Visão geral leva ao mural.",
+    "origem_das_imagens": "Felipeab8/videowall-coe, branch main, commit ea0fe04 (04/11/2026), aberto como TV Full HD (?telas=<id>&tema=claro|escuro)",
+    "recortes": "fonte/miniaturas-kpi.json: um recorte por indicador (seletor no card, 111 colunas de tabela, rótulos que entram junto); 12 com nota na ficha",
+    "gerador": "scripts/miniaturas-kpi.cjs (Playwright); 832 imagens WebP de até 720 px, 6,3 MB, e img/kpi/indice.json",
+    "detalhes": [
+      "o resto do card fica invisível sem mudar o desenho; vazios largos são fechados e faixas muito largas são quebradas em linhas",
+      "o título do card vai numa faixa própria, em cima, e sai do corpo para não aparecer duas vezes",
+      "cards de outro período (AVR-SPD-D, E e F) são fotografados e destacados com o período certo",
+      "a rolagem automática das listas na TV fica parada no gerador; partes abaixo da área visível (linha Geral) são roladas até aparecer"
+    ],
+    "conferencias": [
+      "atualizar.py exige que cada indicador do recorte exista no mapeamento e tenha as versões clara e escura",
+      "teste Python: 416 recortes, 416 miniaturas, WebP válidos, recorte e nota levados ao painel",
+      "teste Chromium: miniatura e legenda de AVR-REC-A01, nota de AVR-REC-G05, abertura da tela e destaque só da parte \"Com tag\" no mesmo domínio",
+      "conferência visual de todas as telas em folhas de contato (claro e escuro) e do destaque de AVR-ARM-A10, AVR-ARM-A09 e AVR-EXP-G13 dentro da tela"
+    ],
+    "acessibilidade_axe": "Sem violações WCAG 2.1 AA na Ficha de KPI (lista e 3 indicadores, 390 e 1440 px, claro e escuro)",
+    "testes_python": 39,
+    "testes_regressao_navegador": {
+      "aprovados": 30,
+      "falhas": 0
+    },
+    "scripts_js": 15
   }
 }

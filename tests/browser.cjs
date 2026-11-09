@@ -490,3 +490,39 @@ test('the viability catalog filters by layer, scenario and search, and its total
     await page.locator('#p-dados-sala-do-coe:not([hidden])').waitFor();
   } finally { await page.close(); }
 });
+
+test('every KPI sheet shows only its own part of the videowall card and opens the indicator on its screen', async () => {
+  const page = await visit('#indicadores/ficha-de-kpi');
+  try {
+    const C = await page.evaluate(() => window.COE);
+    assert.deepEqual(Object.keys(C.mini).sort(), C.linhas.map(l => l[0]).sort(), 'uma miniatura por indicador');
+    const card = page.locator('#p-indicadores-ficha-de-kpi #kpiCard');
+    // a Visão geral mostra o mural e leva à página do mural
+    assert.match(await card.locator('.kf-mini-bt img.so-claro').getAttribute('src'), /img\/kpi\/AVR-VG-M01-claro\.webp$/);
+    await page.waitForFunction(() => { const i = document.querySelector('#kpiCard .kf-mini-bt img.so-claro'); return i && i.complete && i.naturalWidth > 0; });
+    assert.equal(await card.locator('.kf-mini-bt img.so-claro').isVisible(), true);
+    assert.equal(await card.locator('.kf-mini-bt img.so-escuro').isVisible(), false);
+    // um indicador de tela: a miniatura é só a parte dele e a legenda diz o que é e onde está
+    await page.locator('.kf-i[data-id="AVR-REC-A01"]').click();
+    const bt = card.locator('.kf-mini-bt');
+    assert.match(await bt.locator('img.so-claro').getAttribute('src'), /AVR-REC-A01-claro\.webp$/);
+    assert.match(await card.locator('.kf-mini figcaption').innerText(), /Com tag por cultura[\s\S]*no card Caminhões na fila \(AVR-REC-A\)[\s\S]*Tela da recepção/);
+    await page.locator('.kf-i[data-id="AVR-REC-G05"]').click();
+    assert.match(await card.locator('.kf-mini-nota').innerText(), /balão/);
+    await page.locator('.kf-i[data-id="AVR-REC-A01"]').click();
+    await bt.click();
+    await page.locator('#telao[open]').waitFor();
+    assert.match(await page.locator('#telaoSub').innerText(), /Com tag por cultura \(AVR-REC-A\)/);
+    const tela = await page.locator('#telaoTela iframe').getAttribute('data-tela');
+    assert.match(tela, /\?telas=0&/);
+    if (new URL(tela).origin === new URL(page.url()).origin) {
+      // no mesmo domínio (GitHub Pages da mesma conta) só a parte do indicador fica contornada dentro da tela
+      const frame = page.frameLocator('#telaoTela iframe');
+      await frame.locator('.coe-destaque').first().waitFor({ timeout: 30000 });
+      assert.equal(await frame.locator('.coe-destaque').count(), 1);
+      assert.match(await frame.locator('.coe-destaque').innerText(), /Com tag/i);
+      assert.equal(await frame.locator('[data-codigo="AVR-REC-A"].coe-destaque').count(), 0);
+    }
+    await page.keyboard.press('Escape');
+  } finally { await page.close(); }
+});

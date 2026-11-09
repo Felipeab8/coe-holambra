@@ -113,6 +113,32 @@ def montar_mural(grupos, telas):
     return saida
 
 
+def ler_miniaturas(ids):
+    """Miniaturas da Ficha de KPI (scripts/miniaturas-kpi.cjs): uma por indicador, com o recorte de fonte/miniaturas-kpi.json."""
+    recortes = json.loads((FONTE / "miniaturas-kpi.json").read_text(encoding="utf-8"))["indicadores"]
+    fora = sorted(set(recortes) - set(ids))
+    if fora:
+        falha(f"fonte/miniaturas-kpi.json cita indicadores que não estão no mapeamento: {', '.join(fora[:6])}")
+    indice = RAIZ / "img" / "kpi" / "indice.json"
+    if not indice.exists():
+        print("  Atenção: sem img/kpi/indice.json; a Ficha de KPI fica sem miniaturas (rode node scripts/miniaturas-kpi.cjs)")
+        return {}, {}, {}
+    gerados = json.loads(indice.read_text(encoding="utf-8")).get("indicadores", {})
+    for ind in gerados:
+        for tema in ("claro", "escuro"):
+            if not (RAIZ / "img" / "kpi" / f"{ind}-{tema}.webp").exists():
+                falha(f"miniatura ausente: img/kpi/{ind}-{tema}.webp (rode node scripts/miniaturas-kpi.cjs)")
+    sem = [i for i in ids if i not in gerados]
+    if sem:
+        print(f"  Atenção: {len(sem)} indicadores sem miniatura: {', '.join(sem[:6])}")
+    mini = {i: [g["w"], g["h"]] for i, g in gerados.items() if i in ids}
+    notas = {i: recortes[i]["nota"] for i in mini if recortes.get(i, {}).get("nota")}
+    # o mesmo recorte serve para destacar o indicador dentro da tela, quando ela abre a partir da ficha
+    campos = ("alvo", "tem", "sub", "todos", "mais", "coluna", "com_primeira", "rodape", "linhas_tem", "raiz", "raiz_n", "elem_n", "doc")
+    destaque = {i: {k: v for k, v in recortes[i].items() if k in campos} for i in mini if any(k in campos for k in recortes.get(i, {}))}
+    return mini, notas, destaque
+
+
 def milhoes(valor):
     return "R$ " + f"{valor / 1e6:.1f}".replace(".", ",") + " mi"
 
@@ -230,6 +256,7 @@ def main():
         "linhas": [[l[c] for c in list(COLUNAS) + ["sit", "cod", "onda"]] for l in linhas],
         "telas": telas, "tatica": tatica, "estrategica": estrategica,
     }
+    dados["mini"], dados["miniNota"], dados["recorte"] = ler_miniaturas([l["id"] for l in linhas])
     js = "/* Gerado por atualizar.py a partir de " + caminho.name + ". Não edite à mão. */\n"
     js += "window.COE=" + json.dumps(dados, ensure_ascii=False, separators=(",", ":")) + ";\n"
     saidas = {"js/indicadores.js": js, "dados/indicadores.csv": caminho.read_text(encoding="utf-8-sig")}

@@ -79,6 +79,21 @@ class BuildTests(unittest.TestCase):
         monitor = next(c for c in data["custos"] if c["id"] == "C005")
         self.assertEqual((monitor["qtd"], monitor["unit"], monitor["total"]), (6, 6100, 36600))
 
+    def test_every_indicator_has_its_own_light_and_dark_thumbnail(self):
+        js = (ROOT / "js/indicadores.js").read_text(encoding="utf-8")
+        data = __import__("json").loads(js[js.index("=") + 1:js.rindex(";")])
+        ids = [l[0] for l in data["linhas"]]
+        recortes = __import__("json").loads((ROOT / "fonte/miniaturas-kpi.json").read_text(encoding="utf-8"))["indicadores"]
+        self.assertEqual(sorted(recortes), sorted(ids))
+        self.assertEqual(sorted(data["mini"]), sorted(ids))
+        for ind, (w, h) in data["mini"].items():
+            self.assertTrue(0 < w <= 720 and 0 < h <= 720, ind)
+            for tema in ("claro", "escuro"):
+                self.assertEqual((ROOT / "img/kpi" / f"{ind}-{tema}.webp").read_bytes()[8:12], b"WEBP", f"{ind}-{tema}")
+        # o recorte usado na miniatura também vai para o destaque dentro da tela
+        self.assertEqual(data["recorte"]["AVR-REC-A01"], {"alvo": ".kpi-tag-bloco", "tem": "Com tag"})
+        self.assertIn("balão", data["miniNota"]["AVR-REC-G05"])
+
     def test_cost_links_reject_unknown_duplicate_or_missing_items(self):
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "site"

@@ -1,0 +1,1881 @@
+{
+ "_leia": [
+  "Recorte da miniatura de cada indicador na Ficha de KPI, usado por scripts/miniaturas-kpi.cjs.",
+  "A miniatura mostra só a parte do card do videowall de que o indicador trata, com o título do card, e nada ao redor.",
+  "Campos: alvo (seletor CSS dentro do card), tem (texto que o elemento contém), sub (partes de dentro do alvo, todas), todos (true: todos os encontrados; 'primeiros': o primeiro de cada seletor da lista), mais (outros elementos que entram junto, como um rótulo), coluna (cabeçalho da coluna de tabela; exato, com_primeira, rodape, linhas_tem), raiz e raiz_n (bloco do card usado como exemplo, como a primeira moega), elem_n (qual dos cards com o mesmo código), doc (seletor na tela inteira, fora do card), titulo (seletor do título ou false) e nota (texto mostrado na ficha).",
+  "Sem campos, a miniatura é o card inteiro."
+ ],
+ "indicadores": {
+  "AVR-VG-M01": {},
+  "AVR-VG-M02": {
+   "nota": "O rodízio acontece dentro de cada quadro do mural, a cada 10 s."
+  },
+  "AVR-REC-A01": {
+   "alvo": ".kpi-tag-bloco",
+   "tem": "Com tag"
+  },
+  "AVR-REC-A02": {
+   "alvo": ".kpi-tag-bloco--sem"
+  },
+  "AVR-REC-B01": {
+   "alvo": ".kpi-value-row"
+  },
+  "AVR-REC-B02": {
+   "alvo": ".kpi-sub"
+  },
+  "AVR-REC-C01": {
+   "alvo": ".kpi-value-row"
+  },
+  "AVR-REC-C02": {
+   "alvo": ".kpi-sub"
+  },
+  "AVR-REC-D01": {
+   "alvo": ".kpi-value-row > .kpi-value"
+  },
+  "AVR-REC-D02": {
+   "alvo": ".kpi-value-ref"
+  },
+  "AVR-REC-D03": {
+   "alvo": ".kpi-sub"
+  },
+  "AVR-REC-D04": {
+   "alvo": ".kpi-sub"
+  },
+  "AVR-REC-E01": {
+   "alvo": ".etapa-fill--fila",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".etapa-cultura-nome",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-REC-E02": {
+   "alvo": ".etapa-fill--p1",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".etapa-cultura-nome",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-REC-E03": {
+   "alvo": ".etapa-fill--classif",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".etapa-cultura-nome",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-REC-E04": {
+   "alvo": ".etapa-fill--moega",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".etapa-cultura-nome",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-REC-E05": {
+   "alvo": ".etapa-fill--p2",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".etapa-cultura-nome",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-REC-F01": {
+   "alvo": ".mensal-cell",
+   "tem": "Mês passado",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".mensal-head",
+     "tem": "Mês passado"
+    },
+    {
+     "alvo": ".mensal-cultura",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-REC-F02": {
+   "alvo": ".mensal-cell",
+   "tem": "Mês passado",
+   "todos": true,
+   "sub": ".mensal-note",
+   "mais": [
+    {
+     "alvo": ".mensal-head",
+     "tem": "Mês passado"
+    },
+    {
+     "alvo": ".mensal-cultura",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-REC-F03": {
+   "alvo": ".mensal-cell",
+   "tem": "Mês passado",
+   "todos": true,
+   "sub": ".mensal-pct",
+   "mais": [
+    {
+     "alvo": ".mensal-head",
+     "tem": "Mês passado"
+    },
+    {
+     "alvo": ".mensal-cultura",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-REC-F04": {
+   "alvo": ".mensal-cell",
+   "tem": "Mês atual",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".mensal-head",
+     "tem": "Mês atual"
+    },
+    {
+     "alvo": ".mensal-cultura",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-REC-F05": {
+   "alvo": ".mensal-cell",
+   "tem": "Mês atual",
+   "todos": true,
+   "sub": ".mensal-note",
+   "mais": [
+    {
+     "alvo": ".mensal-head",
+     "tem": "Mês atual"
+    },
+    {
+     "alvo": ".mensal-cultura",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-REC-F06": {
+   "alvo": ".mensal-cell",
+   "tem": "Mês atual",
+   "todos": true,
+   "sub": ".mensal-bar-row",
+   "mais": [
+    {
+     "alvo": ".mensal-head",
+     "tem": "Mês atual"
+    },
+    {
+     "alvo": ".mensal-cultura",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-REC-F07": {
+   "alvo": ".mensal-cell",
+   "tem": "Próximo mês",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".mensal-head",
+     "tem": "Próximo mês"
+    },
+    {
+     "alvo": ".mensal-cultura",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-REC-G01": {
+   "alvo": ".kpi-sub"
+  },
+  "AVR-REC-G02": {
+   "alvo": ".kpi-tag-bloco",
+   "tem": "No mês"
+  },
+  "AVR-REC-G05": {
+   "balao": true,
+   "nota": "A lista aparece no balão, ao passar o mouse sobre o card."
+  },
+  "AVR-REC-G06": {
+   "alvo": ".kpi-tag-bloco",
+   "tem": "Hoje"
+  },
+  "AVR-FLX-A01": {
+   "alvo": ".fluxo-etapa-valor",
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome"
+    }
+   ],
+   "titulo": false
+  },
+  "AVR-FLX-A02": {
+   "alvo": ".fluxo-etapa-sub",
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome"
+    }
+   ],
+   "titulo": false
+  },
+  "AVR-FLX-B01": {
+   "alvo": ".fluxo-etapa-valor",
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome"
+    }
+   ],
+   "titulo": false
+  },
+  "AVR-FLX-B02": {
+   "alvo": ".fluxo-etapa-espera",
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome"
+    }
+   ],
+   "titulo": false
+  },
+  "AVR-FLX-B03": {
+   "alvo": ".fluxo-etapa-sub",
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome"
+    }
+   ],
+   "titulo": false
+  },
+  "AVR-FLX-C01": {
+   "alvo": ".fluxo-etapa-valor",
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome"
+    }
+   ],
+   "titulo": false
+  },
+  "AVR-FLX-C02": {
+   "alvo": ".fluxo-etapa-espera",
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome"
+    }
+   ],
+   "titulo": false
+  },
+  "AVR-FLX-C03": {
+   "alvo": ".fluxo-etapa-sub",
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome"
+    }
+   ],
+   "titulo": false
+  },
+  "AVR-FLX-D01": {
+   "alvo": ".fluxo-etapa-valor",
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome"
+    }
+   ],
+   "titulo": false
+  },
+  "AVR-FLX-D02": {
+   "alvo": ".fluxo-etapa-sub",
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome"
+    }
+   ],
+   "titulo": false
+  },
+  "AVR-FLX-E01": {
+   "alvo": ".fluxo-etapa-valor",
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome"
+    }
+   ],
+   "titulo": false
+  },
+  "AVR-FLX-E02": {
+   "alvo": ".fluxo-etapa-espera",
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome"
+    }
+   ],
+   "titulo": false
+  },
+  "AVR-FLX-E03": {
+   "alvo": ".fluxo-etapa-sub",
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome"
+    }
+   ],
+   "titulo": false
+  },
+  "AVR-FLX-F01": {
+   "alvo": ".fluxo-etapa-valor",
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome"
+    }
+   ],
+   "titulo": false
+  },
+  "AVR-FLX-G01": {
+   "alvo": ".fluxo-etapa-estado",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-FLX-H01": {
+   "alvo": ".fluxo-tabela-resumo"
+  },
+  "AVR-FLX-H02": {
+   "coluna": "TAG"
+  },
+  "AVR-FLX-H03": {
+   "coluna": "Placa"
+  },
+  "AVR-FLX-H04": {
+   "coluna": "Cultura"
+  },
+  "AVR-FLX-H05": {
+   "coluna": "Cooperado"
+  },
+  "AVR-FLX-H06": {
+   "coluna": "Etapa"
+  },
+  "AVR-FLX-H07": {
+   "coluna": "Entrada"
+  },
+  "AVR-FLX-H08": {
+   "coluna": "Vinculação"
+  },
+  "AVR-FLX-H09": {
+   "coluna": "1ª pesagem"
+  },
+  "AVR-FLX-H10": {
+   "coluna": "Classificação"
+  },
+  "AVR-FLX-H11": {
+   "coluna": "Descarga"
+  },
+  "AVR-FLX-H12": {
+   "coluna": "2ª pesagem"
+  },
+  "AVR-CLA-A01": {},
+  "AVR-CLA-B01": {},
+  "AVR-CLA-C01": {},
+  "AVR-CLA-D01": {
+   "alvo": ".kpi-value"
+  },
+  "AVR-CLA-D02": {
+   "alvo": ".kpi-queimado"
+  },
+  "AVR-CLA-E01": {
+   "alvo": ".trigo-tipo-head",
+   "todos": true
+  },
+  "AVR-CLA-E02": {
+   "alvo": ".trigo-val:nth-child(1)",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".trigo-tipo-nome",
+     "todos": true
+    },
+    {
+     "alvo": ".trigo-tipo-lim",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-CLA-E03": {
+   "alvo": ".trigo-val:nth-child(2)",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".trigo-tipo-nome",
+     "todos": true
+    },
+    {
+     "alvo": ".trigo-tipo-lim",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-CLA-E04": {
+   "alvo": ".trigo-tipo--triguilho"
+  },
+  "AVR-CLA-E05": {
+   "alvo": ".trigo-val--germ",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".trigo-tipo-nome",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-CLA-G01": {
+   "coluna": "TAG"
+  },
+  "AVR-CLA-G02": {
+   "coluna": "CULTURA"
+  },
+  "AVR-CLA-G03": {
+   "coluna": "COOPERADO"
+  },
+  "AVR-CLA-G04": {
+   "coluna": "UMIDADE"
+  },
+  "AVR-CLA-G05": {
+   "coluna": "IMPUREZA"
+  },
+  "AVR-CLA-G06": {
+   "coluna": "TOTAL DE AVARIADOS"
+  },
+  "AVR-CLA-G07": {
+   "coluna": "PH"
+  },
+  "AVR-CLA-G08": {
+   "coluna": "FALLING NUMBER"
+  },
+  "AVR-CLA-G09": {
+   "coluna": "STATUS"
+  },
+  "AVR-CLA-G10": {
+   "coluna": "GERMINADO"
+  },
+  "AVR-CLA-H01": {
+   "alvo": ".conc-num",
+   "tem": "Descontado"
+  },
+  "AVR-CLA-H02": {
+   "alvo": ".conc-num",
+   "tem": "Resíduo pesado"
+  },
+  "AVR-CLA-H03": {
+   "alvo": ".conc-num--dif"
+  },
+  "AVR-CLA-H04": {
+   "alvo": ".conc-aberto"
+  },
+  "AVR-CLA-H05": {
+   "alvo": ".conc-num",
+   "tem": "Média por caçamba"
+  },
+  "AVR-CLA-I01": {
+   "coluna": "CAÇAMBA"
+  },
+  "AVR-CLA-I02": {
+   "coluna": "SAÍDA"
+  },
+  "AVR-CLA-I03": {
+   "coluna": "PRÉ-LIMPEZA"
+  },
+  "AVR-CLA-I04": {
+   "coluna": "PESADO"
+  },
+  "AVR-CLA-I05": {
+   "coluna": "DESCONTADO"
+  },
+  "AVR-CLA-I06": {
+   "coluna": "DIFERENÇA"
+  },
+  "AVR-CLA-J01": {
+   "alvo": ".hist-row .hist-cell:nth-child(1)",
+   "mais": [
+    {
+     "alvo": ".hist-grid--head .hist-head:nth-child(1)"
+    }
+   ]
+  },
+  "AVR-CLA-J02": {
+   "alvo": ".hist-row .hist-cell:nth-child(2)",
+   "mais": [
+    {
+     "alvo": ".hist-grid--head .hist-head:nth-child(2)"
+    }
+   ]
+  },
+  "AVR-CLA-J03": {
+   "alvo": ".hist-row .hist-cell:nth-child(3)",
+   "mais": [
+    {
+     "alvo": ".hist-grid--head .hist-head:nth-child(3)"
+    }
+   ]
+  },
+  "AVR-MOE-A01": {
+   "raiz": ".moega-item",
+   "alvo": ".moega-cultura"
+  },
+  "AVR-MOE-A02": {
+   "raiz": ".moega-item",
+   "alvo": ".moega-tipo"
+  },
+  "AVR-MOE-A03": {
+   "raiz": ".moega-item",
+   "alvo": ".moega-status"
+  },
+  "AVR-MOE-A04": {
+   "raiz": ".moega-item",
+   "alvo": ".moega-cargas-head .moega-dado-label"
+  },
+  "AVR-MOE-A05": {
+   "raiz": ".moega-item",
+   "alvo": ".moega-cargas-total"
+  },
+  "AVR-MOE-A06": {
+   "raiz": ".moega-item",
+   "alvo": ".moega-hist"
+  },
+  "AVR-MOE-B01": {
+   "coluna": "Placa"
+  },
+  "AVR-MOE-B02": {
+   "coluna": "ton"
+  },
+  "AVR-MOE-B03": {
+   "coluna": "Umid"
+  },
+  "AVR-MOE-B04": {
+   "coluna": "Imp"
+  },
+  "AVR-MOE-B05": {
+   "coluna": "Avar"
+  },
+  "AVR-MOE-B06": {
+   "alvo": "tfoot tr:last-child",
+   "mais": [
+    {
+     "alvo": "thead"
+    }
+   ]
+  },
+  "AVR-MOE-B07": {
+   "coluna": "Umid",
+   "rodape": true
+  },
+  "AVR-MOE-B08": {
+   "coluna": "Imp",
+   "rodape": true
+  },
+  "AVR-MOE-B09": {
+   "coluna": "Avar",
+   "rodape": true
+  },
+  "AVR-MOE-B10": {
+   "alvo": ".moega-fluxo-item--entrada"
+  },
+  "AVR-MOE-B11": {
+   "alvo": ".moega-fluxo-item--saida .moega-fluxo-label, .moega-fluxo-item--saida .moega-fluxo-value",
+   "todos": true
+  },
+  "AVR-MOE-B12": {
+   "alvo": ".moega-fluxo-sub",
+   "mais": [
+    {
+     "alvo": ".moega-fluxo-item--saida .moega-fluxo-label"
+    }
+   ]
+  },
+  "AVR-MOE-C01": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-stock span"
+  },
+  "AVR-MOE-C02": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-body"
+  },
+  "AVR-MOE-C03": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-stock span"
+  },
+  "AVR-MOE-C05": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-aer"
+  },
+  "AVR-MOE-C06": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-cultura"
+  },
+  "AVR-MOE-C07": {
+   "raiz": ".sa-card",
+   "alvo": ".pulmao-aer-dado:not(.pulmao-aer-dado--acum)"
+  },
+  "AVR-MOE-C08": {
+   "raiz": ".sa-card",
+   "alvo": ".pulmao-aer-dado--acum"
+  },
+  "AVR-MOE-C09": {
+   "raiz": ".sa-card",
+   "alvo": ".pulmao-hist"
+  },
+  "AVR-MOE-C10": {
+   "alvo": ".pulmao-soma"
+  },
+  "AVR-SPR-A01": {
+   "raiz": ".secador",
+   "alvo": ".secador-cultura"
+  },
+  "AVR-SPR-A02": {
+   "raiz": ".secador",
+   "alvo": ".secador-tipo"
+  },
+  "AVR-SPR-A03": {
+   "raiz": ".secador",
+   "alvo": ".secador-estado"
+  },
+  "AVR-SPR-A04": {
+   "raiz": ".secador",
+   "alvo": ".secador-tipo"
+  },
+  "AVR-SPR-A06": {
+   "raiz": ".secador",
+   "alvo": ".secador-head > *",
+   "todos": true,
+   "titulo": false,
+   "nota": "Com risco, aparece um selo de alerta no cabeçalho do secador e a borda do cartão fica vermelha."
+  },
+  "AVR-SPR-A07": {
+   "raiz": ".secador",
+   "alvo": ".secador-ponto--sai",
+   "nota": "Posição prevista no cartão do secador; o dado ainda será incluído no videowall."
+  },
+  "AVR-SPR-B02": {
+   "alvo": ".secador-dado:not(.secador-dado--ref)"
+  },
+  "AVR-SPR-B03": {
+   "alvo": ".secador-dado--ref"
+  },
+  "AVR-SPR-C01": {
+   "alvo": ".secador-dado--ar"
+  },
+  "AVR-SPR-C02": {
+   "alvo": ".secador-dado--saida"
+  },
+  "AVR-SPR-C03": {
+   "alvo": ".secador-dado--ref"
+  },
+  "AVR-SPR-D01": {
+   "alvo": ".secador-dado",
+   "tem": "temperatura"
+  },
+  "AVR-SPR-D02": {
+   "alvo": ".secador-dado",
+   "tem": "umidade"
+  },
+  "AVR-SPR-E01": {
+   "alvo": ".secador-dado",
+   "tem": "temperatura"
+  },
+  "AVR-SPR-E02": {
+   "alvo": ".secador-dado",
+   "tem": "umidade"
+  },
+  "AVR-SPR-E03": {
+   "alvo": ".secador-ponto-nota"
+  },
+  "AVR-SPR-F01": {},
+  "AVR-SPR-G01": {
+   "alvo": ".secador-limpeza-falta, .secador-limpeza-barra",
+   "todos": true
+  },
+  "AVR-SPR-G02": {
+   "alvo": ".secador-limpeza-trab"
+  },
+  "AVR-SPR-G03": {
+   "alvo": ".secador-limpeza-lista"
+  },
+  "AVR-SPD-A01": {
+   "alvo": ".kpi-value"
+  },
+  "AVR-SPD-A02": {
+   "alvo": ".kpi-meta-bar, .kpi-meta-row",
+   "todos": true
+  },
+  "AVR-SPD-B01": {
+   "alvo": ".kpi-value, .kpi-meta-row .kpi-flag",
+   "todos": true
+  },
+  "AVR-SPD-B02": {
+   "alvo": ".kpi-meta-row",
+   "nota": "O resultado por secador aparece no balão, ao passar o mouse sobre o card."
+  },
+  "AVR-SPD-C01": {
+   "alvo": ".kpi-duplo"
+  },
+  "AVR-SPD-C02": {
+   "alvo": ".kpi-duplo-item em",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".kpi-duplo-item b",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-SPD-C03": {
+   "alvo": ".kpi-meta-row",
+   "nota": "O ritmo necessário aparece no balão do card, ao passar o mouse."
+  },
+  "AVR-SPD-C04": {
+   "alvo": ".kpi-duplo, .kpi-meta-row",
+   "todos": true
+  },
+  "AVR-SPD-D01": {
+   "alvo": ".kpi-value"
+  },
+  "AVR-SPD-D02": {
+   "alvo": ".kpi-meta-bar, .kpi-meta-row",
+   "todos": true
+  },
+  "AVR-SPD-E01": {
+   "alvo": ".kpi-value, .kpi-meta-row .kpi-flag",
+   "todos": true
+  },
+  "AVR-SPD-F01": {},
+  "AVR-SPD-G01": {
+   "alvo": ".prod-grafico-corpo"
+  },
+  "AVR-SPD-G02": {
+   "alvo": ".prod-grafico-corpo",
+   "mais": [
+    {
+     "alvo": ".legend-item",
+     "tem": "Meta de operação"
+    }
+   ]
+  },
+  "AVR-SPD-G03": {
+   "alvo": ".prod-grafico-corpo",
+   "mais": [
+    {
+     "alvo": ".legend-item",
+     "tem": "Projeção"
+    }
+   ]
+  },
+  "AVR-SPD-G04": {
+   "alvo": ".prod-grafico-corpo",
+   "mais": [
+    {
+     "alvo": ".legend-item",
+     "tem": "Nominal"
+    }
+   ]
+  },
+  "AVR-SPD-G05": {
+   "alvo": ".prod-grafico-corpo, .prod-eventos",
+   "todos": "primeiros",
+   "mais": [
+    {
+     "alvo": ".legend-item",
+     "tem": "Parada"
+    }
+   ]
+  },
+  "AVR-SPD-G06": {
+   "doc": "button[data-prod-periodo]",
+   "todos": true
+  },
+  "AVR-SPD-G07": {
+   "alvo": ".prod-fim"
+  },
+  "AVR-SPD-G08": {
+   "alvo": ".prod-fim .class-status"
+  },
+  "AVR-SPD-G09": {
+   "alvo": ".forecast-xaxis, .forecast-unit",
+   "todos": "primeiros"
+  },
+  "AVR-SPD-G10": {
+   "alvo": ".prod-eventos"
+  },
+  "AVR-SPD-H01": {
+   "alvo": ".secador-nome",
+   "titulo": false
+  },
+  "AVR-SPD-H02": {
+   "alvo": ".prod-secador-head .secador-tipo"
+  },
+  "AVR-SPD-H03": {
+   "alvo": ".prod-secador-estado"
+  },
+  "AVR-SPD-H04": {
+   "alvo": ".prod-secador-volume"
+  },
+  "AVR-SPD-H05": {
+   "alvo": ".prod-secador-meta, .prod-secador-track",
+   "todos": "primeiros"
+  },
+  "AVR-SPD-H06": {
+   "alvo": ".prod-linha-item"
+  },
+  "AVR-SPD-H07": {
+   "alvo": ".prod-linha-item em",
+   "mais": [
+    {
+     "alvo": ".prod-linha-item b"
+    }
+   ]
+  },
+  "AVR-SPD-H08": {
+   "alvo": ".prod-cult-lista"
+  },
+  "AVR-SPD-I01": {
+   "alvo": ".manut-kpi",
+   "tem": "Disponibilidade",
+   "mais": [
+    {
+     "alvo": ".manut-secadores"
+    }
+   ]
+  },
+  "AVR-SPD-I02": {
+   "alvo": ".manut-kpi",
+   "tem": "Tempo parado"
+  },
+  "AVR-SPD-I03": {
+   "alvo": ".manut-kpi",
+   "tem": "Paradas"
+  },
+  "AVR-SPD-I04": {
+   "alvo": ".manut-kpi",
+   "tem": "MTTR"
+  },
+  "AVR-SPD-I05": {
+   "alvo": ".manut-kpi",
+   "tem": "MTBF"
+  },
+  "AVR-SPD-I06": {
+   "alvo": ".manut-kpi--limpeza"
+  },
+  "AVR-SPD-K01": {
+   "alvo": ".kpi-tag-bloco",
+   "tem": "Entrada"
+  },
+  "AVR-SPD-K02": {
+   "alvo": ".kpi-tag-bloco--igual",
+   "nota": "O consumo por secador aparece no balão, ao passar o mouse sobre o card."
+  },
+  "AVR-SPD-K03": {
+   "alvo": ".kpi-sub--consumo"
+  },
+  "AVR-SPD-K04": {
+   "alvo": ".kpi-meta-row",
+   "nota": "A conta aparece no balão, ao passar o mouse sobre o card."
+  },
+  "AVR-PRS-A01": {
+   "raiz": ".pr-sec",
+   "alvo": ".pr-q",
+   "sub": ".pr-q-head, .pr-q-valor"
+  },
+  "AVR-PRS-A03": {
+   "raiz": ".pr-sec",
+   "alvo": ".pr-q",
+   "sub": ".pr15",
+   "mais": [
+    {
+     "alvo": ".pr-q-head"
+    }
+   ]
+  },
+  "AVR-PRS-A04": {
+   "raiz": ".pr-sec",
+   "alvo": ".pr-figura"
+  },
+  "AVR-PRS-A05": {
+   "raiz": ".pr-sec",
+   "alvo": ".pr-q--ocorr"
+  },
+  "AVR-PRS-A06": {
+   "raiz": ".pr-sec",
+   "alvo": ".pr-q"
+  },
+  "AVR-PRS-A07": {
+   "raiz": ".pr-sec",
+   "alvo": ".pr-status"
+  },
+  "AVR-SIL-A01": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-cultura"
+  },
+  "AVR-SIL-A02": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-umi"
+  },
+  "AVR-SIL-A03": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-body"
+  },
+  "AVR-SIL-A04": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-stock span"
+  },
+  "AVR-SIL-A05": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-temp"
+  },
+  "AVR-SIL-A06": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-aer"
+  },
+  "AVR-SIL-A07": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-temp"
+  },
+  "AVR-SIL-A09": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-aer-clima"
+  },
+  "AVR-SIL-A10": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-aer-dado",
+   "tem": "cultura"
+  },
+  "AVR-SIL-A11": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-aer-dado",
+   "tem": "total"
+  },
+  "AVR-SIL-A12": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-aer-dado",
+   "tem": "kWh"
+  },
+  "AVR-SIL-A14": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-aer-clima-ur"
+  },
+  "AVR-SIL-A15": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-head",
+   "nota": "A tabela aparece no balão, ao passar o mouse sobre o silo."
+  },
+  "AVR-SIL-A16": {
+   "doc": ".arm-clima"
+  },
+  "AVR-SIL-A19": {
+   "raiz": ".sa-card",
+   "alvo": ".sa-ar"
+  },
+  "AVR-SIL-B01": {
+   "coluna": "SILO"
+  },
+  "AVR-SIL-B02": {
+   "coluna": "CULTURA"
+  },
+  "AVR-SIL-B03": {
+   "coluna": "ENTRADAS"
+  },
+  "AVR-SIL-B04": {
+   "coluna": "SAÍDAS"
+  },
+  "AVR-SIL-B05": {
+   "coluna": "SALDO"
+  },
+  "AVR-SIL-B06": {
+   "coluna": "ESTOQUE"
+  },
+  "AVR-SIL-B07": {
+   "coluna": "DENSIDADE"
+  },
+  "AVR-SIL-B08": {
+   "coluna": "MASSA"
+  },
+  "AVR-ARM-A01": {
+   "raiz": ".arm-card",
+   "alvo": ".sa-cultura"
+  },
+  "AVR-ARM-A02": {
+   "raiz": ".arm-card",
+   "alvo": ".sa-cultura"
+  },
+  "AVR-ARM-A03": {
+   "raiz": ".arm-card",
+   "alvo": ".sa-umi"
+  },
+  "AVR-ARM-A04": {
+   "raiz": ".arm-card",
+   "alvo": ".arm-ocup"
+  },
+  "AVR-ARM-A05": {
+   "raiz": ".arm-card",
+   "alvo": ".arm-ocup > span:not(.arm-ocup-barra)"
+  },
+  "AVR-ARM-A06": {
+   "raiz": ".arm-card",
+   "alvo": ".arm-media"
+  },
+  "AVR-ARM-A07": {
+   "raiz": ".arm-card",
+   "alvo": ".arm-aer .sa-aer-badge, .arm-aer-motores, .arm-aer .sa-aer-info",
+   "todos": true
+  },
+  "AVR-ARM-A08": {
+   "raiz": ".arm-card",
+   "alvo": ".arm-tend-item",
+   "todos": true
+  },
+  "AVR-ARM-A09": {
+   "raiz": ".arm-card",
+   "alvo": ".arm-setor",
+   "sub": ".arm-celulas, .arm-tunel",
+   "mais": [
+    {
+     "alvo": ".arm-lados"
+    },
+    {
+     "alvo": ".arm-setor-nome"
+    }
+   ],
+   "titulo": ".sa-name",
+   "nota": "Trecho da canaleta 1; na tela, a planta mostra todas as canaletas lado a lado."
+  },
+  "AVR-ARM-A10": {
+   "raiz": ".arm-card",
+   "alvo": ".arm-setor-head",
+   "sub": ".arm-setor-nome, .arm-setor-media, .arm-setor-max"
+  },
+  "AVR-ARM-A11": {
+   "raiz": ".arm-card",
+   "alvo": ".arm-setor-head",
+   "sub": ".arm-setor-nome, .arm-setor-motores"
+  },
+  "AVR-ARM-A12": {
+   "raiz": ".arm-card",
+   "alvo": ".arm-setor",
+   "sub": ".arm-motor",
+   "mais": [
+    {
+     "alvo": ".arm-setor-nome"
+    }
+   ]
+  },
+  "AVR-ARM-A13": {
+   "raiz": ".arm-card",
+   "alvo": ".arm-aer .sa-aer-clima"
+  },
+  "AVR-ARM-A14": {
+   "doc": ".arm-clima"
+  },
+  "AVR-ARM-A17": {
+   "raiz": ".arm-card",
+   "alvo": ".arm-ar"
+  },
+  "AVR-EXP-A01": {
+   "alvo": ".kpi-value-row"
+  },
+  "AVR-EXP-A02": {
+   "alvo": ".kpi-sub-item",
+   "tem": "Programado"
+  },
+  "AVR-EXP-A03": {
+   "alvo": ".exp-meta-track",
+   "mais": [
+    {
+     "alvo": ".kpi-sub-item",
+     "tem": "Atingido"
+    }
+   ]
+  },
+  "AVR-EXP-B01": {
+   "alvo": ".kpi-value-row"
+  },
+  "AVR-EXP-B02": {
+   "alvo": ".kpi-sub-item",
+   "tem": "em carregamento"
+  },
+  "AVR-EXP-B03": {
+   "alvo": ".kpi-sub-item",
+   "tem": "aguardando"
+  },
+  "AVR-EXP-B04": {
+   "alvo": ".kpi-sub",
+   "nota": "Os reprovados aparecem nesta linha do card quando há carga reprovada no período."
+  },
+  "AVR-EXP-C01": {
+   "alvo": ".kpi-value-row"
+  },
+  "AVR-EXP-C02": {
+   "alvo": ".kpi-sub-item",
+   "tem": "Umidade"
+  },
+  "AVR-EXP-C03": {
+   "alvo": ".kpi-sub-item",
+   "tem": "Impureza"
+  },
+  "AVR-EXP-C04": {
+   "alvo": ".kpi-sub-item",
+   "tem": "Avariados"
+  },
+  "AVR-EXP-D01": {
+   "alvo": ".kpi-sub-item",
+   "tem": "Dosado"
+  },
+  "AVR-EXP-D05": {
+   "alvo": ".kpi-value-row"
+  },
+  "AVR-EXP-D06": {
+   "alvo": ".kpi-sub-item",
+   "tem": "Classif"
+  },
+  "AVR-EXP-D07": {
+   "alvo": ".kpi-sub-item",
+   "tem": "Armazém"
+  },
+  "AVR-EXP-D08": {
+   "alvo": ".kpi-sub-item",
+   "tem": "Margem"
+  },
+  "AVR-EXP-F01": {
+   "raiz": ".exp-contrato",
+   "alvo": ".ecg-hoje",
+   "mais": [
+    {
+     "alvo": ".ecg-x"
+    }
+   ]
+  },
+  "AVR-EXP-F02": {
+   "raiz": ".exp-contrato",
+   "alvo": ".exp-contrato-cliente",
+   "titulo": false
+  },
+  "AVR-EXP-F03": {
+   "raiz": ".exp-contrato",
+   "alvo": ".exp-contrato-ref"
+  },
+  "AVR-EXP-F04": {
+   "raiz": ".exp-contrato",
+   "alvo": ".exp-contrato-ref"
+  },
+  "AVR-EXP-F05": {
+   "raiz": ".exp-contrato",
+   "alvo": ".exp-contrato-ref"
+  },
+  "AVR-EXP-F06": {
+   "raiz": ".exp-contrato",
+   "alvo": ".exp-contrato-validade"
+  },
+  "AVR-EXP-F07": {
+   "raiz": ".exp-contrato",
+   "alvo": ".ecg-exec"
+  },
+  "AVR-EXP-F08": {
+   "raiz": ".exp-contrato",
+   "alvo": ".ecg-exec"
+  },
+  "AVR-EXP-F09": {
+   "raiz": ".exp-contrato",
+   "alvo": ".exp-contrato-track"
+  },
+  "AVR-EXP-F10": {
+   "raiz": ".exp-contrato",
+   "alvo": ".exp-contrato-track"
+  },
+  "AVR-EXP-F11": {
+   "raiz": ".exp-contrato",
+   "alvo": ".class-status"
+  },
+  "AVR-EXP-F12": {
+   "raiz": ".exp-contrato",
+   "alvo": ".exp-contrato-ritmo"
+  },
+  "AVR-EXP-F13": {
+   "raiz": ".exp-contrato",
+   "alvo": ".exp-contrato-ritmo"
+  },
+  "AVR-EXP-F14": {
+   "raiz": ".exp-contrato",
+   "alvo": ".class-status"
+  },
+  "AVR-EXP-F15": {
+   "alvo": ".exp-contratos-menu"
+  },
+  "AVR-EXP-F16": {
+   "raiz": ".exp-contrato",
+   "alvo": ".ecg-plot",
+   "mais": [
+    {
+     "alvo": ".ecg-leg-item",
+     "tem": "Executado"
+    }
+   ]
+  },
+  "AVR-EXP-F18": {
+   "raiz": ".exp-contrato",
+   "alvo": ".exp-contrato-parado"
+  },
+  "AVR-EXP-F19": {
+   "raiz": ".exp-contrato",
+   "alvo": ".exp-contrato-parado"
+  },
+  "AVR-EXP-F20": {
+   "raiz": ".exp-contrato",
+   "alvo": ".exp-contrato-ref"
+  },
+  "AVR-EXP-F21": {
+   "raiz": ".exp-contrato",
+   "alvo": ".ecg-falta"
+  },
+  "AVR-EXP-F22": {
+   "raiz": ".exp-contrato",
+   "alvo": ".ecg-plot",
+   "mais": [
+    {
+     "alvo": ".ecg-leg-item",
+     "tem": "Projetado"
+    }
+   ]
+  },
+  "AVR-EXP-F23": {
+   "raiz": ".exp-contrato",
+   "alvo": ".ecg-plot",
+   "mais": [
+    {
+     "alvo": ".ecg-leg-item",
+     "tem": "cadência"
+    },
+    {
+     "alvo": ".ecg-leg-dado",
+     "tem": "cadência média"
+    }
+   ]
+  },
+  "AVR-EXP-F24": {
+   "raiz": ".exp-contrato",
+   "alvo": ".ecg-leg-dado",
+   "tem": "projetado até"
+  },
+  "AVR-EXP-F25": {
+   "doc": ".exp-unidade"
+  },
+  "AVR-EXP-G01": {
+   "coluna": "TAG"
+  },
+  "AVR-EXP-G04": {
+   "coluna": "CULTURA"
+  },
+  "AVR-EXP-G05": {
+   "coluna": "ORIGEM"
+  },
+  "AVR-EXP-G06": {
+   "coluna": "TAG",
+   "nota": "O destino aparece no balão, ao passar o mouse sobre a tag."
+  },
+  "AVR-EXP-G08": {
+   "coluna": "VOLUME"
+  },
+  "AVR-EXP-G09": {
+   "coluna": "DOSADO"
+  },
+  "AVR-EXP-G10": {
+   "coluna": "HORÁRIO"
+  },
+  "AVR-EXP-G12": {
+   "coluna": "STATUS"
+  },
+  "AVR-EXP-G13": {
+   "alvo": ".exp-cult-resumo--geral > td:not(.exp-q)",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": "thead th",
+     "tem": "Volume"
+    },
+    {
+     "alvo": "thead th",
+     "tem": "Dosado"
+    },
+    {
+     "alvo": "thead th",
+     "tem": "Status"
+    }
+   ]
+  },
+  "AVR-EXP-G14": {
+   "coluna": "UMIDADE"
+  },
+  "AVR-EXP-G15": {
+   "coluna": "IMPUREZA"
+  },
+  "AVR-EXP-G16": {
+   "coluna": "AVARIADOS"
+  },
+  "AVR-EXP-G17": {
+   "coluna": "PH",
+   "linhas_tem": "Trigo"
+  },
+  "AVR-EXP-G18": {
+   "coluna": "FN",
+   "linhas_tem": "Trigo"
+  },
+  "AVR-EXP-G19": {
+   "coluna": "AVARIADOS",
+   "linhas_tem": "Trigo"
+  },
+  "AVR-EXP-H01": {
+   "coluna": "Cliente"
+  },
+  "AVR-EXP-H02": {
+   "coluna": "Contrato"
+  },
+  "AVR-EXP-H03": {
+   "coluna": "Cultura"
+  },
+  "AVR-EXP-H04": {
+   "coluna": "Executado"
+  },
+  "AVR-EXP-H05": {
+   "coluna": "Progresso"
+  },
+  "AVR-EXP-H06": {
+   "coluna": "Ritmo"
+  },
+  "AVR-EXP-H07": {
+   "coluna": "Validade"
+  },
+  "AVR-EXP-H08": {
+   "coluna": "Situação"
+  },
+  "AVR-EXF-A01": {
+   "raiz": ".fluxo-etapa",
+   "raiz_n": 0,
+   "alvo": ".fluxo-etapa-valor"
+  },
+  "AVR-EXF-A02": {
+   "raiz": ".fluxo-etapa",
+   "raiz_n": 0,
+   "alvo": ".fluxo-etapa-sub"
+  },
+  "AVR-EXF-A03": {
+   "raiz": ".fluxo-etapa",
+   "raiz_n": 1,
+   "alvo": ".fluxo-etapa-valor"
+  },
+  "AVR-EXF-A04": {
+   "raiz": ".fluxo-etapa",
+   "raiz_n": 1,
+   "alvo": ".fluxo-etapa-sub"
+  },
+  "AVR-EXF-A05": {
+   "raiz": ".fluxo-etapa",
+   "raiz_n": 2,
+   "alvo": ".fluxo-etapa-valor"
+  },
+  "AVR-EXF-A06": {
+   "raiz": ".fluxo-etapa",
+   "raiz_n": 2,
+   "alvo": ".fluxo-etapa-sub"
+  },
+  "AVR-EXF-A07": {
+   "raiz": ".fluxo-etapa",
+   "raiz_n": 3,
+   "alvo": ".fluxo-etapa-valor"
+  },
+  "AVR-EXF-A08": {
+   "raiz": ".fluxo-etapa",
+   "raiz_n": 3,
+   "alvo": ".fluxo-etapa-sub"
+  },
+  "AVR-EXF-A09": {
+   "raiz": ".fluxo-etapa",
+   "raiz_n": 4,
+   "alvo": ".fluxo-etapa-valor"
+  },
+  "AVR-EXF-A10": {
+   "raiz": ".fluxo-etapa",
+   "raiz_n": 4,
+   "alvo": ".fluxo-etapa-sub"
+  },
+  "AVR-EXF-A11": {
+   "raiz": ".fluxo-etapa",
+   "raiz_n": 5,
+   "alvo": ".fluxo-etapa-valor"
+  },
+  "AVR-EXF-A12": {
+   "raiz": ".fluxo-etapa",
+   "raiz_n": 5,
+   "alvo": ".fluxo-etapa-sub, .fluxo-etapa-espera",
+   "todos": true
+  },
+  "AVR-EXF-A13": {
+   "alvo": ".fluxo-etapa-estado",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".fluxo-etapa-nome",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-EXF-B01": {
+   "alvo": ".etapa-fill--fila",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".etapa-cultura-nome",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-EXF-B02": {
+   "alvo": ".etapa-fill--p1",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".etapa-cultura-nome",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-EXF-B03": {
+   "alvo": ".etapa-fill--classif",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".etapa-cultura-nome",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-EXF-B04": {
+   "alvo": ".etapa-fill--moega",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".etapa-cultura-nome",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-EXF-B05": {
+   "alvo": ".etapa-fill--p2",
+   "todos": true,
+   "mais": [
+    {
+     "alvo": ".etapa-cultura-nome",
+     "todos": true
+    }
+   ]
+  },
+  "AVR-EXF-B06": {
+   "alvo": ".etapa-cultura",
+   "todos": true
+  },
+  "AVR-EXF-C01": {
+   "coluna": "TAG"
+  },
+  "AVR-EXF-C02": {
+   "coluna": "PLACA"
+  },
+  "AVR-EXF-C03": {
+   "coluna": "CULTURA"
+  },
+  "AVR-EXF-C04": {
+   "coluna": "CONTRATO"
+  },
+  "AVR-EXF-C05": {
+   "coluna": "ETAPA"
+  },
+  "AVR-EXF-C06": {
+   "coluna": "ENTRADA"
+  },
+  "AVR-EXF-C07": {
+   "coluna": "1ª PESAGEM"
+  },
+  "AVR-EXF-C08": {
+   "coluna": "CARREG"
+  },
+  "AVR-EXF-C09": {
+   "coluna": "CLASSIF"
+  },
+  "AVR-EXF-C10": {
+   "coluna": "2ª PESAGEM"
+  },
+  "AVR-EXF-C11": {
+   "coluna": "NA UNIDADE"
+  },
+  "AVR-EXF-C12": {
+   "coluna": "FRETE"
+  },
+  "AVR-PRV-A01": {
+   "alvo": ".pv-estacao-val",
+   "tem": "temperatura",
+   "mais": [
+    {
+     "alvo": ".pv-estacao-rot"
+    }
+   ]
+  },
+  "AVR-PRV-A02": {
+   "alvo": ".pv-agora-ref"
+  },
+  "AVR-PRV-A03": {
+   "alvo": ".pv-agora-ref"
+  },
+  "AVR-PRV-A04": {
+   "alvo": ".pv-estacao-val",
+   "tem": "umidade",
+   "mais": [
+    {
+     "alvo": ".pv-estacao-rot"
+    }
+   ]
+  },
+  "AVR-PRV-A05": {
+   "alvo": ".pv-fact",
+   "tem": "chuva"
+  },
+  "AVR-PRV-A06": {
+   "alvo": ".pv-fact",
+   "tem": "chuva"
+  },
+  "AVR-PRV-A07": {
+   "alvo": ".pv-fact",
+   "tem": "vento"
+  },
+  "AVR-PRV-A08": {
+   "alvo": ".pv-fact",
+   "tem": "vento"
+  },
+  "AVR-PRV-A10": {
+   "alvo": ".pv-fact",
+   "tem": "nascer"
+  },
+  "AVR-PRV-A11": {
+   "alvo": ".pv-fact",
+   "tem": "pôr do sol"
+  },
+  "AVR-PRV-A12": {
+   "alvo": ".pv-estacao-hora",
+   "mais": [
+    {
+     "alvo": ".pv-estacao-rot"
+    }
+   ]
+  },
+  "AVR-PRV-B01": {
+   "alvo": ".pv-meteo-t, .pv-meteo-linha, .pv-meteo-h",
+   "todos": true
+  },
+  "AVR-PRV-B02": {
+   "alvo": ".pv-meteo-p, .pv-meteo-h",
+   "todos": true
+  },
+  "AVR-PRV-B03": {
+   "alvo": ".pv-meteo-mm, .pv-meteo-bar, .pv-meteo-h",
+   "todos": true
+  },
+  "AVR-PRV-C02": {
+   "coluna": "Tempo"
+  },
+  "AVR-PRV-C03": {
+   "coluna": "Máx"
+  },
+  "AVR-PRV-C04": {
+   "coluna": "Chuva"
+  },
+  "AVR-PRV-C05": {
+   "coluna": "mm"
+  },
+  "AVR-PRV-C06": {
+   "coluna": "Vento"
+  },
+  "AVR-PRV-D01": {
+   "coluna": "Localidade"
+  },
+  "AVR-PRV-D02": {
+   "coluna": "Máx"
+  },
+  "AVR-PRV-D03": {
+   "coluna": "Chuva"
+  },
+  "AVR-PRV-D04": {
+   "coluna": "mm"
+  },
+  "AVR-PRV-D05": {
+   "coluna": "Vento"
+  },
+  "AVR-PRV-E01": {
+   "alvo": ".pv-acum-item",
+   "tem": "hoje até agora"
+  },
+  "AVR-PRV-E02": {
+   "alvo": ".pv-acum-item",
+   "tem": "últimos 7 dias"
+  },
+  "AVR-PRV-E03": {
+   "alvo": ".pv-acum-item:nth-child(3)"
+  },
+  "AVR-PRV-E04": {
+   "alvo": ".pv-chuva-graf",
+   "mais": [
+    {
+     "alvo": ".pv-acum-leg span",
+     "tem": "média histórica"
+    }
+   ]
+  },
+  "AVR-PRV-E05": {
+   "alvo": ".pv-acum-item--prev"
+  },
+  "AVR-PRV-E06": {
+   "alvo": ".pv-acum-item:nth-child(4)"
+  },
+  "AVR-PRV-E07": {
+   "alvo": ".pv-chuva"
+  },
+  "AVR-EVG-A01": {
+   "elem_n": 0
+  },
+  "AVR-EVG-A02": {
+   "elem_n": 1
+  },
+  "AVR-EVG-A03": {
+   "elem_n": 2
+  },
+  "AVR-EVG-A04": {
+   "elem_n": 3
+  },
+  "AVR-EVG-A05": {
+   "elem_n": 4
+  },
+  "AVR-EVG-A06": {
+   "elem_n": 5
+  },
+  "AVR-EVG-A07": {
+   "elem_n": 6
+  },
+  "AVR-EVG-B01": {
+   "alvo": ".est-recordes li:nth-child(1)"
+  },
+  "AVR-EVG-B02": {
+   "alvo": ".est-recordes li:nth-child(2)"
+  },
+  "AVR-EVG-B03": {
+   "alvo": ".est-recordes li:nth-child(3)"
+  },
+  "AVR-EVG-B04": {
+   "alvo": ".est-recordes li:nth-child(4)"
+  },
+  "AVR-EVG-B05": {
+   "alvo": ".est-recordes li:nth-child(5)"
+  },
+  "AVR-ERE-A01": {
+   "elem_n": 0
+  },
+  "AVR-ERE-A02": {
+   "elem_n": 1
+  },
+  "AVR-ERE-A03": {
+   "elem_n": 2
+  },
+  "AVR-ERE-A04": {
+   "elem_n": 3
+  },
+  "AVR-ERE-B01": {},
+  "AVR-ERE-C01": {
+   "coluna": "Recebido",
+   "com_primeira": true
+  },
+  "AVR-ERE-C02": {
+   "coluna": "Caminhões",
+   "com_primeira": true
+  },
+  "AVR-ERE-C03": {
+   "coluna": "Espera",
+   "com_primeira": true
+  },
+  "AVR-ECL-A01": {
+   "elem_n": 0
+  },
+  "AVR-ECL-A02": {
+   "elem_n": 1
+  },
+  "AVR-ECL-A03": {
+   "elem_n": 2
+  },
+  "AVR-ECL-A04": {
+   "elem_n": 3
+  },
+  "AVR-ECL-B01": {},
+  "AVR-ECL-C01": {
+   "coluna": "Umidade",
+   "com_primeira": true
+  },
+  "AVR-ECL-C02": {
+   "coluna": "Impureza",
+   "com_primeira": true
+  },
+  "AVR-ECL-C03": {
+   "coluna": "Avariados",
+   "com_primeira": true
+  },
+  "AVR-ECL-C04": {
+   "coluna": "Descontado",
+   "com_primeira": true
+  },
+  "AVR-EMO-A01": {
+   "elem_n": 0
+  },
+  "AVR-EMO-A02": {
+   "elem_n": 1
+  },
+  "AVR-EMO-A03": {
+   "elem_n": 2
+  },
+  "AVR-EMO-A04": {
+   "elem_n": 3
+  },
+  "AVR-EMO-B01": {},
+  "AVR-EMO-C01": {
+   "coluna": "Vazão",
+   "com_primeira": true
+  },
+  "AVR-EMO-C02": {
+   "coluna": "Descarga",
+   "com_primeira": true
+  },
+  "AVR-EMO-C03": {
+   "coluna": "Parada",
+   "com_primeira": true
+  },
+  "AVR-ESE-A01": {
+   "elem_n": 0
+  },
+  "AVR-ESE-A02": {
+   "elem_n": 1
+  },
+  "AVR-ESE-A03": {
+   "elem_n": 2
+  },
+  "AVR-ESE-A04": {
+   "elem_n": 3
+  },
+  "AVR-ESE-B01": {},
+  "AVR-ESE-C01": {
+   "coluna": "Secado",
+   "com_primeira": true
+  },
+  "AVR-ESE-C02": {
+   "coluna": "Cavaco",
+   "com_primeira": true
+  },
+  "AVR-ESE-C03": {
+   "coluna": "Cavaco/m³",
+   "com_primeira": true
+  },
+  "AVR-EAR-A01": {
+   "elem_n": 0
+  },
+  "AVR-EAR-A02": {
+   "elem_n": 1
+  },
+  "AVR-EAR-A03": {
+   "elem_n": 2
+  },
+  "AVR-EAR-A04": {
+   "elem_n": 3
+  },
+  "AVR-EAR-B01": {},
+  "AVR-EAR-C01": {
+   "coluna": "Ocupação",
+   "com_primeira": true
+  },
+  "AVR-EAR-C02": {
+   "coluna": "Pico",
+   "com_primeira": true
+  },
+  "AVR-EAR-C03": {
+   "coluna": "Acima de 90%",
+   "com_primeira": true
+  },
+  "AVR-EAR-C04": {
+   "coluna": "Giro",
+   "com_primeira": true
+  },
+  "AVR-EEX-A01": {
+   "elem_n": 0
+  },
+  "AVR-EEX-A02": {
+   "elem_n": 1
+  },
+  "AVR-EEX-A03": {
+   "elem_n": 2
+  },
+  "AVR-EEX-A04": {
+   "elem_n": 3
+  },
+  "AVR-EEX-B01": {},
+  "AVR-EEX-C01": {
+   "coluna": "Expedido",
+   "com_primeira": true
+  },
+  "AVR-EEX-C02": {
+   "coluna": "Caminhões",
+   "com_primeira": true
+  },
+  "AVR-EEX-C03": {
+   "coluna": "Reprovas",
+   "com_primeira": true
+  },
+  "AVR-ECI-A01": {
+   "elem_n": 0
+  },
+  "AVR-ECI-A02": {
+   "elem_n": 1
+  },
+  "AVR-ECI-A03": {
+   "elem_n": 2
+  },
+  "AVR-ECI-A04": {
+   "elem_n": 3
+  },
+  "AVR-ECI-B01": {},
+  "AVR-ECI-C01": {
+   "coluna": "Chuva",
+   "com_primeira": true
+  },
+  "AVR-ECI-C02": {
+   "coluna": "Dias de chuva",
+   "com_primeira": true
+  },
+  "AVR-ECI-C03": {
+   "coluna": "Temp. média",
+   "com_primeira": true
+  },
+  "AVR-ECI-C04": {
+   "coluna": "Parada",
+   "com_primeira": true
+  }
+ }
+}

@@ -1,0 +1,2098 @@
+{
+ "videowall": "https://felipeab8.github.io/videowall-coe/",
+ "gerado": "2026-11-09",
+ "indicadores": {
+  "AVR-ARM-A01": {
+   "w": 468,
+   "h": 136,
+   "card": "AVR-ARM-A"
+  },
+  "AVR-ARM-A02": {
+   "w": 468,
+   "h": 136,
+   "card": "AVR-ARM-A"
+  },
+  "AVR-ARM-A03": {
+   "w": 196,
+   "h": 136,
+   "card": "AVR-ARM-A"
+  },
+  "AVR-ARM-A04": {
+   "w": 436,
+   "h": 144,
+   "card": "AVR-ARM-A"
+  },
+  "AVR-ARM-A05": {
+   "w": 156,
+   "h": 134,
+   "card": "AVR-ARM-A"
+  },
+  "AVR-ARM-A06": {
+   "w": 220,
+   "h": 144,
+   "card": "AVR-ARM-A"
+  },
+  "AVR-ARM-A07": {
+   "w": 287,
+   "h": 258,
+   "card": "AVR-ARM-A"
+  },
+  "AVR-ARM-A08": {
+   "w": 516,
+   "h": 654,
+   "card": "AVR-ARM-A"
+  },
+  "AVR-ARM-A09": {
+   "w": 488,
+   "h": 720,
+   "card": "AVR-ARM-A",
+   "nota": "Trecho da canaleta 1; na tela, a planta mostra todas as canaletas lado a lado."
+  },
+  "AVR-ARM-A10": {
+   "w": 472,
+   "h": 166,
+   "card": "AVR-ARM-A"
+  },
+  "AVR-ARM-A11": {
+   "w": 472,
+   "h": 128,
+   "card": "AVR-ARM-A"
+  },
+  "AVR-ARM-A12": {
+   "w": 472,
+   "h": 296,
+   "card": "AVR-ARM-A"
+  },
+  "AVR-ARM-A13": {
+   "w": 316,
+   "h": 128,
+   "card": "AVR-ARM-A"
+  },
+  "AVR-ARM-A14": {
+   "w": 720,
+   "h": 149,
+   "card": "AVR-ARM-A"
+  },
+  "AVR-ARM-A17": {
+   "w": 516,
+   "h": 266,
+   "card": "AVR-ARM-A"
+  },
+  "AVR-CLA-A01": {
+   "w": 500,
+   "h": 342,
+   "card": "AVR-CLA-A"
+  },
+  "AVR-CLA-B01": {
+   "w": 500,
+   "h": 342,
+   "card": "AVR-CLA-B"
+  },
+  "AVR-CLA-C01": {
+   "w": 500,
+   "h": 342,
+   "card": "AVR-CLA-C"
+  },
+  "AVR-CLA-D01": {
+   "w": 468,
+   "h": 218,
+   "card": "AVR-CLA-D"
+  },
+  "AVR-CLA-D02": {
+   "w": 468,
+   "h": 168,
+   "card": "AVR-CLA-D"
+  },
+  "AVR-CLA-E01": {
+   "w": 720,
+   "h": 295,
+   "card": "AVR-CLA-E"
+  },
+  "AVR-CLA-E02": {
+   "w": 720,
+   "h": 438,
+   "card": "AVR-CLA-E"
+  },
+  "AVR-CLA-E03": {
+   "w": 720,
+   "h": 582,
+   "card": "AVR-CLA-E"
+  },
+  "AVR-CLA-E04": {
+   "w": 720,
+   "h": 318,
+   "card": "AVR-CLA-E"
+  },
+  "AVR-CLA-E05": {
+   "w": 720,
+   "h": 364,
+   "card": "AVR-CLA-E"
+  },
+  "AVR-CLA-G01": {
+   "w": 720,
+   "h": 474,
+   "card": "AVR-CLA-G"
+  },
+  "AVR-CLA-G02": {
+   "w": 538,
+   "h": 566,
+   "card": "AVR-CLA-G"
+  },
+  "AVR-CLA-G03": {
+   "w": 538,
+   "h": 566,
+   "card": "AVR-CLA-G"
+  },
+  "AVR-CLA-G04": {
+   "w": 538,
+   "h": 566,
+   "card": "AVR-CLA-G"
+  },
+  "AVR-CLA-G05": {
+   "w": 538,
+   "h": 566,
+   "card": "AVR-CLA-G"
+  },
+  "AVR-CLA-G06": {
+   "w": 538,
+   "h": 566,
+   "card": "AVR-CLA-G"
+  },
+  "AVR-CLA-G07": {
+   "w": 538,
+   "h": 566,
+   "card": "AVR-CLA-G"
+  },
+  "AVR-CLA-G08": {
+   "w": 538,
+   "h": 566,
+   "card": "AVR-CLA-G"
+  },
+  "AVR-CLA-G09": {
+   "w": 538,
+   "h": 566,
+   "card": "AVR-CLA-G"
+  },
+  "AVR-CLA-G10": {
+   "w": 538,
+   "h": 566,
+   "card": "AVR-CLA-G"
+  },
+  "AVR-CLA-H01": {
+   "w": 562,
+   "h": 242,
+   "card": "AVR-CLA-H"
+  },
+  "AVR-CLA-H02": {
+   "w": 562,
+   "h": 242,
+   "card": "AVR-CLA-H"
+  },
+  "AVR-CLA-H03": {
+   "w": 562,
+   "h": 242,
+   "card": "AVR-CLA-H"
+  },
+  "AVR-CLA-H04": {
+   "w": 484,
+   "h": 122,
+   "card": "AVR-CLA-H"
+  },
+  "AVR-CLA-H05": {
+   "w": 562,
+   "h": 242,
+   "card": "AVR-CLA-H"
+  },
+  "AVR-CLA-I01": {
+   "w": 220,
+   "h": 190,
+   "card": "AVR-CLA-I"
+  },
+  "AVR-CLA-I02": {
+   "w": 298,
+   "h": 190,
+   "card": "AVR-CLA-I"
+  },
+  "AVR-CLA-I03": {
+   "w": 324,
+   "h": 190,
+   "card": "AVR-CLA-I"
+  },
+  "AVR-CLA-I04": {
+   "w": 212,
+   "h": 190,
+   "card": "AVR-CLA-I"
+  },
+  "AVR-CLA-I05": {
+   "w": 300,
+   "h": 190,
+   "card": "AVR-CLA-I"
+  },
+  "AVR-CLA-I06": {
+   "w": 272,
+   "h": 190,
+   "card": "AVR-CLA-I"
+  },
+  "AVR-CLA-J01": {
+   "w": 720,
+   "h": 226,
+   "card": "AVR-CLA-J"
+  },
+  "AVR-CLA-J02": {
+   "w": 720,
+   "h": 226,
+   "card": "AVR-CLA-J"
+  },
+  "AVR-CLA-J03": {
+   "w": 720,
+   "h": 226,
+   "card": "AVR-CLA-J"
+  },
+  "AVR-EAR-A01": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-EAR-A"
+  },
+  "AVR-EAR-A02": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-EAR-A"
+  },
+  "AVR-EAR-A03": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-EAR-A"
+  },
+  "AVR-EAR-A04": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-EAR-A"
+  },
+  "AVR-EAR-B01": {
+   "w": 720,
+   "h": 506,
+   "card": "AVR-EAR-B"
+  },
+  "AVR-EAR-C01": {
+   "w": 331,
+   "h": 720,
+   "card": "AVR-EAR-C"
+  },
+  "AVR-EAR-C02": {
+   "w": 260,
+   "h": 720,
+   "card": "AVR-EAR-C"
+  },
+  "AVR-EAR-C03": {
+   "w": 318,
+   "h": 720,
+   "card": "AVR-EAR-C"
+  },
+  "AVR-EAR-C04": {
+   "w": 257,
+   "h": 720,
+   "card": "AVR-EAR-C"
+  },
+  "AVR-ECI-A01": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ECI-A"
+  },
+  "AVR-ECI-A02": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ECI-A"
+  },
+  "AVR-ECI-A03": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ECI-A"
+  },
+  "AVR-ECI-A04": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ECI-A"
+  },
+  "AVR-ECI-B01": {
+   "w": 720,
+   "h": 506,
+   "card": "AVR-ECI-B"
+  },
+  "AVR-ECI-C01": {
+   "w": 303,
+   "h": 720,
+   "card": "AVR-ECI-C"
+  },
+  "AVR-ECI-C02": {
+   "w": 297,
+   "h": 720,
+   "card": "AVR-ECI-C"
+  },
+  "AVR-ECI-C03": {
+   "w": 280,
+   "h": 720,
+   "card": "AVR-ECI-C"
+  },
+  "AVR-ECI-C04": {
+   "w": 246,
+   "h": 720,
+   "card": "AVR-ECI-C"
+  },
+  "AVR-ECL-A01": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ECL-A"
+  },
+  "AVR-ECL-A02": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ECL-A"
+  },
+  "AVR-ECL-A03": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ECL-A"
+  },
+  "AVR-ECL-A04": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ECL-A"
+  },
+  "AVR-ECL-B01": {
+   "w": 720,
+   "h": 506,
+   "card": "AVR-ECL-B"
+  },
+  "AVR-ECL-C01": {
+   "w": 249,
+   "h": 720,
+   "card": "AVR-ECL-C"
+  },
+  "AVR-ECL-C02": {
+   "w": 277,
+   "h": 720,
+   "card": "AVR-ECL-C"
+  },
+  "AVR-ECL-C03": {
+   "w": 287,
+   "h": 720,
+   "card": "AVR-ECL-C"
+  },
+  "AVR-ECL-C04": {
+   "w": 342,
+   "h": 720,
+   "card": "AVR-ECL-C"
+  },
+  "AVR-EEX-A01": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-EEX-A"
+  },
+  "AVR-EEX-A02": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-EEX-A"
+  },
+  "AVR-EEX-A03": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-EEX-A"
+  },
+  "AVR-EEX-A04": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-EEX-A"
+  },
+  "AVR-EEX-B01": {
+   "w": 720,
+   "h": 506,
+   "card": "AVR-EEX-B"
+  },
+  "AVR-EEX-C01": {
+   "w": 381,
+   "h": 720,
+   "card": "AVR-EEX-C"
+  },
+  "AVR-EEX-C02": {
+   "w": 326,
+   "h": 720,
+   "card": "AVR-EEX-C"
+  },
+  "AVR-EEX-C03": {
+   "w": 311,
+   "h": 720,
+   "card": "AVR-EEX-C"
+  },
+  "AVR-EMO-A01": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-EMO-A"
+  },
+  "AVR-EMO-A02": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-EMO-A"
+  },
+  "AVR-EMO-A03": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-EMO-A"
+  },
+  "AVR-EMO-A04": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-EMO-A"
+  },
+  "AVR-EMO-B01": {
+   "w": 720,
+   "h": 506,
+   "card": "AVR-EMO-B"
+  },
+  "AVR-EMO-C01": {
+   "w": 287,
+   "h": 720,
+   "card": "AVR-EMO-C"
+  },
+  "AVR-EMO-C02": {
+   "w": 343,
+   "h": 720,
+   "card": "AVR-EMO-C"
+  },
+  "AVR-EMO-C03": {
+   "w": 421,
+   "h": 720,
+   "card": "AVR-EMO-C"
+  },
+  "AVR-ERE-A01": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ERE-A"
+  },
+  "AVR-ERE-A02": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ERE-A"
+  },
+  "AVR-ERE-A03": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ERE-A"
+  },
+  "AVR-ERE-A04": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ERE-A"
+  },
+  "AVR-ERE-B01": {
+   "w": 720,
+   "h": 506,
+   "card": "AVR-ERE-B"
+  },
+  "AVR-ERE-C01": {
+   "w": 397,
+   "h": 720,
+   "card": "AVR-ERE-C"
+  },
+  "AVR-ERE-C02": {
+   "w": 338,
+   "h": 720,
+   "card": "AVR-ERE-C"
+  },
+  "AVR-ERE-C03": {
+   "w": 297,
+   "h": 720,
+   "card": "AVR-ERE-C"
+  },
+  "AVR-ESE-A01": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ESE-A"
+  },
+  "AVR-ESE-A02": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ESE-A"
+  },
+  "AVR-ESE-A03": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ESE-A"
+  },
+  "AVR-ESE-A04": {
+   "w": 720,
+   "h": 192,
+   "card": "AVR-ESE-A"
+  },
+  "AVR-ESE-B01": {
+   "w": 720,
+   "h": 506,
+   "card": "AVR-ESE-B"
+  },
+  "AVR-ESE-C01": {
+   "w": 395,
+   "h": 720,
+   "card": "AVR-ESE-C"
+  },
+  "AVR-ESE-C02": {
+   "w": 301,
+   "h": 720,
+   "card": "AVR-ESE-C"
+  },
+  "AVR-ESE-C03": {
+   "w": 333,
+   "h": 720,
+   "card": "AVR-ESE-C"
+  },
+  "AVR-EVG-A01": {
+   "w": 710,
+   "h": 720,
+   "card": "AVR-EVG-A"
+  },
+  "AVR-EVG-A02": {
+   "w": 710,
+   "h": 720,
+   "card": "AVR-EVG-A"
+  },
+  "AVR-EVG-A03": {
+   "w": 710,
+   "h": 720,
+   "card": "AVR-EVG-A"
+  },
+  "AVR-EVG-A04": {
+   "w": 710,
+   "h": 720,
+   "card": "AVR-EVG-A"
+  },
+  "AVR-EVG-A05": {
+   "w": 710,
+   "h": 720,
+   "card": "AVR-EVG-A"
+  },
+  "AVR-EVG-A06": {
+   "w": 710,
+   "h": 720,
+   "card": "AVR-EVG-A"
+  },
+  "AVR-EVG-A07": {
+   "w": 710,
+   "h": 720,
+   "card": "AVR-EVG-A"
+  },
+  "AVR-EVG-B01": {
+   "w": 720,
+   "h": 144,
+   "card": "AVR-EVG-B"
+  },
+  "AVR-EVG-B02": {
+   "w": 720,
+   "h": 144,
+   "card": "AVR-EVG-B"
+  },
+  "AVR-EVG-B03": {
+   "w": 720,
+   "h": 144,
+   "card": "AVR-EVG-B"
+  },
+  "AVR-EVG-B04": {
+   "w": 720,
+   "h": 144,
+   "card": "AVR-EVG-B"
+  },
+  "AVR-EVG-B05": {
+   "w": 720,
+   "h": 142,
+   "card": "AVR-EVG-B"
+  },
+  "AVR-EXF-A01": {
+   "w": 496,
+   "h": 164,
+   "card": "AVR-EXF-A"
+  },
+  "AVR-EXF-A02": {
+   "w": 496,
+   "h": 134,
+   "card": "AVR-EXF-A"
+  },
+  "AVR-EXF-A03": {
+   "w": 496,
+   "h": 164,
+   "card": "AVR-EXF-A"
+  },
+  "AVR-EXF-A04": {
+   "w": 496,
+   "h": 134,
+   "card": "AVR-EXF-A"
+  },
+  "AVR-EXF-A05": {
+   "w": 496,
+   "h": 164,
+   "card": "AVR-EXF-A"
+  },
+  "AVR-EXF-A06": {
+   "w": 496,
+   "h": 134,
+   "card": "AVR-EXF-A"
+  },
+  "AVR-EXF-A07": {
+   "w": 496,
+   "h": 164,
+   "card": "AVR-EXF-A"
+  },
+  "AVR-EXF-A08": {
+   "w": 496,
+   "h": 134,
+   "card": "AVR-EXF-A"
+  },
+  "AVR-EXF-A09": {
+   "w": 496,
+   "h": 164,
+   "card": "AVR-EXF-A"
+  },
+  "AVR-EXF-A10": {
+   "w": 496,
+   "h": 134,
+   "card": "AVR-EXF-A"
+  },
+  "AVR-EXF-A11": {
+   "w": 496,
+   "h": 164,
+   "card": "AVR-EXF-A"
+  },
+  "AVR-EXF-A12": {
+   "w": 496,
+   "h": 134,
+   "card": "AVR-EXF-A"
+  },
+  "AVR-EXF-A13": {
+   "w": 720,
+   "h": 308,
+   "card": "AVR-EXF-A"
+  },
+  "AVR-EXF-B01": {
+   "w": 720,
+   "h": 178,
+   "card": "AVR-EXF-B"
+  },
+  "AVR-EXF-B02": {
+   "w": 656,
+   "h": 298,
+   "card": "AVR-EXF-B"
+  },
+  "AVR-EXF-B03": {
+   "w": 720,
+   "h": 172,
+   "card": "AVR-EXF-B"
+  },
+  "AVR-EXF-B04": {
+   "w": 720,
+   "h": 244,
+   "card": "AVR-EXF-B"
+  },
+  "AVR-EXF-B05": {
+   "w": 720,
+   "h": 283,
+   "card": "AVR-EXF-B"
+  },
+  "AVR-EXF-B06": {
+   "w": 656,
+   "h": 300,
+   "card": "AVR-EXF-B"
+  },
+  "AVR-EXF-C01": {
+   "w": 720,
+   "h": 623,
+   "card": "AVR-EXF-C"
+  },
+  "AVR-EXF-C02": {
+   "w": 720,
+   "h": 623,
+   "card": "AVR-EXF-C"
+  },
+  "AVR-EXF-C03": {
+   "w": 720,
+   "h": 623,
+   "card": "AVR-EXF-C"
+  },
+  "AVR-EXF-C04": {
+   "w": 720,
+   "h": 623,
+   "card": "AVR-EXF-C"
+  },
+  "AVR-EXF-C05": {
+   "w": 720,
+   "h": 623,
+   "card": "AVR-EXF-C"
+  },
+  "AVR-EXF-C06": {
+   "w": 720,
+   "h": 623,
+   "card": "AVR-EXF-C"
+  },
+  "AVR-EXF-C07": {
+   "w": 720,
+   "h": 623,
+   "card": "AVR-EXF-C"
+  },
+  "AVR-EXF-C08": {
+   "w": 720,
+   "h": 623,
+   "card": "AVR-EXF-C"
+  },
+  "AVR-EXF-C09": {
+   "w": 720,
+   "h": 623,
+   "card": "AVR-EXF-C"
+  },
+  "AVR-EXF-C10": {
+   "w": 720,
+   "h": 623,
+   "card": "AVR-EXF-C"
+  },
+  "AVR-EXF-C11": {
+   "w": 720,
+   "h": 623,
+   "card": "AVR-EXF-C"
+  },
+  "AVR-EXF-C12": {
+   "w": 720,
+   "h": 623,
+   "card": "AVR-EXF-C"
+  },
+  "AVR-EXP-A01": {
+   "w": 720,
+   "h": 163,
+   "card": "AVR-EXP-A"
+  },
+  "AVR-EXP-A02": {
+   "w": 522,
+   "h": 158,
+   "card": "AVR-EXP-A"
+  },
+  "AVR-EXP-A03": {
+   "w": 720,
+   "h": 161,
+   "card": "AVR-EXP-A"
+  },
+  "AVR-EXP-B01": {
+   "w": 720,
+   "h": 163,
+   "card": "AVR-EXP-B"
+  },
+  "AVR-EXP-B02": {
+   "w": 434,
+   "h": 158,
+   "card": "AVR-EXP-B"
+  },
+  "AVR-EXP-B03": {
+   "w": 374,
+   "h": 158,
+   "card": "AVR-EXP-B"
+  },
+  "AVR-EXP-B04": {
+   "w": 720,
+   "h": 154,
+   "card": "AVR-EXP-B",
+   "nota": "Os reprovados aparecem nesta linha do card quando há carga reprovada no período."
+  },
+  "AVR-EXP-C01": {
+   "w": 720,
+   "h": 163,
+   "card": "AVR-EXP-C"
+  },
+  "AVR-EXP-C02": {
+   "w": 426,
+   "h": 158,
+   "card": "AVR-EXP-C"
+  },
+  "AVR-EXP-C03": {
+   "w": 426,
+   "h": 158,
+   "card": "AVR-EXP-C"
+  },
+  "AVR-EXP-C04": {
+   "w": 426,
+   "h": 158,
+   "card": "AVR-EXP-C"
+  },
+  "AVR-EXP-D01": {
+   "w": 334,
+   "h": 158,
+   "card": "AVR-EXP-D"
+  },
+  "AVR-EXP-D05": {
+   "w": 720,
+   "h": 163,
+   "card": "AVR-EXP-D"
+  },
+  "AVR-EXP-D06": {
+   "w": 362,
+   "h": 158,
+   "card": "AVR-EXP-D"
+  },
+  "AVR-EXP-D07": {
+   "w": 404,
+   "h": 158,
+   "card": "AVR-EXP-D"
+  },
+  "AVR-EXP-D08": {
+   "w": 360,
+   "h": 158,
+   "card": "AVR-EXP-D"
+  },
+  "AVR-EXP-F01": {
+   "w": 720,
+   "h": 132,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F02": {
+   "w": 518,
+   "h": 128,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F03": {
+   "w": 720,
+   "h": 113,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F04": {
+   "w": 720,
+   "h": 113,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F05": {
+   "w": 720,
+   "h": 113,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F06": {
+   "w": 606,
+   "h": 180,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F07": {
+   "w": 720,
+   "h": 158,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F08": {
+   "w": 720,
+   "h": 158,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F09": {
+   "w": 720,
+   "h": 67,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F10": {
+   "w": 720,
+   "h": 67,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F11": {
+   "w": 506,
+   "h": 214,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F12": {
+   "w": 694,
+   "h": 230,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F13": {
+   "w": 694,
+   "h": 230,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F14": {
+   "w": 506,
+   "h": 214,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F15": {
+   "w": 694,
+   "h": 176,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F16": {
+   "w": 720,
+   "h": 132,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F18": {
+   "w": 572,
+   "h": 180,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F19": {
+   "w": 572,
+   "h": 180,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F20": {
+   "w": 720,
+   "h": 113,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F21": {
+   "w": 506,
+   "h": 184,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F22": {
+   "w": 720,
+   "h": 132,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F23": {
+   "w": 720,
+   "h": 132,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F24": {
+   "w": 506,
+   "h": 180,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-F25": {
+   "w": 608,
+   "h": 96,
+   "card": "AVR-EXP-F"
+  },
+  "AVR-EXP-G01": {
+   "w": 720,
+   "h": 612,
+   "card": "AVR-EXP-G"
+  },
+  "AVR-EXP-G04": {
+   "w": 720,
+   "h": 612,
+   "card": "AVR-EXP-G"
+  },
+  "AVR-EXP-G05": {
+   "w": 720,
+   "h": 612,
+   "card": "AVR-EXP-G"
+  },
+  "AVR-EXP-G06": {
+   "w": 720,
+   "h": 612,
+   "card": "AVR-EXP-G",
+   "nota": "O destino aparece no balão, ao passar o mouse sobre a tag."
+  },
+  "AVR-EXP-G08": {
+   "w": 720,
+   "h": 612,
+   "card": "AVR-EXP-G"
+  },
+  "AVR-EXP-G09": {
+   "w": 720,
+   "h": 612,
+   "card": "AVR-EXP-G"
+  },
+  "AVR-EXP-G10": {
+   "w": 720,
+   "h": 612,
+   "card": "AVR-EXP-G"
+  },
+  "AVR-EXP-G12": {
+   "w": 720,
+   "h": 612,
+   "card": "AVR-EXP-G"
+  },
+  "AVR-EXP-G13": {
+   "w": 720,
+   "h": 354,
+   "card": "AVR-EXP-G"
+  },
+  "AVR-EXP-G14": {
+   "w": 720,
+   "h": 612,
+   "card": "AVR-EXP-G"
+  },
+  "AVR-EXP-G15": {
+   "w": 720,
+   "h": 612,
+   "card": "AVR-EXP-G"
+  },
+  "AVR-EXP-G16": {
+   "w": 720,
+   "h": 612,
+   "card": "AVR-EXP-G"
+  },
+  "AVR-EXP-G17": {
+   "w": 720,
+   "h": 231,
+   "card": "AVR-EXP-G"
+  },
+  "AVR-EXP-G18": {
+   "w": 720,
+   "h": 231,
+   "card": "AVR-EXP-G"
+  },
+  "AVR-EXP-G19": {
+   "w": 720,
+   "h": 231,
+   "card": "AVR-EXP-G"
+  },
+  "AVR-EXP-H01": {
+   "w": 540,
+   "h": 590,
+   "card": "AVR-EXP-H"
+  },
+  "AVR-EXP-H02": {
+   "w": 430,
+   "h": 590,
+   "card": "AVR-EXP-H"
+  },
+  "AVR-EXP-H03": {
+   "w": 430,
+   "h": 590,
+   "card": "AVR-EXP-H"
+  },
+  "AVR-EXP-H04": {
+   "w": 530,
+   "h": 590,
+   "card": "AVR-EXP-H"
+  },
+  "AVR-EXP-H05": {
+   "w": 720,
+   "h": 408,
+   "card": "AVR-EXP-H"
+  },
+  "AVR-EXP-H06": {
+   "w": 446,
+   "h": 590,
+   "card": "AVR-EXP-H"
+  },
+  "AVR-EXP-H07": {
+   "w": 430,
+   "h": 590,
+   "card": "AVR-EXP-H"
+  },
+  "AVR-EXP-H08": {
+   "w": 438,
+   "h": 590,
+   "card": "AVR-EXP-H"
+  },
+  "AVR-FLX-A01": {
+   "w": 496,
+   "h": 152,
+   "card": "AVR-FLX-A"
+  },
+  "AVR-FLX-A02": {
+   "w": 496,
+   "h": 145,
+   "card": "AVR-FLX-A"
+  },
+  "AVR-FLX-B01": {
+   "w": 496,
+   "h": 152,
+   "card": "AVR-FLX-B"
+  },
+  "AVR-FLX-B02": {
+   "w": 496,
+   "h": 143,
+   "card": "AVR-FLX-B"
+  },
+  "AVR-FLX-B03": {
+   "w": 496,
+   "h": 145,
+   "card": "AVR-FLX-B"
+  },
+  "AVR-FLX-C01": {
+   "w": 496,
+   "h": 152,
+   "card": "AVR-FLX-C"
+  },
+  "AVR-FLX-C02": {
+   "w": 496,
+   "h": 143,
+   "card": "AVR-FLX-C"
+  },
+  "AVR-FLX-C03": {
+   "w": 496,
+   "h": 145,
+   "card": "AVR-FLX-C"
+  },
+  "AVR-FLX-D01": {
+   "w": 496,
+   "h": 152,
+   "card": "AVR-FLX-D"
+  },
+  "AVR-FLX-D02": {
+   "w": 496,
+   "h": 145,
+   "card": "AVR-FLX-D"
+  },
+  "AVR-FLX-E01": {
+   "w": 496,
+   "h": 152,
+   "card": "AVR-FLX-E"
+  },
+  "AVR-FLX-E02": {
+   "w": 496,
+   "h": 143,
+   "card": "AVR-FLX-E"
+  },
+  "AVR-FLX-E03": {
+   "w": 496,
+   "h": 145,
+   "card": "AVR-FLX-E"
+  },
+  "AVR-FLX-F01": {
+   "w": 496,
+   "h": 152,
+   "card": "AVR-FLX-F"
+  },
+  "AVR-FLX-G01": {
+   "w": 720,
+   "h": 444,
+   "card": "AVR-FLX-G"
+  },
+  "AVR-FLX-H01": {
+   "w": 720,
+   "h": 59,
+   "card": "AVR-FLX-H"
+  },
+  "AVR-FLX-H02": {
+   "w": 718,
+   "h": 720,
+   "card": "AVR-FLX-H"
+  },
+  "AVR-FLX-H03": {
+   "w": 718,
+   "h": 720,
+   "card": "AVR-FLX-H"
+  },
+  "AVR-FLX-H04": {
+   "w": 718,
+   "h": 720,
+   "card": "AVR-FLX-H"
+  },
+  "AVR-FLX-H05": {
+   "w": 718,
+   "h": 720,
+   "card": "AVR-FLX-H"
+  },
+  "AVR-FLX-H06": {
+   "w": 718,
+   "h": 720,
+   "card": "AVR-FLX-H"
+  },
+  "AVR-FLX-H07": {
+   "w": 718,
+   "h": 720,
+   "card": "AVR-FLX-H"
+  },
+  "AVR-FLX-H08": {
+   "w": 718,
+   "h": 720,
+   "card": "AVR-FLX-H"
+  },
+  "AVR-FLX-H09": {
+   "w": 718,
+   "h": 720,
+   "card": "AVR-FLX-H"
+  },
+  "AVR-FLX-H10": {
+   "w": 718,
+   "h": 720,
+   "card": "AVR-FLX-H"
+  },
+  "AVR-FLX-H11": {
+   "w": 718,
+   "h": 720,
+   "card": "AVR-FLX-H"
+  },
+  "AVR-FLX-H12": {
+   "w": 718,
+   "h": 720,
+   "card": "AVR-FLX-H"
+  },
+  "AVR-MOE-A01": {
+   "w": 446,
+   "h": 158,
+   "card": "AVR-MOE-A"
+  },
+  "AVR-MOE-A02": {
+   "w": 446,
+   "h": 140,
+   "card": "AVR-MOE-A"
+  },
+  "AVR-MOE-A03": {
+   "w": 446,
+   "h": 174,
+   "card": "AVR-MOE-A"
+  },
+  "AVR-MOE-A04": {
+   "w": 234,
+   "h": 136,
+   "card": "AVR-MOE-A"
+  },
+  "AVR-MOE-A05": {
+   "w": 194,
+   "h": 150,
+   "card": "AVR-MOE-A"
+  },
+  "AVR-MOE-A06": {
+   "w": 446,
+   "h": 298,
+   "card": "AVR-MOE-A"
+  },
+  "AVR-MOE-B01": {
+   "w": 210,
+   "h": 454,
+   "card": "AVR-MOE-B"
+  },
+  "AVR-MOE-B02": {
+   "w": 194,
+   "h": 454,
+   "card": "AVR-MOE-B"
+  },
+  "AVR-MOE-B03": {
+   "w": 194,
+   "h": 454,
+   "card": "AVR-MOE-B"
+  },
+  "AVR-MOE-B04": {
+   "w": 194,
+   "h": 454,
+   "card": "AVR-MOE-B"
+  },
+  "AVR-MOE-B05": {
+   "w": 194,
+   "h": 454,
+   "card": "AVR-MOE-B"
+  },
+  "AVR-MOE-B06": {
+   "w": 446,
+   "h": 240,
+   "card": "AVR-MOE-B"
+  },
+  "AVR-MOE-B07": {
+   "w": 340,
+   "h": 240,
+   "card": "AVR-MOE-B"
+  },
+  "AVR-MOE-B08": {
+   "w": 300,
+   "h": 240,
+   "card": "AVR-MOE-B"
+  },
+  "AVR-MOE-B09": {
+   "w": 309,
+   "h": 240,
+   "card": "AVR-MOE-B"
+  },
+  "AVR-MOE-B10": {
+   "w": 446,
+   "h": 286,
+   "card": "AVR-MOE-B"
+  },
+  "AVR-MOE-B11": {
+   "w": 404,
+   "h": 188,
+   "card": "AVR-MOE-B"
+  },
+  "AVR-MOE-B12": {
+   "w": 404,
+   "h": 222,
+   "card": "AVR-MOE-B"
+  },
+  "AVR-MOE-C01": {
+   "w": 208,
+   "h": 138,
+   "card": "AVR-MOE-C"
+  },
+  "AVR-MOE-C02": {
+   "w": 456,
+   "h": 394,
+   "card": "AVR-MOE-C"
+  },
+  "AVR-MOE-C03": {
+   "w": 208,
+   "h": 138,
+   "card": "AVR-MOE-C"
+  },
+  "AVR-MOE-C05": {
+   "w": 456,
+   "h": 166,
+   "card": "AVR-MOE-C"
+  },
+  "AVR-MOE-C06": {
+   "w": 166,
+   "h": 130,
+   "card": "AVR-MOE-C"
+  },
+  "AVR-MOE-C07": {
+   "w": 212,
+   "h": 204,
+   "card": "AVR-MOE-C"
+  },
+  "AVR-MOE-C08": {
+   "w": 264,
+   "h": 204,
+   "card": "AVR-MOE-C"
+  },
+  "AVR-MOE-C09": {
+   "w": 456,
+   "h": 210,
+   "card": "AVR-MOE-C"
+  },
+  "AVR-MOE-C10": {
+   "w": 508,
+   "h": 276,
+   "card": "AVR-MOE-C"
+  },
+  "AVR-PRS-A01": {
+   "w": 498,
+   "h": 296,
+   "card": "AVR-PRS-A"
+  },
+  "AVR-PRS-A03": {
+   "w": 498,
+   "h": 473,
+   "card": "AVR-PRS-A"
+  },
+  "AVR-PRS-A04": {
+   "w": 307,
+   "h": 720,
+   "card": "AVR-PRS-A"
+  },
+  "AVR-PRS-A05": {
+   "w": 570,
+   "h": 586,
+   "card": "AVR-PRS-A"
+  },
+  "AVR-PRS-A06": {
+   "w": 570,
+   "h": 586,
+   "card": "AVR-PRS-A"
+  },
+  "AVR-PRS-A07": {
+   "w": 316,
+   "h": 212,
+   "card": "AVR-PRS-A"
+  },
+  "AVR-PRV-A01": {
+   "w": 472,
+   "h": 352,
+   "card": "AVR-PRV-A"
+  },
+  "AVR-PRV-A02": {
+   "w": 524,
+   "h": 186,
+   "card": "AVR-PRV-A"
+  },
+  "AVR-PRV-A03": {
+   "w": 524,
+   "h": 186,
+   "card": "AVR-PRV-A"
+  },
+  "AVR-PRV-A04": {
+   "w": 588,
+   "h": 352,
+   "card": "AVR-PRV-A"
+  },
+  "AVR-PRV-A05": {
+   "w": 420,
+   "h": 236,
+   "card": "AVR-PRV-A"
+  },
+  "AVR-PRV-A06": {
+   "w": 420,
+   "h": 236,
+   "card": "AVR-PRV-A"
+  },
+  "AVR-PRV-A07": {
+   "w": 420,
+   "h": 236,
+   "card": "AVR-PRV-A"
+  },
+  "AVR-PRV-A08": {
+   "w": 420,
+   "h": 236,
+   "card": "AVR-PRV-A"
+  },
+  "AVR-PRV-A10": {
+   "w": 420,
+   "h": 236,
+   "card": "AVR-PRV-A"
+  },
+  "AVR-PRV-A11": {
+   "w": 420,
+   "h": 236,
+   "card": "AVR-PRV-A"
+  },
+  "AVR-PRV-A12": {
+   "w": 588,
+   "h": 248,
+   "card": "AVR-PRV-A"
+  },
+  "AVR-PRV-B01": {
+   "w": 720,
+   "h": 118,
+   "card": "AVR-PRV-B"
+  },
+  "AVR-PRV-B02": {
+   "w": 720,
+   "h": 353,
+   "card": "AVR-PRV-B"
+  },
+  "AVR-PRV-B03": {
+   "w": 720,
+   "h": 537,
+   "card": "AVR-PRV-B"
+  },
+  "AVR-PRV-C02": {
+   "w": 720,
+   "h": 684,
+   "card": "AVR-PRV-C"
+  },
+  "AVR-PRV-C03": {
+   "w": 720,
+   "h": 684,
+   "card": "AVR-PRV-C"
+  },
+  "AVR-PRV-C04": {
+   "w": 720,
+   "h": 684,
+   "card": "AVR-PRV-C"
+  },
+  "AVR-PRV-C05": {
+   "w": 720,
+   "h": 684,
+   "card": "AVR-PRV-C"
+  },
+  "AVR-PRV-C06": {
+   "w": 720,
+   "h": 684,
+   "card": "AVR-PRV-C"
+  },
+  "AVR-PRV-D01": {
+   "w": 652,
+   "h": 696,
+   "card": "AVR-PRV-D"
+  },
+  "AVR-PRV-D02": {
+   "w": 652,
+   "h": 696,
+   "card": "AVR-PRV-D"
+  },
+  "AVR-PRV-D03": {
+   "w": 652,
+   "h": 696,
+   "card": "AVR-PRV-D"
+  },
+  "AVR-PRV-D04": {
+   "w": 652,
+   "h": 696,
+   "card": "AVR-PRV-D"
+  },
+  "AVR-PRV-D05": {
+   "w": 652,
+   "h": 696,
+   "card": "AVR-PRV-D"
+  },
+  "AVR-PRV-E01": {
+   "w": 314,
+   "h": 280,
+   "card": "AVR-PRV-E"
+  },
+  "AVR-PRV-E02": {
+   "w": 314,
+   "h": 280,
+   "card": "AVR-PRV-E"
+  },
+  "AVR-PRV-E03": {
+   "w": 314,
+   "h": 280,
+   "card": "AVR-PRV-E"
+  },
+  "AVR-PRV-E04": {
+   "w": 720,
+   "h": 257,
+   "card": "AVR-PRV-E"
+  },
+  "AVR-PRV-E05": {
+   "w": 314,
+   "h": 280,
+   "card": "AVR-PRV-E"
+  },
+  "AVR-PRV-E06": {
+   "w": 314,
+   "h": 280,
+   "card": "AVR-PRV-E"
+  },
+  "AVR-PRV-E07": {
+   "w": 720,
+   "h": 410,
+   "card": "AVR-PRV-E"
+  },
+  "AVR-REC-A01": {
+   "w": 338,
+   "h": 314,
+   "card": "AVR-REC-A"
+  },
+  "AVR-REC-A02": {
+   "w": 338,
+   "h": 314,
+   "card": "AVR-REC-A"
+  },
+  "AVR-REC-B01": {
+   "w": 666,
+   "h": 172,
+   "card": "AVR-REC-B"
+  },
+  "AVR-REC-B02": {
+   "w": 666,
+   "h": 154,
+   "card": "AVR-REC-B"
+  },
+  "AVR-REC-C01": {
+   "w": 666,
+   "h": 172,
+   "card": "AVR-REC-C"
+  },
+  "AVR-REC-C02": {
+   "w": 666,
+   "h": 154,
+   "card": "AVR-REC-C"
+  },
+  "AVR-REC-D01": {
+   "w": 266,
+   "h": 172,
+   "card": "AVR-REC-D"
+  },
+  "AVR-REC-D02": {
+   "w": 416,
+   "h": 150,
+   "card": "AVR-REC-D"
+  },
+  "AVR-REC-D03": {
+   "w": 666,
+   "h": 212,
+   "card": "AVR-REC-D"
+  },
+  "AVR-REC-D04": {
+   "w": 666,
+   "h": 212,
+   "card": "AVR-REC-D"
+  },
+  "AVR-REC-E01": {
+   "w": 720,
+   "h": 376,
+   "card": "AVR-REC-E"
+  },
+  "AVR-REC-E02": {
+   "w": 672,
+   "h": 420,
+   "card": "AVR-REC-E"
+  },
+  "AVR-REC-E03": {
+   "w": 720,
+   "h": 324,
+   "card": "AVR-REC-E"
+  },
+  "AVR-REC-E04": {
+   "w": 720,
+   "h": 170,
+   "card": "AVR-REC-E"
+  },
+  "AVR-REC-E05": {
+   "w": 720,
+   "h": 308,
+   "card": "AVR-REC-E"
+  },
+  "AVR-REC-F01": {
+   "w": 720,
+   "h": 335,
+   "card": "AVR-REC-F"
+  },
+  "AVR-REC-F02": {
+   "w": 720,
+   "h": 238,
+   "card": "AVR-REC-F"
+  },
+  "AVR-REC-F03": {
+   "w": 720,
+   "h": 363,
+   "card": "AVR-REC-F"
+  },
+  "AVR-REC-F04": {
+   "w": 720,
+   "h": 335,
+   "card": "AVR-REC-F"
+  },
+  "AVR-REC-F05": {
+   "w": 720,
+   "h": 238,
+   "card": "AVR-REC-F"
+  },
+  "AVR-REC-F06": {
+   "w": 720,
+   "h": 247,
+   "card": "AVR-REC-F"
+  },
+  "AVR-REC-F07": {
+   "w": 720,
+   "h": 335,
+   "card": "AVR-REC-F"
+  },
+  "AVR-REC-G01": {
+   "w": 666,
+   "h": 154,
+   "card": "AVR-REC-G"
+  },
+  "AVR-REC-G02": {
+   "w": 478,
+   "h": 208,
+   "card": "AVR-REC-G"
+  },
+  "AVR-REC-G05": {
+   "w": 706,
+   "h": 410,
+   "card": "AVR-REC-G",
+   "nota": "A lista aparece no balão, ao passar o mouse sobre o card."
+  },
+  "AVR-REC-G06": {
+   "w": 478,
+   "h": 208,
+   "card": "AVR-REC-G"
+  },
+  "AVR-SIL-A01": {
+   "w": 316,
+   "h": 130,
+   "card": "AVR-SIL-A"
+  },
+  "AVR-SIL-A02": {
+   "w": 190,
+   "h": 130,
+   "card": "AVR-SIL-A"
+  },
+  "AVR-SIL-A03": {
+   "w": 412,
+   "h": 346,
+   "card": "AVR-SIL-A"
+  },
+  "AVR-SIL-A04": {
+   "w": 154,
+   "h": 138,
+   "card": "AVR-SIL-A"
+  },
+  "AVR-SIL-A05": {
+   "w": 412,
+   "h": 294,
+   "card": "AVR-SIL-A"
+  },
+  "AVR-SIL-A06": {
+   "w": 412,
+   "h": 170,
+   "card": "AVR-SIL-A"
+  },
+  "AVR-SIL-A07": {
+   "w": 412,
+   "h": 294,
+   "card": "AVR-SIL-A"
+  },
+  "AVR-SIL-A09": {
+   "w": 412,
+   "h": 156,
+   "card": "AVR-SIL-A"
+  },
+  "AVR-SIL-A10": {
+   "w": 126,
+   "h": 156,
+   "card": "AVR-SIL-A"
+  },
+  "AVR-SIL-A11": {
+   "w": 136,
+   "h": 156,
+   "card": "AVR-SIL-A"
+  },
+  "AVR-SIL-A12": {
+   "w": 118,
+   "h": 156,
+   "card": "AVR-SIL-A"
+  },
+  "AVR-SIL-A14": {
+   "w": 412,
+   "h": 128,
+   "card": "AVR-SIL-A"
+  },
+  "AVR-SIL-A15": {
+   "w": 412,
+   "h": 112,
+   "card": "AVR-SIL-A",
+   "nota": "A tabela aparece no balão, ao passar o mouse sobre o silo."
+  },
+  "AVR-SIL-A16": {
+   "w": 720,
+   "h": 147,
+   "card": "AVR-SIL-A"
+  },
+  "AVR-SIL-A19": {
+   "w": 412,
+   "h": 248,
+   "card": "AVR-SIL-A"
+  },
+  "AVR-SIL-B01": {
+   "w": 678,
+   "h": 462,
+   "card": "AVR-SIL-B"
+  },
+  "AVR-SIL-B02": {
+   "w": 678,
+   "h": 462,
+   "card": "AVR-SIL-B"
+  },
+  "AVR-SIL-B03": {
+   "w": 678,
+   "h": 462,
+   "card": "AVR-SIL-B"
+  },
+  "AVR-SIL-B04": {
+   "w": 678,
+   "h": 462,
+   "card": "AVR-SIL-B"
+  },
+  "AVR-SIL-B05": {
+   "w": 678,
+   "h": 462,
+   "card": "AVR-SIL-B"
+  },
+  "AVR-SIL-B06": {
+   "w": 678,
+   "h": 462,
+   "card": "AVR-SIL-B"
+  },
+  "AVR-SIL-B07": {
+   "w": 678,
+   "h": 462,
+   "card": "AVR-SIL-B"
+  },
+  "AVR-SIL-B08": {
+   "w": 678,
+   "h": 462,
+   "card": "AVR-SIL-B"
+  },
+  "AVR-SPD-A01": {
+   "w": 720,
+   "h": 156,
+   "card": "AVR-SPD-A"
+  },
+  "AVR-SPD-A02": {
+   "w": 720,
+   "h": 149,
+   "card": "AVR-SPD-A"
+  },
+  "AVR-SPD-B01": {
+   "w": 720,
+   "h": 206,
+   "card": "AVR-SPD-B"
+  },
+  "AVR-SPD-B02": {
+   "w": 720,
+   "h": 122,
+   "card": "AVR-SPD-B",
+   "nota": "O resultado por secador aparece no balão, ao passar o mouse sobre o card."
+  },
+  "AVR-SPD-C01": {
+   "w": 720,
+   "h": 175,
+   "card": "AVR-SPD-C"
+  },
+  "AVR-SPD-C02": {
+   "w": 408,
+   "h": 370,
+   "card": "AVR-SPD-C"
+  },
+  "AVR-SPD-C03": {
+   "w": 720,
+   "h": 122,
+   "card": "AVR-SPD-C",
+   "nota": "O ritmo necessário aparece no balão do card, ao passar o mouse."
+  },
+  "AVR-SPD-C04": {
+   "w": 720,
+   "h": 226,
+   "card": "AVR-SPD-C"
+  },
+  "AVR-SPD-D01": {
+   "w": 720,
+   "h": 156,
+   "card": "AVR-SPD-D"
+  },
+  "AVR-SPD-D02": {
+   "w": 720,
+   "h": 149,
+   "card": "AVR-SPD-D"
+  },
+  "AVR-SPD-E01": {
+   "w": 720,
+   "h": 206,
+   "card": "AVR-SPD-E"
+  },
+  "AVR-SPD-F01": {
+   "w": 720,
+   "h": 362,
+   "card": "AVR-SPD-F"
+  },
+  "AVR-SPD-G01": {
+   "w": 720,
+   "h": 188,
+   "card": "AVR-SPD-G"
+  },
+  "AVR-SPD-G02": {
+   "w": 720,
+   "h": 224,
+   "card": "AVR-SPD-G"
+  },
+  "AVR-SPD-G03": {
+   "w": 720,
+   "h": 224,
+   "card": "AVR-SPD-G"
+  },
+  "AVR-SPD-G04": {
+   "w": 720,
+   "h": 218,
+   "card": "AVR-SPD-G"
+  },
+  "AVR-SPD-G05": {
+   "w": 720,
+   "h": 253,
+   "card": "AVR-SPD-G"
+  },
+  "AVR-SPD-G06": {
+   "w": 472,
+   "h": 320,
+   "card": "AVR-SPD-G"
+  },
+  "AVR-SPD-G07": {
+   "w": 720,
+   "h": 103,
+   "card": "AVR-SPD-G"
+  },
+  "AVR-SPD-G08": {
+   "w": 720,
+   "h": 109,
+   "card": "AVR-SPD-G"
+  },
+  "AVR-SPD-G09": {
+   "w": 720,
+   "h": 93,
+   "card": "AVR-SPD-G"
+  },
+  "AVR-SPD-G10": {
+   "w": 720,
+   "h": 68,
+   "card": "AVR-SPD-G"
+  },
+  "AVR-SPD-H01": {
+   "w": 412,
+   "h": 86,
+   "card": "AVR-SPD-H"
+  },
+  "AVR-SPD-H02": {
+   "w": 720,
+   "h": 93,
+   "card": "AVR-SPD-H"
+  },
+  "AVR-SPD-H03": {
+   "w": 400,
+   "h": 150,
+   "card": "AVR-SPD-H"
+  },
+  "AVR-SPD-H04": {
+   "w": 400,
+   "h": 168,
+   "card": "AVR-SPD-H"
+  },
+  "AVR-SPD-H05": {
+   "w": 720,
+   "h": 108,
+   "card": "AVR-SPD-H"
+  },
+  "AVR-SPD-H06": {
+   "w": 404,
+   "h": 220,
+   "card": "AVR-SPD-H"
+  },
+  "AVR-SPD-H07": {
+   "w": 404,
+   "h": 218,
+   "card": "AVR-SPD-H"
+  },
+  "AVR-SPD-H08": {
+   "w": 716,
+   "h": 234,
+   "card": "AVR-SPD-H"
+  },
+  "AVR-SPD-I01": {
+   "w": 678,
+   "h": 477,
+   "card": "AVR-SPD-I"
+  },
+  "AVR-SPD-I02": {
+   "w": 586,
+   "h": 274,
+   "card": "AVR-SPD-I"
+  },
+  "AVR-SPD-I03": {
+   "w": 586,
+   "h": 274,
+   "card": "AVR-SPD-I"
+  },
+  "AVR-SPD-I04": {
+   "w": 586,
+   "h": 274,
+   "card": "AVR-SPD-I"
+  },
+  "AVR-SPD-I05": {
+   "w": 586,
+   "h": 274,
+   "card": "AVR-SPD-I"
+  },
+  "AVR-SPD-I06": {
+   "w": 678,
+   "h": 242,
+   "card": "AVR-SPD-I"
+  },
+  "AVR-SPD-K01": {
+   "w": 422,
+   "h": 218,
+   "card": "AVR-SPD-K"
+  },
+  "AVR-SPD-K02": {
+   "w": 422,
+   "h": 218,
+   "card": "AVR-SPD-K",
+   "nota": "O consumo por secador aparece no balão, ao passar o mouse sobre o card."
+  },
+  "AVR-SPD-K03": {
+   "w": 720,
+   "h": 183,
+   "card": "AVR-SPD-K"
+  },
+  "AVR-SPD-K04": {
+   "w": 720,
+   "h": 122,
+   "card": "AVR-SPD-K",
+   "nota": "A conta aparece no balão, ao passar o mouse sobre o card."
+  },
+  "AVR-SPR-A01": {
+   "w": 382,
+   "h": 156,
+   "card": "AVR-SPR-A"
+  },
+  "AVR-SPR-A02": {
+   "w": 720,
+   "h": 111,
+   "card": "AVR-SPR-A"
+  },
+  "AVR-SPR-A03": {
+   "w": 452,
+   "h": 160,
+   "card": "AVR-SPR-A"
+  },
+  "AVR-SPR-A04": {
+   "w": 720,
+   "h": 111,
+   "card": "AVR-SPR-A"
+  },
+  "AVR-SPR-A06": {
+   "w": 720,
+   "h": 238,
+   "card": "AVR-SPR-A",
+   "nota": "Com risco, aparece um selo de alerta no cabeçalho do secador e a borda do cartão fica vermelha."
+  },
+  "AVR-SPR-A07": {
+   "w": 462,
+   "h": 396,
+   "card": "AVR-SPR-A",
+   "nota": "Posição prevista no cartão do secador; o dado ainda será incluído no videowall."
+  },
+  "AVR-SPR-B02": {
+   "w": 390,
+   "h": 142,
+   "card": "AVR-SPR-B"
+  },
+  "AVR-SPR-B03": {
+   "w": 390,
+   "h": 130,
+   "card": "AVR-SPR-B"
+  },
+  "AVR-SPR-C01": {
+   "w": 390,
+   "h": 142,
+   "card": "AVR-SPR-C"
+  },
+  "AVR-SPR-C02": {
+   "w": 390,
+   "h": 142,
+   "card": "AVR-SPR-C"
+  },
+  "AVR-SPR-C03": {
+   "w": 390,
+   "h": 130,
+   "card": "AVR-SPR-C"
+  },
+  "AVR-SPR-D01": {
+   "w": 396,
+   "h": 142,
+   "card": "AVR-SPR-D"
+  },
+  "AVR-SPR-D02": {
+   "w": 396,
+   "h": 142,
+   "card": "AVR-SPR-D"
+  },
+  "AVR-SPR-E01": {
+   "w": 396,
+   "h": 142,
+   "card": "AVR-SPR-E"
+  },
+  "AVR-SPR-E02": {
+   "w": 396,
+   "h": 142,
+   "card": "AVR-SPR-E"
+  },
+  "AVR-SPR-E03": {
+   "w": 396,
+   "h": 132,
+   "card": "AVR-SPR-E"
+  },
+  "AVR-SPR-F01": {
+   "w": 720,
+   "h": 235,
+   "card": "AVR-SPR-F"
+  },
+  "AVR-SPR-G01": {
+   "w": 458,
+   "h": 246,
+   "card": "AVR-SPR-G"
+  },
+  "AVR-SPR-G02": {
+   "w": 458,
+   "h": 166,
+   "card": "AVR-SPR-G"
+  },
+  "AVR-SPR-G03": {
+   "w": 458,
+   "h": 362,
+   "card": "AVR-SPR-G"
+  },
+  "AVR-VG-M01": {
+   "w": 720,
+   "h": 410,
+   "card": "AVR-VG-M"
+  },
+  "AVR-VG-M02": {
+   "w": 720,
+   "h": 410,
+   "card": "AVR-VG-M",
+   "nota": "O rodízio acontece dentro de cada quadro do mural, a cada 10 s."
+  }
+ }
+}

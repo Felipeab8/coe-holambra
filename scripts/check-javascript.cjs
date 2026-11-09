@@ -7,6 +7,7 @@ for (const name of fs.readdirSync(path.join(root, 'js'))) {
 }
 new vm.Script(fs.readFileSync(path.join(root, 'sala-coe-3d/modelo.js'), 'utf8'), { filename: 'sala-coe-3d/modelo.js' }); checked++;
 new vm.Script(fs.readFileSync(path.join(root, 'sala-coe-3d/editor.js'), 'utf8'), { filename: 'sala-coe-3d/editor.js' }); checked++;
+new vm.Script(fs.readFileSync(path.join(root, 'scripts/miniaturas-kpi.cjs'), 'utf8'), { filename: 'scripts/miniaturas-kpi.cjs' }); checked++;
 for (const name of ['sala-coe-3d/index.html', 'index.html', 'arq3d/index.html', 'holambra-avare-3d/index.html']) {
   const html = fs.readFileSync(path.join(root, name), 'utf8'); let index = 0;
   for (const match of html.matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/gi)) {

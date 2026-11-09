@@ -9,13 +9,27 @@ Material executivo de entrega do estudo do **Centro Operacional de Excelência d
 | Início | Capa e atalhos para os sete capítulos. |
 | 01 · Objetivos | Objetivos estratégicos, contexto e escuta das áreas. |
 | 02 · Desafios | Dores transversais e dores por etapa da cadeia. |
-| 03 · Indicadores | Telas do video wall de Avaré e ficha de cada KPI. |
+| 03 · Indicadores | Telas do video wall de Avaré e ficha de cada KPI, com a miniatura da parte do card de que ele trata. |
 | 04 · Infraestrutura e dados | Diagnóstico, diagnóstico de campo, fichas, piloto Avaré em 3D, **configurador da Sala do COE**, arquitetura As-Is/To-Be (2D e 3D) e sistemas, cada um com o investimento correspondente da planilha de viabilidade. |
 | 05 · Viabilidade | Situação atual, investimento e retorno (com o **catálogo de custos** item a item), solução e contratação. |
 | 06 · Governança | Níveis, rituais, decisões e estrutura. |
 | 07 · Roadmap | Plano e gates (roadmap de 12 meses, priorização e plano mestre), expansão às sete unidades e jornada de automação. |
 
 O endereço antigo `#viabilidade/plano-e-gates` continua funcionando e abre a página no capítulo 07.
+
+## Miniaturas da Ficha de KPI
+
+Cada um dos 416 indicadores tem a sua miniatura: só a parte do card do videowall de que ele trata, com o título do card em cima e nada ao redor (por exemplo, AVR-REC-A01 mostra "Caminhões na fila · Com tag 12, milho 8, sorgo 4", sem o bloco "Sem tag"). A legenda diz o indicador, o card e a tela; quando o indicador só aparece num balão ou ainda não está no videowall, uma nota explica. Clicar abre a tela; com o material e o videowall no mesmo domínio (os dois no GitHub Pages da mesma conta), a mesma parte fica contornada dentro da tela. A Visão geral leva ao mural.
+
+O recorte de cada indicador está em `fonte/miniaturas-kpi.json` (seletor dentro do card, coluna de tabela, rótulos que entram junto). As imagens ficam em `img/kpi/` e são geradas a partir do videowall publicado. Quando o visual de algum card mudar:
+
+```powershell
+pnpm exec playwright install chromium   # uma vez
+node scripts/miniaturas-kpi.cjs          # ou informe outro endereço do videowall
+python atualizar.py
+```
+
+Para refazer só alguns indicadores: `$env:MINIATURAS_SO="AVR-REC-A,AVR-CLA"; node scripts/miniaturas-kpi.cjs`.
 
 ## Custos ligados à planilha de viabilidade
 
