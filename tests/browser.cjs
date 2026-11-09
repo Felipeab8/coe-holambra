@@ -5,10 +5,11 @@ const base = process.env.COE_BASE_URL || 'http://127.0.0.1:8765';
 let browser;
 before(async () => { browser = await chromium.launch({ headless: true, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] }); });
 after(async () => { if (browser) await browser.close(); });
-async function visit(hash = '', options = {}) {
+async function visit(hash = '', options = {}, blocked = []) {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce', ...options });
   // Font availability must not gate local navigation regressions.
   await page.route('https://fonts.googleapis.com/**', route => route.fulfill({ body: '', contentType: 'text/css' }));
+  for (const pattern of blocked) await page.route(pattern, route => route.abort());
   await page.goto(base + '/' + hash, { waitUntil: 'domcontentloaded' });
   await page.locator('article.page:not([hidden])').waitFor();
   return page;
@@ -66,7 +67,7 @@ test('pending items are consolidated once, without bracket placeholders or inven
     assert.match(await section.innerText(), /Plano e gates/);
     assert.equal(await section.locator('a[href="#roadmap/plano-e-gates/priorizacao"]').count(), 1);
     assert.equal(await page.locator('article.page').evaluateAll(pages => pages.filter(p => /\[(INSERIR|DEFINIR|VALIDAR|PENDENTE|INFORMA|DESCREVER)/.test(p.textContent)).length), 0);
-    assert.equal(await page.locator('article.page .pend-note').count(), 4);
+    assert.equal(await page.locator('article.page .pend-note').count(), 3);
     assert.equal(await page.locator('a[href^="#decisoes"], a[href*="decisoes-e-proximos-passos"], [data-prazo]').count(), 0);
   } finally { await page.close(); }
 });
@@ -350,7 +351,8 @@ test('expanded diagnostic and architecture diagrams are accessible on mobile', a
 });
 
 test('COE room model supports views, selection, capture, theme and pause in the original page', async () => {
-  const page = await visit('#dados/sala-do-coe');
+  // The live TVs come from the external videowall site; without it the room falls back to its demo screens.
+  const page = await visit('#dados/sala-do-coe', {}, ['https://felipeab8.github.io/**']);
   const errors = []; page.on('pageerror', error => errors.push(error.message));
   try {
     const host = page.locator('iframe[title="Modelo 3D da sala do COE da Cooperativa Holambra"]');
@@ -370,6 +372,13 @@ test('COE room model supports views, selection, capture, theme and pause in the 
     await frame.locator('#areas-close').click();
     assert.equal(await frame.locator('#areas').isHidden(), true);
     assert.match(await frame.locator('#cap-t').innerText(), /Operações/);
+    await frame.locator('#areas-toggle').click();
+    assert.equal(await frame.locator('[data-tv]').count(), 9);
+    await frame.locator('[data-tv="8"]').click();
+    assert.equal(await frame.locator('[data-view="reuniao"]').getAttribute('aria-pressed'), 'true');
+    assert.match(await frame.locator('#cap-t').innerText(), /E0 · Visão da unidade/);
+    assert.match(await frame.locator('#cap-link').getAttribute('href'), /\?telas=est-geral&tema=/);
+    await frame.locator('#areas-close').click();
     await frame.locator('#tour-toggle').click();
     await frame.locator('#tour-play').click();
     const step = Number((await frame.locator('#cap-step').innerText()).match(/(\d) de 6/i)[1]);

@@ -30,17 +30,28 @@
   const contaOnda = o => R.filter(r => r.onda === o).length;
   const legendaOndas = '<div class="vb-leg">' + ['1', '2', '3'].map(o => '<span><i class="o-ponto o' + o + '"></i>' + ROT_ONDA[o] + '</span>').join('') + '</div>';
 
-  alvo('ondas-barra').innerHTML = '<div class="vb-faixa" role="img" aria-label="Das ' + R.length + ' informações do painel: ' +
-    ['1', '2', '3'].map(o => contaOnda(o) + ' na onda ' + o).join(', ') + '">' +
-    ['1', '2', '3'].map(o => { const n = contaOnda(o); return '<div class="seg o' + o + '" style="flex-grow:' + n + '"></div>'; }).join('') + '</div>' +
-    '<div class="vb-faixa-rot">' + ['1', '2', '3'].map(o => { const n = contaOnda(o);
-      return '<div style="flex-grow:' + n + '"><b>' + n + '</b><span>' + pct(n, R.length) + ' das informações, onda ' + o + '</span></div>'; }).join('') + '</div>';
+  /* rosca das três ondas, com um respiro entre as fatias, e os números de cada cartão */
+  const ONDAS = ['1', '2', '3'], N = Object.fromEntries(ONDAS.map(o => [o, contaOnda(o)]));
+  if (alvo('rosca-ondas')) {
+    let ac = 0;
+    const fatias = ONDAS.map(o => { const ini = ac; ac += N[o] / R.length * 100;
+      return 'var(--surface) ' + ini.toFixed(2) + '% ' + (ini + .6).toFixed(2) + '%,var(--o' + o + ') ' + (ini + .6).toFixed(2) + '% ' + ac.toFixed(2) + '%'; }).join(',');
+    alvo('rosca-ondas').innerHTML = '<div class="vx-rosca-g" role="img" aria-label="Das ' + R.length + ' informações do painel: ' + ONDAS.map(o => N[o] + ' na onda ' + o).join(', ') +
+      '" style="background:conic-gradient(' + fatias + ')"><span><b>' + R.length + '</b><small>informações</small></span></div>';
+    ONDAS.forEach(o => { alvo('n-onda' + o).textContent = fmt(N[o]); alvo('p-onda' + o).textContent = pct(N[o], R.length) + ' das informações'; });
+  }
+  if (alvo('anel-onda1')) { alvo('anel-onda1').style.setProperty('--p', (N['1'] / R.length * 100).toFixed(1) + '%'); alvo('anel-onda1').innerHTML = '<span>' + pct(N['1'], R.length) + '</span>'; }
 
-  alvo('parecer').innerHTML = tabela(['Dimensão', 'Evidência favorável', 'Condicionante principal', 'Parecer', 'Gate', 'Responsável'],
-    V.parecer.map(p => {
-      const conf = /confirmar/i.test(p.par);
-      return ['<b>' + esc(p.dim) + '</b>', esc(p.evid), esc(p.cond), conf ? selo('crit', '?', p.par) : selo('aten', '!', p.par), esc(p.gate), esc(p.dono)];
-    }));
+  /* parecer: um cartão por dimensão, com tudo o que a tabela trazia */
+  if (alvo('parecer')) {
+    const confirmar = p => /confirmar/i.test(p.par), abertas = V.parecer.filter(confirmar);
+    alvo('parecer').innerHTML = '<div class="vx-parecer">' + V.parecer.map(p => '<article class="vx-par' + (confirmar(p) ? ' crit' : '') + '">' +
+      '<header><h4>' + esc(p.dim) + '</h4>' + (confirmar(p) ? selo('crit', '?', p.par) : selo('aten', '!', p.par)) + '</header>' +
+      '<dl><dt>A favor</dt><dd>' + esc(p.evid) + '</dd><dt>Condicionante principal</dt><dd>' + esc(p.cond) + '</dd></dl>' +
+      '<footer>' + String(p.gate).split('/').map(g => '<span class="vx-gate">' + esc(g.trim()) + '</span>').join('') + '<span class="vx-dono">' + esc(p.dono) + '</span></footer></article>').join('') + '</div>';
+    if (alvo('parecer-resumo')) alvo('parecer-resumo').textContent = (V.parecer.length - abertas.length) + ' de ' + V.parecer.length + ' dimensões viáveis com condição' +
+      (abertas.length ? '; ' + abertas.map(p => p.dim.toLowerCase()).join(', ') + ' a confirmar' : '');
+  }
 
   (function origem() {
     const maximo = Math.max(...Object.values(C.telas).map(t => t.n));
@@ -60,9 +71,9 @@
   const c = V.cenarios;
   alvo('recomendacao').textContent = 'Recomendação do estudo: ' + V.recomendacao.charAt(0).toLowerCase() + V.recomendacao.slice(1);
   alvo('cenarios-cards').innerHTML = '<div class="vb-cen">' + CEN.map((nome, i) =>
-    '<div class="cen' + (i === REC ? ' rec' : '') + '"><div class="topo"><h3>' + nome + '</h3><span>' + c.ondas[i] + '</span></div>' +
+    '<div class="cen' + (i === REC ? ' rec' : '') + '">' + (i === REC ? '<span class="vx-rec">Recomendação do estudo</span>' : '') + '<div class="topo"><h3>' + nome + '</h3><span>' + c.ondas[i] + '</span></div>' +
     '<b class="valor">' + mi(c.total[i]) + '</b><small>em 3 anos, com contingência</small>' +
-    '<dl><dt>Informações automáticas</dt><dd>' + fmt(c.info[i]) + ' de ' + R.length + '</dd>' +
+    '<dl><dt>Informações automáticas</dt><dd>' + fmt(c.info[i]) + ' de ' + R.length + ' <small>(' + pct(c.info[i], R.length) + ')</small><span class="vx-cob" aria-hidden="true"><i style="width:' + (c.info[i] / R.length * 100).toFixed(1) + '%"></i></span></dd>' +
     '<dt>Investimento (CAPEX e serviços)</dt><dd>' + mi(c.invest[i]) + '</dd>' +
     '<dt>Custo anual em regime</dt><dd>' + mi(c.opex[i]) + '</dd>' +
     '<dt>Faixa do custo direto</dt><dd>' + mi(c.baixa[i]) + ' a ' + mi(c.alta[i]) + '</dd></dl>' +
@@ -73,7 +84,8 @@
     const partes = [['invest', 'Investimento (CAPEX e serviços)', 'o1'], ['opex_impl', 'Equipe, PMO e licenças na implantação', 'o2'], ['conting', 'Contingência', 'o3']];
     alvo('cenarios-barras').innerHTML = '<div class="vb-leg">' + partes.map(p => '<span><i class="o-ponto ' + p[2] + '"></i>' + p[1] + '</span>').join('') + '</div>' +
       CEN.map((nome, i) => '<div class="vb-lin sem-link"><span class="nome">' + nome + '</span><span class="trilha"><span class="barra alta" style="width:' + (c.total[i] / maximo * 100) + '%">' +
-        partes.map(p => '<i class="' + p[2] + '" style="flex-grow:' + c[p[0]][i] + '" data-dica="' + nome + ', ' + p[1].toLowerCase() + ': ' + mi(c[p[0]][i]) + '"></i>').join('') +
+        partes.map(p => '<i class="' + p[2] + '" style="flex-grow:' + c[p[0]][i] + '" data-dica="' + nome + ', ' + p[1].toLowerCase() + ': ' + mi(c[p[0]][i]) + '">' +
+          (c[p[0]][i] / c.total[i] >= .12 ? '<span>' + mi(c[p[0]][i]) + '</span>' : '') + '</i>').join('') +
         '</span><em>' + mi(c.total[i]) + '</em></span></div>').join('');
   })();
 
@@ -133,7 +145,12 @@
       const y = v => t + (lim - v) / tot * (h - t - b), x = i => e + i * (w - e - d) / 4;
       const pts = acum.map((v, i) => x(i) + ',' + y(v)).join(' ');
       const marcas = [-20e6, -10e6, 0, 10e6, 20e6].filter(v => Math.abs(v) <= lim);
+      /* área entre a curva e o zero: verde acima, vermelha abaixo */
+      const area = 'M' + x(0) + ',' + y(0) + ' L' + acum.map((v, i) => x(i) + ',' + y(v)).join(' L') + ' L' + x(4) + ',' + y(0) + ' Z';
       g.innerHTML = '<svg width="' + w + '" height="' + h + '" role="img" aria-label="Fluxo de caixa acumulado em 5 anos">' +
+        '<defs><clipPath id="simArea"><path d="' + area + '"/></clipPath></defs>' +
+        '<rect class="area-pos" x="' + e + '" y="' + t + '" width="' + (w - e - d) + '" height="' + Math.max(0, y(0) - t) + '" clip-path="url(#simArea)"/>' +
+        '<rect class="area-neg" x="' + e + '" y="' + y(0) + '" width="' + (w - e - d) + '" height="' + Math.max(0, h - b - y(0)) + '" clip-path="url(#simArea)"/>' +
         marcas.map(v => '<line class="' + (v ? 'grade' : 'zero') + '" x1="' + e + '" x2="' + (w - d) + '" y1="' + y(v) + '" y2="' + y(v) + '"/>' +
           '<text class="eixo-t" x="' + (e - 8) + '" y="' + (y(v) + 4) + '" text-anchor="end">' + fmt(v / 1e6) + '</text>').join('') +
         '<text class="eixo-t" x="' + e + '" y="11">R$ mi, acumulado</text>' +
@@ -303,6 +320,17 @@
     conta.addEventListener('click', e => { if (e.target.closest('.m-limpa')) { filtro = null; aplica(); } });
     aplica();
   })();
+
+  /* ---------- atalhos que abrem um bloco recolhido (as quatro frentes da integradora) ---------- */
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-abre]');
+    const d = b && document.getElementById(b.dataset.abre);
+    if (!d) return;
+    d.open = true;
+    d.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    const s = d.querySelector('summary');
+    if (s) s.focus({ preventScroll: true });
+  });
 
   /* ---------- decisões ---------- */
   if (alvo('validacao')) alvo('validacao').textContent = 'Situação da validação com a Holambra: ' + V.validacao.replace(/ – /g, ', ') + '.';

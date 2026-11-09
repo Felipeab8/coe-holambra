@@ -1073,3 +1073,126 @@ tbody td{line-height:1.6}
 .kf-mini-nota{margin-top:2px;padding-left:8px;border-left:2px solid var(--accent);font-style:italic}
 @media (max-width:900px){.kf-cab.com-mini{grid-template-columns:minmax(0,1fr)}.kf-mini{max-width:460px}}
 @media (prefers-reduced-motion:reduce){.kf-mini-bt,.kf-mini-ir{transition:none}.kf-mini-bt:hover{transform:none}}
+
+/* ---------- viabilidade: leitura executiva (09/11/2026) ----------
+   Números com gráfico no topo, ondas e parecer em cartões, tabelas refinadas.
+   Prefixo vx-; as regras genéricas valem só nas páginas da etapa 05. */
+.vx-veredito{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:-8px 0 0;font-size:14.5px;color:var(--dim)}
+.vx-selo{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-size:14px;font-weight:700}
+.vx-selo i{width:9px;height:9px;border-radius:50%;background:currentColor}
+.vx-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.vx-kpi{display:flex;align-items:center;gap:16px;min-width:0;padding:18px 20px;border:1px solid var(--line);border-radius:16px;background:var(--surface);transition:background-color .3s,border-color .3s}
+.vx-kpi b{display:block;color:var(--fg);font-size:clamp(28px,2.6vw,36px);font-weight:700;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.vx-kpi:first-child b{color:var(--accent)}
+.vx-kpi b small{color:var(--dim);font-size:15px;font-weight:600;letter-spacing:0}
+.vx-kpi div > span{display:block;margin-top:6px;color:var(--dim);font-size:13.5px;line-height:1.35}
+.vx-anel{position:relative;flex:none;display:grid;place-items:center;width:62px;height:62px;border-radius:50%;background:conic-gradient(var(--o1) var(--p,0%),var(--line-2) 0)}
+.vx-anel::before{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--surface)}
+.vx-anel span{position:relative;color:var(--fg);font-size:12.5px;font-weight:800}
+.vx-segs{flex:none;display:grid;grid-template-columns:repeat(15,minmax(0,1fr));gap:2px;width:66px;height:30px}
+.vx-segs i{border-radius:2px;background:var(--crit)}
+.vx-pontos{flex:none;display:grid;grid-template-columns:repeat(6,9px);gap:5px}
+.vx-pontos i{width:9px;height:9px;border-radius:50%;background:var(--off)}
+.vx-segs i.ok,.vx-pontos i.ok{background:var(--ok)}
+.vx-zero{flex:none;display:grid;place-items:center;width:54px;height:54px;border-radius:14px;background:var(--crit-soft);color:var(--crit)}
+.vx-zero svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+
+.vx-ondas{display:grid;grid-template-columns:auto repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+.vx-rosca{display:grid;place-items:center;padding:0 8px}
+.vx-rosca-g{position:relative;display:grid;place-items:center;width:156px;height:156px;border-radius:50%}
+.vx-rosca-g::before{content:"";position:absolute;inset:24px;border-radius:50%;background:var(--surface)}
+.vx-rosca-g span{position:relative;display:grid;text-align:center;line-height:1.1}
+.vx-rosca-g b{color:var(--fg);font-size:32px;font-weight:700;letter-spacing:-.03em}
+.vx-rosca-g small{color:var(--dim);font-size:12.5px}
+.vx-onda{display:grid;align-content:start;gap:6px;padding:16px 18px;border-top:4px solid var(--o1);border-radius:16px;background:var(--soft)}
+.vx-onda.w2{border-top-color:var(--o2)}
+.vx-onda.w3{border-top-color:var(--o3)}
+.vx-onda-n{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;margin:0}
+.vx-onda-n b{color:var(--fg);font-size:clamp(30px,2.8vw,40px);font-weight:700;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.vx-onda-n span{color:var(--dim);font-size:13px}
+.vx-onda h4{margin:2px 0 0;font-family:var(--f-display);font-size:16px;font-weight:700;line-height:1.25}
+.vx-onda > p:last-child{margin:0;color:var(--texto-2);font-size:14px;line-height:1.45}
+.vx-dado{display:inline-grid;grid-template-columns:96px auto;align-items:center;gap:10px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.vx-dado > i{position:relative;height:8px;overflow:hidden;border-radius:99px;background:var(--line-2)}
+.vx-dado > i::after{content:"";position:absolute;inset:0 auto 0 0;width:var(--v);border-radius:inherit;background:var(--c,var(--o1))}
+.vx-dado b{color:var(--fg);font-weight:700}
+.vx-onda-chip{display:inline-grid;place-items:center;min-width:26px;height:26px;padding:0 8px;border-radius:999px;color:var(--sobre-accent);font-size:13px;font-weight:700}
+
+.vx-chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0;padding:0;list-style:none}
+.vx-chips li{padding:3px 10px;border:1px solid var(--line);border-radius:999px;background:var(--bg);color:var(--fg);font-size:13px;font-weight:500;line-height:1.4}
+.vb-matriz .q{border-radius:14px}
+.vb-matriz .q.forte .vx-chips li{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:#fff}
+
+.vx-parecer{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.vx-par{display:grid;grid-template-rows:auto 1fr auto;gap:12px;min-width:0;padding:16px 18px;border:1px solid var(--line);border-top:4px solid var(--warn);border-radius:14px;background:var(--bg)}
+.vx-par.crit{border-top-color:var(--crit);background:color-mix(in srgb,var(--crit-soft) 55%,var(--bg))}
+.vx-par header{display:grid;justify-items:start;gap:8px}
+.vx-par h4{margin:0;color:var(--fg);font-family:var(--f-display);font-size:16.5px;font-weight:700;line-height:1.25}
+.vx-par dl{display:grid;align-content:start;gap:2px;margin:0}
+.vx-par dt{margin-top:8px;color:var(--dim);font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+.vx-par dt:first-child{margin-top:0}
+.vx-par dd{margin:0;color:var(--texto-2);font-size:14px;line-height:1.45}
+.vx-par footer{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding-top:10px;border-top:1px solid var(--line-2)}
+.vx-gate{padding:2px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
+.vx-dono{margin-left:auto;color:var(--texto-2);font-size:13px;font-weight:600;text-align:right}
+
+.vb-alerta.vx-cuidado{border:1px dashed color-mix(in srgb,var(--warn) 60%,transparent);background:var(--warn-soft);color:var(--fg)}
+.vb-alerta.vx-cuidado b{color:var(--warn)}
+
+/* cenários: selo da recomendação e cobertura das informações */
+.vb-cen .cen{position:relative}
+.vx-rec{position:absolute;top:-12px;left:18px;padding:3px 10px;border-radius:999px;background:var(--accent-2);color:#fff;font-size:12px;font-weight:700;letter-spacing:.02em}
+.vb-cen{padding-top:6px}
+[data-theme="dark"] .vx-rec{color:#07142A}
+.cen dd small{color:var(--dim);font-size:12.5px;font-weight:500}
+.vx-cob{display:block;height:6px;margin-top:6px;overflow:hidden;border-radius:99px;background:var(--line-2)}
+.vx-cob i{display:block;height:100%;border-radius:inherit;background:var(--o1)}
+
+/* imagens da solução: cada uma na proporção dela, as duas na mesma altura */
+.vb-fig img{height:auto;aspect-ratio:auto}
+[id^="p-viabilidade-"] .vb-duas:has(> .vb-fig + .vb-fig){grid-template-columns:minmax(0,1.5fr) minmax(0,2.95fr);align-items:start}
+
+/* frase de leitura de cada seção e tabelas mais legíveis */
+[id^="p-viabilidade-"] .sec > .vb-apoio{max-width:none;margin:0;padding:10px 14px;border-left:3px solid var(--accent);border-radius:0 10px 10px 0;background:var(--soft);color:var(--texto-2);font-size:14.5px}
+[id^="p-viabilidade-"] th{color:var(--dim);font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+[id^="p-viabilidade-"] td{color:var(--texto-2)}
+[id^="p-viabilidade-"] td:first-child{color:var(--fg);font-weight:600}
+[id^="p-viabilidade-"] tbody tr:nth-child(even) td{background:color-mix(in srgb,var(--soft) 45%,transparent)}
+[id^="p-viabilidade-"] tbody tr:hover td{background:var(--soft)}
+[id^="p-viabilidade-"] .sec .tbl th:first-child,[id^="p-viabilidade-"] .sec .tbl td:first-child{padding-left:12px}
+
+/* composição do total: valor dentro de cada parte da barra */
+[data-v="cenarios-barras"] .barra.alta i{display:flex;align-items:center;justify-content:center;flex-basis:0;min-width:0;overflow:hidden}
+[data-v="cenarios-barras"] .barra.alta i span{padding:0 6px;color:#fff;font-size:12px;font-style:normal;font-weight:700;white-space:nowrap;pointer-events:none}
+[data-theme="dark"] [data-v="cenarios-barras"] .barra.alta i span{color:#07142A}
+
+/* simulador: área entre a curva e o zero */
+.area-pos{fill:var(--ok);opacity:.16}
+.area-neg{fill:var(--crit);opacity:.13}
+
+/* escopo: as quatro frentes lado a lado; cada uma abre o detalhe */
+.vx-frentes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none}
+.vx-frentes li{position:relative;min-width:0}
+.vx-frentes li + li::before{content:"";position:absolute;top:50%;left:-14px;width:14px;height:2px;background:var(--line)}
+.vx-frentes button{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:2px 12px;width:100%;height:100%;padding:16px 18px;border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--fg);font:inherit;text-align:left;cursor:pointer;transition:border-color .2s,transform .25s var(--curva),box-shadow .25s var(--curva)}
+.vx-frentes button:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 12px 24px -16px rgba(0,30,60,.5)}
+.vx-frentes button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.vx-frentes .dg-n{grid-row:1 / span 2;width:36px;height:36px;min-width:36px;font-size:15px}
+.vx-frentes b{font-size:16px;font-weight:700;line-height:1.25}
+.vx-frentes small{color:var(--dim);font-size:13px;line-height:1.35}
+.dobra[id^="vx-frente-"]{scroll-margin-top:calc(var(--toph) + 16px)}
+
+/* fornecedores: os três blocos de contato numa linha do tempo */
+.vx-linha{position:relative;padding-top:28px}
+.vx-linha::before{content:"";position:absolute;top:9px;right:24px;left:24px;height:3px;border-radius:3px;background:var(--line)}
+.vx-linha > .card{position:relative}
+.vx-linha > .card::before{content:"";position:absolute;top:-26px;left:20px;width:11px;height:11px;border:3px solid var(--accent);border-radius:50%;background:var(--surface)}
+.vx-linha .k{justify-self:start;display:inline-block;padding:2px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12.5px;font-weight:700}
+
+@media (max-width:1100px){.vx-frentes{grid-template-columns:repeat(2,minmax(0,1fr))}.vx-frentes li:nth-child(odd)::before{display:none}}
+@media (max-width:860px){.vx-linha{padding-top:0}.vx-linha::before,.vx-linha > .card::before{display:none}}
+@media (max-width:520px){.vx-frentes{grid-template-columns:minmax(0,1fr)}.vx-frentes li::before{display:none}}
+@media (prefers-reduced-motion:reduce){.vx-frentes button{transition:none}.vx-frentes button:hover{transform:none}}
+@media (max-width:1100px){.vx-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.vx-parecer{grid-template-columns:repeat(2,minmax(0,1fr))}.vx-ondas{grid-template-columns:repeat(3,minmax(0,1fr))}.vx-rosca{grid-column:1 / -1}}
+@media (max-width:760px){.vx-tab{overflow-x:auto}.vx-tab table{min-width:760px}.vx-dado{grid-template-columns:64px auto}.vx-ondas,.vx-parecer{grid-template-columns:minmax(0,1fr)}[id^="p-viabilidade-"] .vb-duas:has(> .vb-fig + .vb-fig){grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.vx-kpis{grid-template-columns:minmax(0,1fr)}.vx-kpi{padding:14px 16px}}

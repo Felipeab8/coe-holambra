@@ -21,6 +21,12 @@
 <section class="aba" data-aba="escopo" data-rotulo="Escopo da integradora" hidden>
 <div><h2>Uma integradora responde do sensor ao banco de dados, em quatro frentes</h2></div>
   <p class="intro">Esta é a base do termo de referência. A integradora coordena os fornecedores de cada painel e entrega a rede de campo até o switch de borda no CCO. Daí em diante, rede corporativa e servidores ficam com a TI Holambra. Controles e intertravamentos não saem dos CLPs locais.</p>
+  <ol class="vx-frentes" aria-label="As quatro frentes da integradora">
+    <li><button type="button" data-abre="vx-frente-1"><span class="dg-n">1</span><b>SCADA</b><small>Telas, nomes das variáveis e histórico</small></button></li>
+    <li><button type="button" data-abre="vx-frente-2"><span class="dg-n">2</span><b>Painéis e CLPs</b><small>Comunicação de cada painel com o SCADA</small></button></li>
+    <li><button type="button" data-abre="vx-frente-3"><span class="dg-n">3</span><b>Sensores</b><small>Instrumentos das variáveis que faltam</small></button></li>
+    <li><button type="button" data-abre="vx-frente-4"><span class="dg-n">4</span><b>Infraestrutura</b><small>Rede de campo até o switch de borda</small></button></li>
+  </ol>
 
 <details class="sec dobra"><summary><h3>Premissas da contratação</h3></summary>
 <div class="dobra-c">
@@ -35,7 +41,7 @@
     </ul>
 </div></details>
 
-<details class="sec dobra"><summary><h3><span class="dg-n">1</span>Frente 1: SCADA</h3><span class="dobra-sub">Remodela as telas com o fluxo de todos os sistemas, padroniza o nome das variáveis, comunica com os painéis e grava o histórico.</span></summary>
+<details class="sec dobra" id="vx-frente-1"><summary><h3><span class="dg-n">1</span>Frente 1: SCADA</h3><span class="dobra-sub">Remodela as telas com o fluxo de todos os sistemas, padroniza o nome das variáveis, comunica com os painéis e grava o histórico.</span></summary>
 <div class="dobra-c">
 <div class="tbl"><table class=""><thead><tr><th>Item</th><th>Escopo</th><th>Exemplos em Avaré</th></tr></thead><tbody>
       <tr class="vb-sub"><td colspan="3">1.1  REMODELAR AS TELAS COM O FLUXO DE TODOS OS SISTEMAS DE AUTOMAÇÃO</td></tr>
@@ -52,7 +58,7 @@
     </tbody></table></div>
 </div></details>
 
-<details class="sec dobra"><summary><h3><span class="dg-n">2</span>Frente 2: painéis e CLPs</h3><span class="dobra-sub">Programa a comunicação de cada painel com o SCADA. Pode exigir subcontratar o fornecedor do painel ou comprar módulos, gateways e remotas de I/O.</span></summary>
+<details class="sec dobra" id="vx-frente-2"><summary><h3><span class="dg-n">2</span>Frente 2: painéis e CLPs</h3><span class="dobra-sub">Programa a comunicação de cada painel com o SCADA. Pode exigir subcontratar o fornecedor do painel ou comprar módulos, gateways e remotas de I/O.</span></summary>
 <div class="dobra-c">
 <div class="tbl"><table class=""><thead><tr><th>Painel / fornecedor</th><th>Controlador</th><th>Ação da integradora</th><th>Subcontratar</th><th>Hardware adicional</th></tr></thead><tbody>
       <tr><td><b>Tombadores (SAUR / NBR Tec)</b></td><td>Inversor SINAMICS, soft starters, HC-03</td><td>Status, falhas e ciclos por entradas digitais; inversor pela rede, se houver porta</td><td>NBR Tec / SAUR <span class="dg-aberto">confirmar</span></td><td>Remota de I/O</td></tr>
@@ -71,7 +77,7 @@
     </tbody></table></div>
 </div></details>
 
-<details class="sec dobra"><summary><h3><span class="dg-n">3</span>Frente 3: sensores</h3><span class="dobra-sub">Fornece, instala, cabeia, calibra e integra os instrumentos das variáveis que hoje não existem.</span></summary>
+<details class="sec dobra" id="vx-frente-3"><summary><h3><span class="dg-n">3</span>Frente 3: sensores</h3><span class="dobra-sub">Fornece, instala, cabeia, calibra e integra os instrumentos das variáveis que hoje não existem.</span></summary>
 <div class="dobra-c">
 <div class="tbl"><table class=""><thead><tr><th>Variável</th><th>Instrumento</th><th>Uso no COE</th><th>Exigência de execução</th></tr></thead><tbody>
       <tr><td><b>Corrente das esteiras e elevadores</b></td><td>Transdutor de corrente ou multimedidor</td><td>Relacionar corrente com t/h (vazão e ritmo)</td><td>Curva corrente × t/h calibrada com pesagem/balança de fluxo</td></tr>
@@ -83,7 +89,7 @@
     </tbody></table></div>
 </div></details>
 
-<details class="sec dobra"><summary><h3><span class="dg-n">4</span>Frente 4: infraestrutura</h3><span class="dobra-sub">O campo fica com a integradora. Rede entre operação e servidores, segurança OT/TI e servidores ficam com a TI Holambra.</span></summary>
+<details class="sec dobra" id="vx-frente-4"><summary><h3><span class="dg-n">4</span>Frente 4: infraestrutura</h3><span class="dobra-sub">O campo fica com a integradora. Rede entre operação e servidores, segurança OT/TI e servidores ficam com a TI Holambra.</span></summary>
 <div class="dobra-c">
 <div class="tbl"><table class=""><thead><tr><th>Item</th><th>Escopo</th><th>Responsável</th><th>Situação</th></tr></thead><tbody>
       <tr class="vb-sub"><td colspan="4">4.1  CAMPO</td></tr>
@@ -139,7 +145,7 @@
   <p class="vb-alerta"><b>Primeiro passo sugerido:</b> o comunicado formal da diretoria, com o objetivo do COE, o ponto focal e o prazo de resposta. O estudo sugere <span class="dg-aberto">15 dias úteis por solicitação</span>, a validar com a Holambra.</p>
 
   <section class="sec"><h3>Sequência de contato, contada a partir do comunicado</h3>
-    <div class="vb-tres">
+    <div class="vb-tres vx-linha">
       <div class="card"><div class="k">Bloco 1: Semanas 1 a 2</div><h4>Império, Evolutize, Microsoft Forms, Jotform, Altus e provedor meteorológico</h4><p>Forma de acesso aos dados definida e Onda 1 liberada para projeto</p></div>
       <div class="card"><div class="k">Bloco 2: Semanas 2 a 4</div><h4>FACH, SanTec, Condutiva, NBR Tec, Fockink e Omega Engenharia</h4><p>Mapas de memória, protocolos e propostas de serviço dos painéis prioritários</p></div>
       <div class="card"><div class="k">Bloco 3: Semanas 4 a 6</div><h4>RM Engenharia, SAUR, Autokraft, Atlas Copco e Kepler Weber</h4><p>Caminho de integração definido para os demais painéis</p></div>

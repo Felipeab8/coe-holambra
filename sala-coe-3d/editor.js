@@ -90,7 +90,7 @@
       setInput('room-name',item.name);for(const k of ['x','y','z'])setInput('room-'+k,+(+item[k]).toFixed(2));setInput('room-rotation',Math.round(item.rotation));
       setInput('room-scale',+(+item.scale).toFixed(2));setInput('room-scale-range',item.scale);for(const k of ['sx','sy','sz'])setInput('room-'+k,+(+item[k]).toFixed(2));
       setInput('room-description',item.description||'');setInput('room-items',(item.items||[]).join('\n'));
-      $('room-screen-wrap').hidden=!item.hasScreen;if(item.hasScreen){const s=$('room-screen');if(!s.options.length)model.screenNames.forEach((n,i)=>s.append(new Option(n.charAt(0)+n.slice(1).toLowerCase(),String(i))));s.value=String(Number.isInteger(item.screen)?item.screen:0);}
+      $('room-screen-wrap').hidden=!item.hasScreen;if(item.hasScreen){const s=$('room-screen');if(!s.options.length)model.screenNames.forEach((n,i)=>s.append(new Option(n,String(i))));s.value=String(Number.isInteger(item.screen)?item.screen:0);}
       $('room-color-wrap').hidden=!item.colorable;if(item.colorable)setInput('room-color',item.color||(model.catalog.find(v=>v.kind===item.kind)||{}).color||'#ffffff');
       const size=model.size(item.id);$('room-dims').textContent=size?'Dimensões aproximadas: '+fmt(size.w)+' m (largura) × '+fmt(size.d)+' m (profundidade) × '+fmt(size.h)+' m (altura)':'';
       $('room-reset-object').hidden=item.added;$('room-tag-name').textContent=item.name+(size?' · '+fmt(size.w)+' × '+fmt(size.d)+' m':'');
